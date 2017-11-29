@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">xadrez</string>
+    <string name="botao1MP">Jogar Contra PC</string>
+    <string name="botao2MP">Modo 2 Jogadores</string>
+    <string name="botao3MP">Criar Jogo Online</string>
+    <string name="botao4MP">Juntar-se a Jogo Online</string>
+
 </resources>
