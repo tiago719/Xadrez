@@ -3,9 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Users\Administrador\AMOV\AMOV\xadrez\app\app.iml" filepath="C:\Users\Administrador\AMOV\AMOV\xadrez\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/xadrez.iml" filepath="$PROJECT_DIR$/xadrez.iml" />
-      <module fileurl="file://C:\Users\Administrador\AMOV\AMOV\xadrez\xadrez.iml" filepath="C:\Users\Administrador\AMOV\AMOV\xadrez\xadrez.iml" />
     </modules>
   </component>
 </project>
