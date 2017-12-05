@@ -9,17 +9,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".JogarContraPCActivity" />
-        <activity android:name=".Modo2JogadoresActivity" />
-        <activity android:name=".CriarJogoOnlineActivity" />
-        <activity android:name=".JuntarJogoOnlineActivity"></activity>
+        <activity android:name=".Activities.JogarContraPCActivity" />
+        <activity android:name=".Activities.Modo2JogadoresActivity" />
+        <activity android:name=".Activities.CriarJogoOnlineActivity" />
+        <activity android:name=".Activities.JuntarJogoOnlineActivity"></activity>
     </application>
 
 </manifest>
