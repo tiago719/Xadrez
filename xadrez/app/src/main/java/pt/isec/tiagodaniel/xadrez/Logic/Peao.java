@@ -5,7 +5,12 @@
  */
 package pt.isec.tiagodaniel.xadrez.Logic;
 
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+
 import java.util.ArrayList;
+
+import pt.isec.tiagodaniel.xadrez.R;
 
 /**
  *
@@ -15,9 +20,9 @@ public class Peao extends Peca
 {
     private boolean primeiroLance=true;
     
-    public Peao(Tabuleiro t, Posicao p, Jogador j)
+    public Peao(Tabuleiro t, Posicao p, Jogador j, LinearLayout ll)
     {
-        super(t,p,j);
+        super(t,p,j,ll);
     }
     
     public ArrayList<Posicao> getDisponiveis()
@@ -47,7 +52,16 @@ public class Peao extends Peca
         
         return disponiveis;
     }
-    
+
+    @Override
+    public void desenhaPeca(ImageView childAt)
+    {
+        if(jogador instanceof Jogador1)
+            childAt.setImageResource(R.drawable.b_peao);
+        else
+            childAt.setImageResource(R.drawable.p_peao);
+    }
+
     @Override
     public void movePara(Posicao posicao)
     {

@@ -5,6 +5,8 @@
  */
 package pt.isec.tiagodaniel.xadrez.Logic;
 
+import android.widget.LinearLayout;
+
 import static java.lang.System.in;
 import java.util.ArrayList;
 import static pt.isec.tiagodaniel.xadrez.Logic.Constantes.*;
@@ -18,7 +20,7 @@ public class Tabuleiro
     private ArrayList<Posicao> tabuleiro;
     private ArrayList<Jogador> jogadores;
     
-    public Tabuleiro()
+    public Tabuleiro(LinearLayout ll)
     {
         tabuleiro=new ArrayList<Posicao>();
         
@@ -29,10 +31,9 @@ public class Tabuleiro
                 tabuleiro.add(new Posicao(i,j));
             }
         }
-        
         jogadores=new ArrayList<Jogador>();
-        jogadores.add(new Jogador(this));
-        jogadores.add(new Jogador(this));      
+        jogadores.add(new Jogador1(this, ll));
+        jogadores.add(new Jogador2(this, ll));
     }
     
     public boolean dentroLimites(int linha, int coluna)
@@ -69,6 +70,8 @@ public class Tabuleiro
             if(p.getLinha()==linha && p.getColuna()==coluna)
                 return p;
         }
+        int a=0;
+        int b=0;
         return null;
     }
     
