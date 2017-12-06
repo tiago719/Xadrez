@@ -5,7 +5,21 @@
  */
 package pt.isec.tiagodaniel.xadrez.Logic;
 
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+
+import pt.isec.tiagodaniel.xadrez.R;
 
 /**
  *
@@ -17,14 +31,17 @@ public abstract class Peca
     protected Posicao posicao;
     protected Jogador jogador;
     
-    public Peca(Tabuleiro t, Posicao p, Jogador j)
+    public Peca(Tabuleiro t, Posicao p, Jogador j, LinearLayout ll)
     {
         tabuleiro=t;
         posicao=p;
         jogador=j;
+        desenhaPeca((ImageView) ll.getChildAt(p.getColuna()-1));
     }
 
     public abstract ArrayList<Posicao> getDisponiveis();
+
+    public abstract void desenhaPeca(ImageView childAt);
         
     public Posicao getPosicao()
     {
@@ -55,8 +72,7 @@ public abstract class Peca
     {
         this.jogador = jogador;
     }
-    
-        
+
     public void adiciona(ArrayList<Posicao> disponiveis, Posicao nova)
     {
         if(!nova.isOcupado())

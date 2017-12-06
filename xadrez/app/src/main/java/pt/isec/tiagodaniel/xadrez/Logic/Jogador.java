@@ -5,6 +5,8 @@
  */
 package pt.isec.tiagodaniel.xadrez.Logic;
 
+import android.widget.LinearLayout;
+
 import java.util.ArrayList;
 import static pt.isec.tiagodaniel.xadrez.Logic.Constantes.*;
 
@@ -14,29 +16,15 @@ import static pt.isec.tiagodaniel.xadrez.Logic.Constantes.*;
  */
 public class Jogador
 {
-    private ArrayList<Peca> pecasTabuleiro;
-    private ArrayList<Peca> pecasMortas;
-    private boolean check;
+    protected ArrayList<Peca> pecasTabuleiro;
+    protected ArrayList<Peca> pecasMortas;
+    protected boolean check;
     
     public Jogador(Tabuleiro t)
     {
         pecasTabuleiro=new ArrayList<Peca>();
-        
-        pecasTabuleiro.add(new Torre(t, t.getPosicao(0,0),this));
-        pecasTabuleiro.add(new Cavalo(t, t.getPosicao(0, 1),this));
-        pecasTabuleiro.add(new Bispo(t, t.getPosicao(0, 2),this));
-        pecasTabuleiro.add(new Rei(t, t.getPosicao(0, 3),this));
-        pecasTabuleiro.add(new Rainha(t, t.getPosicao(0, 4),this));
-        pecasTabuleiro.add(new Bispo(t, t.getPosicao(0, 5),this));
-        pecasTabuleiro.add(new Cavalo(t, t.getPosicao(0, 6),this));
-        pecasTabuleiro.add(new Torre(t, t.getPosicao(0, 7),this));
-        
-        for(int i=0;i<TABULEIRO_COLUNAS;i++)
-        {
-            pecasTabuleiro.add(new Peao(t,t.getPosicao(1, i),this));
-        }
-        
         pecasMortas=new ArrayList<Peca>();
+
         check=false;
     }
 

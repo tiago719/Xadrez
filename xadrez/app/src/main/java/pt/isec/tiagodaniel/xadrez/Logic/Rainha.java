@@ -5,7 +5,12 @@
  */
 package pt.isec.tiagodaniel.xadrez.Logic;
 
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+
 import java.util.ArrayList;
+
+import pt.isec.tiagodaniel.xadrez.R;
 
 /**
  *
@@ -13,9 +18,9 @@ import java.util.ArrayList;
  */
 public class Rainha extends Peca
 {
-    public Rainha(Tabuleiro t, Posicao p, Jogador j)
+    public Rainha(Tabuleiro t, Posicao p, Jogador j, LinearLayout ll)
     {
-        super(t,p,j);
+        super(t,p,j,ll);
     }
     
     @Override
@@ -26,5 +31,14 @@ public class Rainha extends Peca
         if(!disponiveis.addAll(diagonal()))
             System.out.println("ERRO A SOMAR OS DIAGONAIS COM OS VERTICAIS/HORIZONTAIS NA RAINHA");
         return disponiveis;
-    }   
+    }
+
+    @Override
+    public void desenhaPeca(ImageView childAt)
+    {
+        if(jogador instanceof Jogador1)
+            childAt.setImageResource(R.drawable.b_rainha);
+        else
+            childAt.setImageResource(R.drawable.p_rainha);
+    }
 }
