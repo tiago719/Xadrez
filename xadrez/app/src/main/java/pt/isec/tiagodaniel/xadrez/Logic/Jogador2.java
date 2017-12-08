@@ -13,18 +13,28 @@ public class Jogador2 extends Jogador
     public Jogador2(Tabuleiro t, LinearLayout ll)
     {
         super(t);
-        pecasTabuleiro.add(new Torre(t, t.getPosicao(8,1),this,(LinearLayout) ll.getChildAt(7)));
-        pecasTabuleiro.add(new Cavalo(t, t.getPosicao(8, 2),this, (LinearLayout) ll.getChildAt(7)));
-        pecasTabuleiro.add(new Bispo(t, t.getPosicao(8, 3),this, (LinearLayout) ll.getChildAt(7)));
-        pecasTabuleiro.add(new Rainha(t, t.getPosicao(8, 4),this, (LinearLayout) ll.getChildAt(7)));
-        pecasTabuleiro.add(new Rei(t, t.getPosicao(8, 5),this, (LinearLayout) ll.getChildAt(7)));
-        pecasTabuleiro.add(new Bispo(t, t.getPosicao(8, 6),this, (LinearLayout) ll.getChildAt(7)));
-        pecasTabuleiro.add(new Cavalo(t, t.getPosicao(8, 7),this, (LinearLayout) ll.getChildAt(7)));
-        pecasTabuleiro.add(new Torre(t, t.getPosicao(8, 8),this, (LinearLayout) ll.getChildAt(7)));
+        Peca p;
+        pecasTabuleiro.add((p =new Torre(t, t.getPosicao(1,'a'),this, (LinearLayout) ll.getChildAt(7))));
+        t.getPosicao(1,'a').setPeca(p);
+        pecasTabuleiro.add((p =new Cavalo(t, t.getPosicao(1, 'b'),this, (LinearLayout) ll.getChildAt(7))));
+        t.getPosicao(1,'b').setPeca(p);
+        pecasTabuleiro.add((p =new Bispo(t, t.getPosicao(1, 'c'),this, (LinearLayout) ll.getChildAt(7))));
+        t.getPosicao(1,'c').setPeca(p);
+        pecasTabuleiro.add((p =new Rainha(t, t.getPosicao(1, 'd'),this, (LinearLayout) ll.getChildAt(7))));
+        t.getPosicao(1,'d').setPeca(p);
+        pecasTabuleiro.add((p =new Rei(t, t.getPosicao(1, 'e'),this, (LinearLayout) ll.getChildAt(7))));
+        t.getPosicao(1,'e').setPeca(p);
+        pecasTabuleiro.add((p =new Bispo(t, t.getPosicao(1, 'f'),this, (LinearLayout) ll.getChildAt(7))));
+        t.getPosicao(1,'f').setPeca(p);
+        pecasTabuleiro.add((p =new Cavalo(t, t.getPosicao(1, 'g'),this, (LinearLayout) ll.getChildAt(7))));
+        t.getPosicao(1,'g').setPeca(p);
+        pecasTabuleiro.add((p =new Torre(t, t.getPosicao(1, 'h'),this, (LinearLayout) ll.getChildAt(7))));
+        t.getPosicao(1,'h').setPeca(p);
 
-        for(int i=1;i<=TABULEIRO_COLUNAS;i++)
+        for(int i=0;i<TABULEIRO_COLUNAS;i++)
         {
-            pecasTabuleiro.add(new Peao(t,t.getPosicao(7, i),this, (LinearLayout) ll.getChildAt(6)));
+            pecasTabuleiro.add((p =new Peao(t,t.getPosicao(2, (char)('a'+i)),this,(LinearLayout) ll.getChildAt(6))));
+            t.getPosicao(2,(char)('a'+i)).setPeca(p);
         }
     }
 }

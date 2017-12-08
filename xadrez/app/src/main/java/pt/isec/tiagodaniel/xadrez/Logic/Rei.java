@@ -30,28 +30,28 @@ public class Rei extends Peca
         Posicao p=getPosicao(), nova;
         Tabuleiro t=getTabuleiro();
         
-        if((nova=t.getPosicao(p.getLinha(),p.getColuna()+1))!=null)
+        if((nova=t.getPosicao(p.getLinha(),(char) (p.getColuna()+1)))!=null)
             adiciona(disponiveis, nova);
         
-        if((nova=t.getPosicao(p.getLinha(),p.getColuna()-1))!=null)
+        if((nova=t.getPosicao(p.getLinha(),(char) (p.getColuna()-1)))!=null)
             adiciona(disponiveis, nova);
         
-        if((nova=t.getPosicao(p.getLinha()-1,p.getColuna()+1))!=null)
+        if((nova=t.getPosicao(p.getLinha()-1,(char) (p.getColuna()+1)))!=null)
             adiciona(disponiveis, nova);
         
-        if((nova=t.getPosicao(p.getLinha()-1,p.getColuna()-1))!=null)
+        if((nova=t.getPosicao(p.getLinha()-1,(char) (p.getColuna()-1)))!=null)
             adiciona(disponiveis, nova);
         
-        if((nova=t.getPosicao(p.getLinha()-1,p.getColuna()))!=null)
+        if((nova=t.getPosicao(p.getLinha()-1,(char) (p.getColuna())))!=null)
             adiciona(disponiveis, nova);
         
-        if((nova=t.getPosicao(p.getLinha()+1,p.getColuna()+1))!=null)
+        if((nova=t.getPosicao(p.getLinha()+1,(char) (p.getColuna()+1)))!=null)
             adiciona(disponiveis, nova);
         
-        if((nova=t.getPosicao(p.getLinha()-1,p.getColuna()-1))!=null)
+        if((nova=t.getPosicao(p.getLinha()-1,(char) (p.getColuna()-1)))!=null)
             adiciona(disponiveis, nova);
         
-        if((nova=t.getPosicao(p.getLinha()-1,p.getColuna()))!=null)
+        if((nova=t.getPosicao(p.getLinha()-1,(char) (p.getColuna())))!=null)
             adiciona(disponiveis, nova);
                            
         return disponiveis;

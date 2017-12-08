@@ -36,13 +36,9 @@ public abstract class Peca
         tabuleiro=t;
         posicao=p;
         jogador=j;
-        desenhaPeca((ImageView) ll.getChildAt(p.getColuna()-1));
+        desenhaPeca((ImageView) ll.getChildAt((p.getColunaNum()-1)));
     }
 
-    public abstract ArrayList<Posicao> getDisponiveis();
-
-    public abstract void desenhaPeca(ImageView childAt);
-        
     public Posicao getPosicao()
     {
         return posicao;
@@ -52,6 +48,10 @@ public abstract class Peca
     {
         this.posicao = posicao;
     }
+
+    public abstract ArrayList<Posicao> getDisponiveis();
+
+    public abstract void desenhaPeca(ImageView childAt);
 
     public Tabuleiro getTabuleiro()
     {
@@ -84,6 +84,9 @@ public abstract class Peca
     
     public boolean ultima(ArrayList<Posicao> disponiveis, Posicao nova)
     {
+        if(nova==null)
+            return false;
+
         if(!nova.isOcupado())
         {
             disponiveis.add(nova);
@@ -104,27 +107,35 @@ public abstract class Peca
         
         for(int i=1;;i++)
         {
-            nova=tabuleiro.getPosicao(posicao.getColuna()+i, posicao.getLinha());
+            nova=tabuleiro.getPosicao(posicao.getLinha(),(char) (posicao.getColuna()+i));
+            if(nova==null)
+                return disponiveis;
             if(ultima(disponiveis,nova))
                 break;
         }
         for(int i=-1;;i--)
         {
-            nova=tabuleiro.getPosicao(posicao.getColuna()+i, posicao.getLinha());
+            nova=tabuleiro.getPosicao(posicao.getLinha(), (char) (posicao.getColuna()+i));
+            if(nova==null)
+                return disponiveis;
             if(ultima(disponiveis,nova))
                 break;
         }
 
         for(int i=1;;i++)
         {
-            nova=tabuleiro.getPosicao(posicao.getColuna(), posicao.getLinha()+i);
+            nova=tabuleiro.getPosicao(posicao.getLinha()+i,(char) (posicao.getColuna()));
+            if(nova==null)
+                return disponiveis;
             if(ultima(disponiveis,nova))
                 break;
         }
         
         for(int i=-1;;i--)
         {
-            nova=tabuleiro.getPosicao(posicao.getColuna(), posicao.getLinha()+i);
+            nova=tabuleiro.getPosicao(posicao.getLinha()+i,(char) (posicao.getColuna()));
+            if(nova==null)
+                return disponiveis;
             if(ultima(disponiveis,nova))
                 break;
         }
@@ -139,27 +150,35 @@ public abstract class Peca
 
         for(int i=1;;i++)
         {
-            nova=tabuleiro.getPosicao(posicao.getColuna()+i, posicao.getLinha()+i);
+            nova=tabuleiro.getPosicao(posicao.getLinha()+i, (char) (posicao.getColuna()+i));
+            if(nova==null)
+                return disponiveis;
             if(ultima(disponiveis,nova))
                 break;
         }
         for(int i=-1;;i--)
         {
-            nova=tabuleiro.getPosicao(posicao.getColuna()+i, posicao.getLinha()+i);
+            nova=tabuleiro.getPosicao(posicao.getLinha()+i, (char) (posicao.getColuna()+i));
+            if(nova==null)
+                return disponiveis;
             if(ultima(disponiveis,nova))
                 break;
         }
 
         for(int i=1;;i++)
         {
-            nova=tabuleiro.getPosicao(posicao.getColuna()-i, posicao.getLinha()+i);
+            nova=tabuleiro.getPosicao(posicao.getLinha()+i, (char) (posicao.getColuna()-i));
+            if(nova==null)
+                return disponiveis;
             if(ultima(disponiveis,nova))
                 break;
         }
         
         for(int i=-1;;i--)
         {
-            nova=tabuleiro.getPosicao(posicao.getColuna()-i, posicao.getLinha()+i);
+            nova=tabuleiro.getPosicao(posicao.getLinha()+i, (char) (posicao.getColuna()-i));
+            if(nova==null)
+                return disponiveis;
             if(ultima(disponiveis,nova))
                 break;
         }

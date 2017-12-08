@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -42,15 +43,21 @@ public class JogarContraPCActivity extends Activity
         Peca pecaClick;
 
         int linha=Character.getNumericValue(res.charAt(1));
-        int coluna=Character.getNumericValue(res.charAt(2));
+        char coluna=res.charAt(0);
 
         if((pecaClick=tabuleiro.getPosicao(linha,coluna).getPeca())!=null)
             posicoesDisponiveis=pecaClick.getDisponiveis();
 
+        ViewGroup.MarginLayoutParams mlp;
         for(Posicao p : posicoesDisponiveis)
         {
-            iv=findViewById(resources.getIdentifier("p"+p.getColuna()+p.getLinha(),"id",getBaseContext().getPackageName()));
-            iv.setBackgroundColor(Color.BLACK);
+            iv=findViewById(resources.getIdentifier(""+p.getColuna()+p.getLinha(),"id",getBaseContext().getPackageName()));
+            mlp=(ViewGroup.MarginLayoutParams) iv.getLayoutParams();
+            mlp.bottomMargin=5;
+            mlp.topMargin=5;
+            mlp.leftMargin=5;
+            mlp.rightMargin=5;
+            iv.setLayoutParams(mlp);
         }
 
     }
