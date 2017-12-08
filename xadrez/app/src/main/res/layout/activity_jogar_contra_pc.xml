@@ -31,12 +31,12 @@
                 android:background="@color/yellow"
                 android:layout_marginBottom="10dp"/>
 
-            <FrameLayout
+            <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:background="@drawable/b_peao">
-            </FrameLayout>
+            </ImageView>
         </LinearLayout>
 
         <LinearLayout
@@ -73,14 +73,15 @@
                 android:text="O nome P1"
                 android:textColor="@color/white"
                 android:background="@color/yellow"
-                android:layout_marginBottom="10dp"/>
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="right"/>
 
-            <FrameLayout
-                android:layout_width="wrap_content"
+            <ImageView
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:background="@drawable/p_peao">
-            </FrameLayout>
+            </ImageView>
         </LinearLayout>
 
     </LinearLayout>
@@ -91,7 +92,7 @@
         android:layout_height="0dp"
         android:layout_weight="0.6"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:background="@color/colorPrimaryDark">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -100,7 +101,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/p18"
+                android:id="@+id/a8"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -108,48 +109,51 @@
                 android:background="@color/tabDark"></ImageView>
 
             <ImageView
-                android:id="@+id/p28"
+                android:id="@+id/b8"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onClickQuadrado"
                 android:background="@color/tabLight"></ImageView>
             <ImageView
-                android:id="@+id/p38"
+                android:id="@+id/c8"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onClickQuadrado"
-                android:background="@color/tabDark"></ImageView>
-            <ImageView
-                android:id="@+id/p48"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:onClick="onClickQuadrado"
-                android:background="@color/tabLight"></ImageView>
-            <ImageView
-                android:id="@+id/p58"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:background="@color/tabDark"></ImageView>
 
             <ImageView
-                android:id="@+id/p68"
+                android:id="@+id/d8"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/tabLight"
+                android:onClick="onClickQuadrado"></ImageView>
+            <ImageView
+                android:id="@+id/e8"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/tabDark"
+                ></ImageView>
+
+            <ImageView
+                android:id="@+id/f8"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onClickQuadrado"
                 android:background="@color/tabLight"></ImageView>
             <ImageView
-                android:id="@+id/p78"
+                android:id="@+id/g8"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="onClickQuadrado"
                 android:background="@color/tabDark"></ImageView>
             <ImageView
-                android:id="@+id/p88"
+                android:id="@+id/h8"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -163,7 +167,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/p17"
+                android:id="@+id/a7"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -171,28 +175,28 @@
                 android:background="@color/tabLight"></ImageView>
 
             <ImageView
-                android:id="@+id/p27"
+                android:id="@+id/b7"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onClickQuadrado"
                 android:background="@color/tabDark"></ImageView>
             <ImageView
-                android:id="@+id/p37"
+                android:id="@+id/c7"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onClickQuadrado"
                 android:background="@color/tabLight"></ImageView>
             <ImageView
-                android:id="@+id/p47"
+                android:id="@+id/d7"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onClickQuadrado"
                 android:background="@color/tabDark"></ImageView>
             <ImageView
-                android:id="@+id/p57"
+                android:id="@+id/e7"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -200,21 +204,21 @@
                 android:background="@color/tabLight"></ImageView>
 
             <ImageView
-                android:id="@+id/p67"
+                android:id="@+id/f7"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onClickQuadrado"
                 android:background="@color/tabDark"></ImageView>
             <ImageView
-                android:id="@+id/p77"
+                android:id="@+id/g7"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onClickQuadrado"
                 android:background="@color/tabLight"></ImageView>
             <ImageView
-                android:id="@+id/p87"
+                android:id="@+id/h7"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -228,7 +232,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/p16"
+                android:id="@+id/a6"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -236,28 +240,28 @@
                 android:background="@color/tabDark"></ImageView>
 
             <ImageView
-                android:id="@+id/p26"
+                android:id="@+id/b6"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onClickQuadrado"
                 android:background="@color/tabLight"></ImageView>
             <ImageView
-                android:id="@+id/p36"
+                android:id="@+id/c6"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onClickQuadrado"
                 android:background="@color/tabDark"></ImageView>
             <ImageView
-                android:id="@+id/p46"
+                android:id="@+id/d6"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onClickQuadrado"
                 android:background="@color/tabLight"></ImageView>
             <ImageView
-                android:id="@+id/p56"
+                android:id="@+id/e6"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -265,21 +269,21 @@
                 android:background="@color/tabDark"></ImageView>
 
             <ImageView
-                android:id="@+id/p66"
+                android:id="@+id/f6"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onClickQuadrado"
                 android:background="@color/tabLight"></ImageView>
             <ImageView
-                android:id="@+id/p76"
+                android:id="@+id/g6"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onClickQuadrado"
                 android:background="@color/tabDark"></ImageView>
             <ImageView
-                android:id="@+id/p86"
+                android:id="@+id/h6"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -293,7 +297,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/p15"
+                android:id="@+id/a5"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -301,28 +305,28 @@
                 android:background="@color/tabLight"></ImageView>
 
             <ImageView
-                android:id="@+id/p25"
+                android:id="@+id/b5"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onClickQuadrado"
                 android:background="@color/tabDark"></ImageView>
             <ImageView
-                android:id="@+id/p35"
+                android:id="@+id/c5"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onClickQuadrado"
                 android:background="@color/tabLight"></ImageView>
             <ImageView
-                android:id="@+id/p45"
+                android:id="@+id/d5"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onClickQuadrado"
                 android:background="@color/tabDark"></ImageView>
             <ImageView
-                android:id="@+id/p55"
+                android:id="@+id/e5"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -330,20 +334,20 @@
                 android:background="@color/tabLight"></ImageView>
 
             <ImageView
-                android:id="@+id/p65"
+                android:id="@+id/f5"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onClickQuadrado"
                 android:background="@color/tabDark"></ImageView>
             <ImageView
-                android:id="@+id/p75"
+                android:id="@+id/g5"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/tabLight"></ImageView>
             <ImageView
-                android:id="@+id/p85"
+                android:id="@+id/h5"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -357,7 +361,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/p14"
+                android:id="@+id/a4"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -365,28 +369,28 @@
                 android:background="@color/tabDark"></ImageView>
 
             <ImageView
-                android:id="@+id/p24"
+                android:id="@+id/b4"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onClickQuadrado"
                 android:background="@color/tabLight"></ImageView>
             <ImageView
-                android:id="@+id/p34"
+                android:id="@+id/c4"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onClickQuadrado"
                 android:background="@color/tabDark"></ImageView>
             <ImageView
-                android:id="@+id/p44"
+                android:id="@+id/d4"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onClickQuadrado"
                 android:background="@color/tabLight"></ImageView>
             <ImageView
-                android:id="@+id/p54"
+                android:id="@+id/e4"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -394,21 +398,21 @@
                 android:background="@color/tabDark"></ImageView>
 
             <ImageView
-                android:id="@+id/p64"
+                android:id="@+id/f4"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onClickQuadrado"
                 android:background="@color/tabLight"></ImageView>
             <ImageView
-                android:id="@+id/p74"
+                android:id="@+id/g4"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onClickQuadrado"
                 android:background="@color/tabDark"></ImageView>
             <ImageView
-                android:id="@+id/p84"
+                android:id="@+id/h4"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -422,7 +426,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/p13"
+                android:id="@+id/a3"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -430,28 +434,28 @@
                 android:background="@color/tabLight"></ImageView>
 
             <ImageView
-                android:id="@+id/p23"
+                android:id="@+id/b3"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onClickQuadrado"
                 android:background="@color/tabDark"></ImageView>
             <ImageView
-                android:id="@+id/p33"
+                android:id="@+id/c3"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onClickQuadrado"
                 android:background="@color/tabLight"></ImageView>
             <ImageView
-                android:id="@+id/p43"
+                android:id="@+id/d3"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onClickQuadrado"
                 android:background="@color/tabDark"></ImageView>
             <ImageView
-                android:id="@+id/p53"
+                android:id="@+id/e3"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -459,21 +463,21 @@
                 android:background="@color/tabLight"></ImageView>
 
             <ImageView
-                android:id="@+id/p63"
+                android:id="@+id/f3"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onClickQuadrado"
                 android:background="@color/tabDark"></ImageView>
             <ImageView
-                android:id="@+id/p73"
+                android:id="@+id/g3"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onClickQuadrado"
                 android:background="@color/tabLight"></ImageView>
             <ImageView
-                android:id="@+id/p83"
+                android:id="@+id/h3"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -487,7 +491,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/p12"
+                android:id="@+id/a2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -495,28 +499,28 @@
                 android:background="@color/tabDark"></ImageView>
 
             <ImageView
-                android:id="@+id/p22"
+                android:id="@+id/b2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onClickQuadrado"
                 android:background="@color/tabLight"></ImageView>
             <ImageView
-                android:id="@+id/p32"
+                android:id="@+id/c2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onClickQuadrado"
                 android:background="@color/tabDark"></ImageView>
             <ImageView
-                android:id="@+id/p42"
+                android:id="@+id/d2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onClickQuadrado"
                 android:background="@color/tabLight"></ImageView>
             <ImageView
-                android:id="@+id/p52"
+                android:id="@+id/e2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -524,21 +528,21 @@
                 android:background="@color/tabDark"></ImageView>
 
             <ImageView
-                android:id="@+id/p62"
+                android:id="@+id/f2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onClickQuadrado"
                 android:background="@color/tabLight"></ImageView>
             <ImageView
-                android:id="@+id/p72"
+                android:id="@+id/g2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onClickQuadrado"
                 android:background="@color/tabDark"></ImageView>
             <ImageView
-                android:id="@+id/p82"
+                android:id="@+id/h2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -552,7 +556,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/p11"
+                android:id="@+id/a1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -560,28 +564,28 @@
                 android:background="@color/tabLight"></ImageView>
 
             <ImageView
-                android:id="@+id/p21"
+                android:id="@+id/b1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onClickQuadrado"
                 android:background="@color/tabDark"></ImageView>
             <ImageView
-                android:id="@+id/p31"
+                android:id="@+id/c1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onClickQuadrado"
                 android:background="@color/tabLight"></ImageView>
             <ImageView
-                android:id="@+id/p41"
+                android:id="@+id/d1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onClickQuadrado"
                 android:background="@color/tabDark"></ImageView>
             <ImageView
-                android:id="@+id/p51"
+                android:id="@+id/e1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -589,21 +593,21 @@
                 android:background="@color/tabLight"></ImageView>
 
             <ImageView
-                android:id="@+id/p61"
+                android:id="@+id/f1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onClickQuadrado"
                 android:background="@color/tabDark"></ImageView>
             <ImageView
-                android:id="@+id/p71"
+                android:id="@+id/g1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onClickQuadrado"
                 android:background="@color/tabLight"></ImageView>
             <ImageView
-                android:id="@+id/p81"
+                android:id="@+id/h1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

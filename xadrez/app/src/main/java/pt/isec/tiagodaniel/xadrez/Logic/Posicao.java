@@ -14,10 +14,10 @@ import java.util.ArrayList;
 public class Posicao
 {
     private int linha;
-    private int coluna;
+    private char coluna;
     private Peca peca;
     
-    public Posicao(int linha, int coluna)
+    public Posicao(int linha, char coluna)
     {
         this.linha=linha;
         this.coluna=coluna;
@@ -25,7 +25,7 @@ public class Posicao
 
     }
     
-    public Posicao(int linha, int coluna, Peca p)
+    public Posicao(int linha, char coluna, Peca p)
     {
         this.linha=linha;
         this.coluna=coluna;
@@ -42,12 +42,36 @@ public class Posicao
         this.linha = linha;
     }
 
-    public int getColuna()
+    public char getColuna()
     {
         return coluna;
     }
 
-    public void setColuna(int coluna)
+    public int getColunaNum()
+    {
+        switch (coluna)
+        {
+            case 'a':
+                return 1;
+            case 'b':
+                return 2;
+            case 'c':
+                return 3;
+            case 'd':
+                return 4;
+            case 'e':
+                return 5;
+            case 'f':
+                return 6;
+            case 'g':
+                return 7;
+            case 'h':
+                return 8;
+        }
+      return -1;
+    }
+
+    public void setColuna(char coluna)
     {
         this.coluna = coluna;
     }

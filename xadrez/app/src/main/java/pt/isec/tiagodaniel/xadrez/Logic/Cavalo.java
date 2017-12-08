@@ -31,28 +31,28 @@ public class Cavalo extends Peca
         Posicao p=getPosicao(), nova;
         Tabuleiro t=getTabuleiro();
         
-        if((nova=t.getPosicao(p.getLinha()+2,p.getColuna()+1))!=null)
+        if((nova=t.getPosicao(p.getLinha()+2,(char) (p.getColuna()+1)))!=null)
             adiciona(disponiveis, nova);
         
-        if((nova=t.getPosicao(p.getLinha()+2,p.getColuna()-1))!=null)
+        if((nova=t.getPosicao(p.getLinha()+2,(char) (p.getColuna()-1)))!=null)
             adiciona(disponiveis, nova);
         
-        if((nova=t.getPosicao(p.getLinha()-2,p.getColuna()+1))!=null)
+        if((nova=t.getPosicao(p.getLinha()-2,(char) (p.getColuna()+1)))!=null)
             adiciona(disponiveis, nova);
         
-        if((nova=t.getPosicao(p.getLinha()-2,p.getColuna()-1))!=null)
+        if((nova=t.getPosicao(p.getLinha()-2,(char) (p.getColuna()-1)))!=null)
             adiciona(disponiveis, nova);
         
-        if((nova=t.getPosicao(p.getLinha()+1,p.getColuna()-2))!=null)
+        if((nova=t.getPosicao(p.getLinha()+1,(char) (p.getColuna()-2)))!=null)
             adiciona(disponiveis, nova);
         
-        if((nova=t.getPosicao(p.getLinha()+1,p.getColuna()+2))!=null)
+        if((nova=t.getPosicao(p.getLinha()+1,(char) (p.getColuna()+2)))!=null)
             adiciona(disponiveis, nova);
         
-        if((nova=t.getPosicao(p.getLinha()-1,p.getColuna()-2))!=null)
+        if((nova=t.getPosicao(p.getLinha()-1,(char) (p.getColuna()-2)))!=null)
             adiciona(disponiveis, nova);
         
-        if((nova=t.getPosicao(p.getLinha()-1,p.getColuna()+2))!=null)
+        if((nova=t.getPosicao(p.getLinha()-1,(char) (p.getColuna()+2)))!=null)
             adiciona(disponiveis, nova);
                            
         return disponiveis;

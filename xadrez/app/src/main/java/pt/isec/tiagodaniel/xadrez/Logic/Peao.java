@@ -30,25 +30,41 @@ public class Peao extends Peca
         ArrayList<Posicao> disponiveis=new ArrayList<Posicao>();
         Posicao p;
         Tabuleiro t=getTabuleiro();;
-        
-        if((p=t.getPosicao(getPosicao().getLinha(),getPosicao().getColuna()+1))!=null)
-            if(!p.isOcupado())
-                disponiveis.add(p);
-        
-        if(primeiroLance)
-            if((p=t.getPosicao(getPosicao().getLinha(),getPosicao().getColuna()+2))!=null)
-                if(!p.isOcupado())
-                    disponiveis.add(p);
-        
-        if((p=t.getPosicao(getPosicao().getLinha()+1,getPosicao().getColuna()+1))!=null)
-            if(t.podeComer(p.getLinha(),p.getColuna(), getJogador()))
-                disponiveis.add(p);
-        
-        if((p=t.getPosicao(getPosicao().getLinha()+1,getPosicao().getColuna()-1))!=null)
-            if(t.podeComer(p.getLinha(),p.getColuna(), getJogador()))
-                disponiveis.add(p);
-        
-        //TODO: Leis da FIDE: Pág 6, 3.7, d)
+
+        if(jogador instanceof Jogador2)
+        {
+            if ((p = t.getPosicao(getPosicao().getLinha() + 1, (char) (getPosicao().getColuna()))) != null)
+                if (!p.isOcupado()) disponiveis.add(p);
+
+            if (primeiroLance)
+                if ((p = t.getPosicao(getPosicao().getLinha() + 2, (char) (getPosicao().getColuna()))) != null)
+                    if (!p.isOcupado()) disponiveis.add(p);
+
+            if ((p = t.getPosicao(getPosicao().getLinha() + 1, (char) (getPosicao().getColuna() + 1))) != null)
+                if (t.podeComer(p.getLinha(), p.getColuna(), getJogador())) disponiveis.add(p);
+
+            if ((p = t.getPosicao(getPosicao().getLinha() - 1, (char) (getPosicao().getColuna() + 1))) != null)
+                if (t.podeComer(p.getLinha(), p.getColuna(), getJogador())) disponiveis.add(p);
+
+            //TODO: Leis da FIDE: Pág 6, 3.7, d)
+        }
+        else
+        {
+            if ((p = t.getPosicao(getPosicao().getLinha() - 1, (char) (getPosicao().getColuna()))) != null)
+                if (!p.isOcupado()) disponiveis.add(p);
+
+            if (primeiroLance)
+                if ((p = t.getPosicao(getPosicao().getLinha() - 2, (char) (getPosicao().getColuna()))) != null)
+                    if (!p.isOcupado()) disponiveis.add(p);
+
+            if ((p = t.getPosicao(getPosicao().getLinha() + 1, (char) (getPosicao().getColuna() - 1))) != null)
+                if (t.podeComer(p.getLinha(), p.getColuna(), getJogador())) disponiveis.add(p);
+
+            if ((p = t.getPosicao(getPosicao().getLinha() - 1, (char) (getPosicao().getColuna() - 1))) != null)
+                if (t.podeComer(p.getLinha(), p.getColuna(), getJogador())) disponiveis.add(p);
+
+            //TODO: Leis da FIDE: Pág 6, 3.7, d)
+        }
         
         return disponiveis;
     }

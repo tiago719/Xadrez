@@ -26,9 +26,9 @@ public class Tabuleiro
         
         for(int i=1;i<=TABULEIRO_LINHAS;i++)
         {
-            for(int j=1;j<=TABULEIRO_COLUNAS;j++)
+            for(int j=0;j<TABULEIRO_COLUNAS;j++)
             {
-                tabuleiro.add(new Posicao(i,j));
+                tabuleiro.add(new Posicao(i,(char)('a'+j)));
             }
         }
         jogadores=new ArrayList<Jogador>();
@@ -36,9 +36,11 @@ public class Tabuleiro
         jogadores.add(new Jogador2(this, ll));
     }
     
-    public boolean dentroLimites(int linha, int coluna)
+    public boolean dentroLimites(int linha, char coluna)
     {
-        return !(linha>TABULEIRO_LINHAS || coluna >TABULEIRO_COLUNAS);
+        if(linha > TABULEIRO_LINHAS || linha<0 || (int)coluna >TABULEIRO_COLUNAS_SUP_CHAR_ASCII || (int)coluna <TABULEIRO_COLUNAS_INF_CHAR_ASCII)
+            return false;
+        return true;
     }            
     
     public boolean isOcupado(Posicao p)
@@ -46,7 +48,7 @@ public class Tabuleiro
         return p.isOcupado();
     }
     
-    public boolean isOcupado(int linha, int coluna)
+    public boolean isOcupado(int linha, char coluna)
     {
         if(!dentroLimites(linha, coluna))
             return false;
@@ -60,7 +62,7 @@ public class Tabuleiro
         return true;
     }
     
-    public Posicao getPosicao(int linha, int coluna)
+    public Posicao getPosicao(int linha, char coluna)
     {
         if(!dentroLimites(linha, coluna))
             return null;
@@ -70,12 +72,10 @@ public class Tabuleiro
             if(p.getLinha()==linha && p.getColuna()==coluna)
                 return p;
         }
-        int a=0;
-        int b=0;
         return null;
     }
     
-    public boolean podeComer(int linha, int coluna, Jogador j)
+    public boolean podeComer(int linha, char coluna, Jogador j)
     {
         Posicao p;
         if((p=getPosicao(linha, coluna))==null)
