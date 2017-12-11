@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="pt.isec.tiagodaniel.xadrez.Modo2JogadoresActivity">
+    tools:context="pt.isec.tiagodaniel.xadrez.Activities.Modo2JogadoresActivity">
 
 </android.support.constraint.ConstraintLayout>

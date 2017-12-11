@@ -19,7 +19,8 @@
         <activity android:name=".Activities.JogarContraPCActivity" />
         <activity android:name=".Activities.Modo2JogadoresActivity" />
         <activity android:name=".Activities.CriarJogoOnlineActivity" />
-        <activity android:name=".Activities.JuntarJogoOnlineActivity"></activity>
+        <activity android:name=".Activities.JuntarJogoOnlineActivity" />
+        <activity android:name=".Activities.PerfilActivity" />
     </application>
 
 </manifest>
