@@ -18,17 +18,17 @@ import pt.isec.tiagodaniel.xadrez.R;
  */
 public class Rainha extends Peca
 {
-    public Rainha(Tabuleiro t, Posicao p, Jogador j, LinearLayout ll)
+    public Rainha(Tabuleiro tabuleiro, Jogador j, ImageView ll)
     {
-        super(t,p,j,ll);
+        super(tabuleiro,j,ll);
     }
     
     @Override
     public ArrayList<Posicao> getDisponiveis()
     {
-        ArrayList<Posicao> disponiveis=horizontalVertival();
+        ArrayList<Posicao> disponiveis=tabuleiro.horizontalVertival(this);
         
-        if(!disponiveis.addAll(diagonal()))
+        if(!disponiveis.addAll(tabuleiro.diagonal(this)))
             System.out.println("ERRO A SOMAR OS DIAGONAIS COM OS VERTICAIS/HORIZONTAIS NA RAINHA");
         return disponiveis;
     }

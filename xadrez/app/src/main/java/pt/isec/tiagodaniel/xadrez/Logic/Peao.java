@@ -20,53 +20,24 @@ public class Peao extends Peca
 {
     private boolean primeiroLance=true;
     
-    public Peao(Tabuleiro t, Posicao p, Jogador j, LinearLayout ll)
+    public Peao(Tabuleiro tabuleiro, Jogador j, ImageView ll)
     {
-        super(t,p,j,ll);
+        super(tabuleiro,j,ll);
     }
     
     public ArrayList<Posicao> getDisponiveis()
     {
-        ArrayList<Posicao> disponiveis=new ArrayList<Posicao>();
-        Posicao p;
-        Tabuleiro t=getTabuleiro();;
+        return tabuleiro.peao(this);
+    }
 
-        if(jogador instanceof Jogador2)
-        {
-            if ((p = t.getPosicao(getPosicao().getLinha() + 1, (char) (getPosicao().getColuna()))) != null)
-                if (!p.isOcupado()) disponiveis.add(p);
+    public boolean isPrimeiroLance()
+    {
+        return primeiroLance;
+    }
 
-            if (primeiroLance)
-                if ((p = t.getPosicao(getPosicao().getLinha() + 2, (char) (getPosicao().getColuna()))) != null)
-                    if (!p.isOcupado()) disponiveis.add(p);
-
-            if ((p = t.getPosicao(getPosicao().getLinha() + 1, (char) (getPosicao().getColuna() + 1))) != null)
-                if (t.podeComer(p.getLinha(), p.getColuna(), getJogador())) disponiveis.add(p);
-
-            if ((p = t.getPosicao(getPosicao().getLinha() - 1, (char) (getPosicao().getColuna() + 1))) != null)
-                if (t.podeComer(p.getLinha(), p.getColuna(), getJogador())) disponiveis.add(p);
-
-            //TODO: Leis da FIDE: Pág 6, 3.7, d)
-        }
-        else
-        {
-            if ((p = t.getPosicao(getPosicao().getLinha() - 1, (char) (getPosicao().getColuna()))) != null)
-                if (!p.isOcupado()) disponiveis.add(p);
-
-            if (primeiroLance)
-                if ((p = t.getPosicao(getPosicao().getLinha() - 2, (char) (getPosicao().getColuna()))) != null)
-                    if (!p.isOcupado()) disponiveis.add(p);
-
-            if ((p = t.getPosicao(getPosicao().getLinha() + 1, (char) (getPosicao().getColuna() - 1))) != null)
-                if (t.podeComer(p.getLinha(), p.getColuna(), getJogador())) disponiveis.add(p);
-
-            if ((p = t.getPosicao(getPosicao().getLinha() - 1, (char) (getPosicao().getColuna() - 1))) != null)
-                if (t.podeComer(p.getLinha(), p.getColuna(), getJogador())) disponiveis.add(p);
-
-            //TODO: Leis da FIDE: Pág 6, 3.7, d)
-        }
-        
-        return disponiveis;
+    public void setPrimeiroLance(boolean primeiroLance)
+    {
+        this.primeiroLance = primeiroLance;
     }
 
     @Override
@@ -76,13 +47,5 @@ public class Peao extends Peca
             childAt.setImageResource(R.drawable.b_peao);
         else
             childAt.setImageResource(R.drawable.p_peao);
-    }
-
-    @Override
-    public void movePara(Posicao posicao)
-    {
-        //TODO: Leis da FIDE: Pág 6, 3.7, d)
-        
-        super.movePara(posicao);
     }
 }

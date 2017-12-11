@@ -19,6 +19,7 @@ public class Tabuleiro
 {
     private ArrayList<Posicao> tabuleiro;
     private ArrayList<Jogador> jogadores;
+    private Jogador jogadorAtual;
     
     public Tabuleiro(LinearLayout ll)
     {
@@ -34,6 +35,7 @@ public class Tabuleiro
         jogadores=new ArrayList<Jogador>();
         jogadores.add(new Jogador1(this, ll));
         jogadores.add(new Jogador2(this, ll));
+        jogadorAtual=jogadores.get(0);
     }
     
     public boolean dentroLimites(int linha, char coluna)
@@ -92,6 +94,254 @@ public class Tabuleiro
                 j.setCheck(true);
             else
                 j.setCheck(false);
+        }
+    }
+
+    public void adiciona(ArrayList<Posicao> disponiveis, Posicao nova)
+    {
+        if(!nova.isOcupado())
+            disponiveis.add(nova);
+        else
+        if(this.podeComer(nova.getLinha(), nova.getColuna(), this.jogadorAtual))
+            disponiveis.add(nova);
+    }
+    public boolean ultima(ArrayList<Posicao> disponiveis, Posicao nova)
+    {
+        if(nova==null)
+            return false;
+
+        if(!nova.isOcupado())
+        {
+            disponiveis.add(nova);
+            return false;
+        }
+        else
+        {
+            if(this.podeComer(nova.getLinha(), nova.getColuna(), this.jogadorAtual))
+                disponiveis.add(nova);
+            return true;
+        }
+    }
+
+    private Posicao encontraPeca(Peca peca)
+    {
+        for(Posicao posicao : tabuleiro)
+        {
+            if(posicao.getPeca()==peca)
+                return posicao;
+        }
+        return null;
+    }
+
+    public ArrayList<Posicao> horizontalVertival(Peca peca)
+    {
+        Posicao posicao=encontraPeca(peca);
+        ArrayList<Posicao> disponiveis=new ArrayList<Posicao>();
+        Posicao nova;
+
+        for(int i=1;;i++)
+        {
+            nova=this.getPosicao(posicao.getLinha(),(char) (posicao.getColuna()+i));
+            if(nova==null)
+                return disponiveis;
+            if(ultima(disponiveis,nova))
+                break;
+        }
+        for(int i=-1;;i--)
+        {
+            nova=this.getPosicao(posicao.getLinha(), (char) (posicao.getColuna()+i));
+            if(nova==null)
+                return disponiveis;
+            if(ultima(disponiveis,nova))
+                break;
+        }
+
+        for(int i=1;;i++)
+        {
+            nova=this.getPosicao(posicao.getLinha()+i,(char) (posicao.getColuna()));
+            if(nova==null)
+                return disponiveis;
+            if(ultima(disponiveis,nova))
+                break;
+        }
+
+        for(int i=-1;;i--)
+        {
+            nova=this.getPosicao(posicao.getLinha()+i,(char) (posicao.getColuna()));
+            if(nova==null)
+                return disponiveis;
+            if(ultima(disponiveis,nova))
+                break;
+        }
+
+        return disponiveis;
+    }
+
+    public ArrayList<Posicao> cavalo(Peca peca)
+    {
+        ArrayList<Posicao> disponiveis=new ArrayList<Posicao>();
+        Posicao p=encontraPeca(peca), nova;
+
+        if((nova=this.getPosicao(p.getLinha()+2,(char) (p.getColuna()+1)))!=null)
+            adiciona(disponiveis, nova);
+
+        if((nova=this.getPosicao(p.getLinha()+2,(char) (p.getColuna()-1)))!=null)
+            adiciona(disponiveis, nova);
+
+        if((nova=this.getPosicao(p.getLinha()-2,(char) (p.getColuna()+1)))!=null)
+            adiciona(disponiveis, nova);
+
+        if((nova=this.getPosicao(p.getLinha()-2,(char) (p.getColuna()-1)))!=null)
+            adiciona(disponiveis, nova);
+
+        if((nova=this.getPosicao(p.getLinha()+1,(char) (p.getColuna()-2)))!=null)
+            adiciona(disponiveis, nova);
+
+        if((nova=this.getPosicao(p.getLinha()+1,(char) (p.getColuna()+2)))!=null)
+            adiciona(disponiveis, nova);
+
+        if((nova=this.getPosicao(p.getLinha()-1,(char) (p.getColuna()-2)))!=null)
+            adiciona(disponiveis, nova);
+
+        if((nova=this.getPosicao(p.getLinha()-1,(char) (p.getColuna()+2)))!=null)
+            adiciona(disponiveis, nova);
+
+        return disponiveis;
+    }
+
+    public ArrayList<Posicao> peao(Peao peca)
+    {
+        ArrayList<Posicao> disponiveis=new ArrayList<Posicao>();
+        Posicao p=encontraPeca(peca);
+
+        if(jogadorAtual instanceof Jogador1)
+        {
+            if ((p = this.getPosicao(p.getLinha() + 1, (char) (p.getColuna()))) != null)
+                if (!p.isOcupado()) disponiveis.add(p);
+
+            if (peca.isPrimeiroLance())
+                if ((p = this.getPosicao(p.getLinha() + 2, (char) (p.getColuna()))) != null)
+                    if (!p.isOcupado()) disponiveis.add(p);
+
+            if ((p = this.getPosicao(p.getLinha() + 1, (char) (p.getColuna() + 1))) != null)
+                if (this.podeComer(p.getLinha(), p.getColuna(), jogadorAtual)) disponiveis.add(p);
+
+            if ((p = this.getPosicao(p.getLinha() - 1, (char) (p.getColuna() + 1))) != null)
+                if (this.podeComer(p.getLinha(), p.getColuna(), jogadorAtual)) disponiveis.add(p);
+
+            //TODO: Leis da FIDE: Pág 6, 3.7, d)
+        }
+        else
+        {
+            if ((p = this.getPosicao(p.getLinha() - 1, (char) (p.getColuna()))) != null)
+                if (!p.isOcupado()) disponiveis.add(p);
+
+            if (peca.isPrimeiroLance())
+                if ((p = this.getPosicao(p.getLinha() - 2, (char) (p.getColuna()))) != null)
+                    if (!p.isOcupado()) disponiveis.add(p);
+
+            if ((p = this.getPosicao(p.getLinha() + 1, (char) (p.getColuna() - 1))) != null)
+                if (this.podeComer(p.getLinha(), p.getColuna(), this.jogadorAtual)) disponiveis.add(p);
+
+            if ((p = this.getPosicao(p.getLinha() - 1, (char) (p.getColuna() - 1))) != null)
+                if (this.podeComer(p.getLinha(), p.getColuna(), this.jogadorAtual)) disponiveis.add(p);
+
+            //TODO: Leis da FIDE: Pág 6, 3.7, d)
+        }
+
+        return disponiveis;
+    }
+
+    public ArrayList<Posicao> rei(Peca peca)
+    {
+        ArrayList<Posicao> disponiveis=new ArrayList<Posicao>();
+        Posicao p=encontraPeca(peca), nova;
+
+        if((nova=this.getPosicao(p.getLinha(),(char) (p.getColuna()+1)))!=null)
+            adiciona(disponiveis, nova);
+
+        if((nova=this.getPosicao(p.getLinha(),(char) (p.getColuna()-1)))!=null)
+            adiciona(disponiveis, nova);
+
+        if((nova=this.getPosicao(p.getLinha()-1,(char) (p.getColuna()+1)))!=null)
+            adiciona(disponiveis, nova);
+
+        if((nova=this.getPosicao(p.getLinha()-1,(char) (p.getColuna()-1)))!=null)
+            adiciona(disponiveis, nova);
+
+        if((nova=this.getPosicao(p.getLinha()-1,(char) (p.getColuna())))!=null)
+            adiciona(disponiveis, nova);
+
+        if((nova=this.getPosicao(p.getLinha()+1,(char) (p.getColuna()+1)))!=null)
+            adiciona(disponiveis, nova);
+
+        if((nova=this.getPosicao(p.getLinha()-1,(char) (p.getColuna()-1)))!=null)
+            adiciona(disponiveis, nova);
+
+        if((nova=this.getPosicao(p.getLinha()-1,(char) (p.getColuna())))!=null)
+            adiciona(disponiveis, nova);
+
+        return disponiveis;
+    }
+
+    public ArrayList<Posicao> diagonal(Peca peca)
+    {
+        Posicao posicao=encontraPeca(peca);
+        ArrayList<Posicao> disponiveis=new ArrayList<Posicao>();
+        Posicao nova;
+
+        for(int i=1;;i++)
+        {
+            nova=this.getPosicao(posicao.getLinha()+i, (char) (posicao.getColuna()+i));
+            if(nova==null)
+                return disponiveis;
+            if(ultima(disponiveis,nova))
+                break;
+        }
+        for(int i=-1;;i--)
+        {
+            nova=this.getPosicao(posicao.getLinha()+i, (char) (posicao.getColuna()+i));
+            if(nova==null)
+                return disponiveis;
+            if(ultima(disponiveis,nova))
+                break;
+        }
+
+        for(int i=1;;i++)
+        {
+            nova=this.getPosicao(posicao.getLinha()+i, (char) (posicao.getColuna()-i));
+            if(nova==null)
+                return disponiveis;
+            if(ultima(disponiveis,nova))
+                break;
+        }
+
+        for(int i=-1;;i--)
+        {
+            nova=this.getPosicao(posicao.getLinha()+i, (char) (posicao.getColuna()-i));
+            if(nova==null)
+                return disponiveis;
+            if(ultima(disponiveis,nova))
+                break;
+        }
+
+        return disponiveis;
+    }
+
+    private Jogador getJogadorAdversario()
+    {
+        for(Jogador j : jogadores)
+            if(j!=jogadorAtual)
+                return j;
+
+        return null;
+    }
+
+    public void movePara(Posicao posicaoOrigem, Posicao posicaoDestino)
+    {
+        if(posicaoDestino.isOcupado())
+        {
+            getJogadorAdversario().addPecaMorta(posicaoDestino.getPeca());
         }
     }
 }

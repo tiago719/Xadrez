@@ -52,13 +52,10 @@ public class JogarContraPCActivity extends Activity
         for(Posicao p : posicoesDisponiveis)
         {
             iv=findViewById(resources.getIdentifier(""+p.getColuna()+p.getLinha(),"id",getBaseContext().getPackageName()));
-            mlp=(ViewGroup.MarginLayoutParams) iv.getLayoutParams();
-            mlp.bottomMargin=5;
-            mlp.topMargin=5;
-            mlp.leftMargin=5;
-            mlp.rightMargin=5;
-            iv.setLayoutParams(mlp);
+            iv.setBackgroundColor(Color.BLACK);
         }
 
     }
+
+
 }

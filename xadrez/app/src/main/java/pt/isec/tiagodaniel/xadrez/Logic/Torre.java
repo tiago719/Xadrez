@@ -18,15 +18,15 @@ import pt.isec.tiagodaniel.xadrez.R;
  */
 public class Torre extends Peca
 {
-    public Torre(Tabuleiro t, Posicao p, Jogador j, LinearLayout ll)
+    public Torre(Tabuleiro tabuleiro, Jogador j, ImageView ll)
     {
-        super(t,p,j,ll);
+        super(tabuleiro,j,ll);
     }
 
     @Override
     public ArrayList<Posicao> getDisponiveis()
     {
-        return horizontalVertival();
+        return tabuleiro.horizontalVertival(this);
     }
 
     @Override

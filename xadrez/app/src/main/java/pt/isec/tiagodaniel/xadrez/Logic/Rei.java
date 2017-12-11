@@ -18,43 +18,15 @@ import pt.isec.tiagodaniel.xadrez.R;
  */
 public class Rei extends Peca
 {
-    public Rei(Tabuleiro t, Posicao p, Jogador j, LinearLayout ll)
+    public Rei(Tabuleiro tabuleiro, Jogador j, ImageView ll)
     {
-        super(t,p,j,ll);
+        super(tabuleiro,j,ll);
     }
     
     @Override
     public ArrayList<Posicao> getDisponiveis()
     {
-        ArrayList<Posicao> disponiveis=new ArrayList<Posicao>();
-        Posicao p=getPosicao(), nova;
-        Tabuleiro t=getTabuleiro();
-        
-        if((nova=t.getPosicao(p.getLinha(),(char) (p.getColuna()+1)))!=null)
-            adiciona(disponiveis, nova);
-        
-        if((nova=t.getPosicao(p.getLinha(),(char) (p.getColuna()-1)))!=null)
-            adiciona(disponiveis, nova);
-        
-        if((nova=t.getPosicao(p.getLinha()-1,(char) (p.getColuna()+1)))!=null)
-            adiciona(disponiveis, nova);
-        
-        if((nova=t.getPosicao(p.getLinha()-1,(char) (p.getColuna()-1)))!=null)
-            adiciona(disponiveis, nova);
-        
-        if((nova=t.getPosicao(p.getLinha()-1,(char) (p.getColuna())))!=null)
-            adiciona(disponiveis, nova);
-        
-        if((nova=t.getPosicao(p.getLinha()+1,(char) (p.getColuna()+1)))!=null)
-            adiciona(disponiveis, nova);
-        
-        if((nova=t.getPosicao(p.getLinha()-1,(char) (p.getColuna()-1)))!=null)
-            adiciona(disponiveis, nova);
-        
-        if((nova=t.getPosicao(p.getLinha()-1,(char) (p.getColuna())))!=null)
-            adiciona(disponiveis, nova);
-                           
-        return disponiveis;
+        return tabuleiro.rei(this);
     }
 
     @Override
