@@ -19,43 +19,15 @@ import pt.isec.tiagodaniel.xadrez.R;
  */
 public class Cavalo extends Peca
 {
-    public Cavalo(Tabuleiro t, Posicao p, Jogador j, LinearLayout ll)
+    public Cavalo(Tabuleiro tabuleiro, Jogador j, ImageView ll)
     {
-        super(t,p,j,ll);
+        super(tabuleiro,j,ll);
     }
     
     @Override
     public ArrayList<Posicao> getDisponiveis()
     {
-        ArrayList<Posicao> disponiveis=new ArrayList<Posicao>();
-        Posicao p=getPosicao(), nova;
-        Tabuleiro t=getTabuleiro();
-        
-        if((nova=t.getPosicao(p.getLinha()+2,(char) (p.getColuna()+1)))!=null)
-            adiciona(disponiveis, nova);
-        
-        if((nova=t.getPosicao(p.getLinha()+2,(char) (p.getColuna()-1)))!=null)
-            adiciona(disponiveis, nova);
-        
-        if((nova=t.getPosicao(p.getLinha()-2,(char) (p.getColuna()+1)))!=null)
-            adiciona(disponiveis, nova);
-        
-        if((nova=t.getPosicao(p.getLinha()-2,(char) (p.getColuna()-1)))!=null)
-            adiciona(disponiveis, nova);
-        
-        if((nova=t.getPosicao(p.getLinha()+1,(char) (p.getColuna()-2)))!=null)
-            adiciona(disponiveis, nova);
-        
-        if((nova=t.getPosicao(p.getLinha()+1,(char) (p.getColuna()+2)))!=null)
-            adiciona(disponiveis, nova);
-        
-        if((nova=t.getPosicao(p.getLinha()-1,(char) (p.getColuna()-2)))!=null)
-            adiciona(disponiveis, nova);
-        
-        if((nova=t.getPosicao(p.getLinha()-1,(char) (p.getColuna()+2)))!=null)
-            adiciona(disponiveis, nova);
-                           
-        return disponiveis;
+       return tabuleiro.cavalo(this);
     }
 
     @Override

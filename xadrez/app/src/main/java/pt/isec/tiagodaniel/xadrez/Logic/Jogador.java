@@ -37,8 +37,6 @@ public class Jogador
     {
         this.check = check;
     }
-    
-    
 
     public void addPecaMorta(Peca p)
     {
@@ -55,7 +53,7 @@ public class Jogador
         
         randomNum=0 + (int)(Math.random() * disponiveis.size());
         
-        peca.movePara(disponiveis.get(randomNum));
+        //peca.movePara(disponiveis.get(randomNum));
     }
     
     public boolean poeEmCheck()

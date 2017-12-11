@@ -18,16 +18,16 @@ import pt.isec.tiagodaniel.xadrez.R;
  */
 public class Bispo extends Peca
 {
-    public Bispo(Tabuleiro t, Posicao p, Jogador j, LinearLayout ll)
+    public Bispo(Tabuleiro tabuleiro, Jogador j, ImageView ll)
     {
-        super(t,p,j,ll);
+        super(tabuleiro,j,ll);
 
     }
 
     @Override
     public ArrayList<Posicao> getDisponiveis()
     {
-        ArrayList<Posicao> disponiveis=diagonal();
+        ArrayList<Posicao> disponiveis=tabuleiro.diagonal(this);
         
         return disponiveis;
     }
