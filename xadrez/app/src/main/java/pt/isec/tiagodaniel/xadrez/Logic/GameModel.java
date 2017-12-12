@@ -1,5 +1,7 @@
 package pt.isec.tiagodaniel.xadrez.Logic;
 
+import android.widget.LinearLayout;
+
 import pt.isec.tiagodaniel.xadrez.States.EstadoInicial;
 import pt.isec.tiagodaniel.xadrez.States.IState;
 
@@ -8,15 +10,15 @@ import pt.isec.tiagodaniel.xadrez.States.IState;
  */
 
 public class GameModel {
-    private GameData gameData;
+    private Tabuleiro tabuleiro;
     private IState state;
 
-    public GameModel() {
-        gameData = new GameData();
+    public GameModel(LinearLayout ll) {
+        tabuleiro = new Tabuleiro(ll);
         this.setState(new EstadoInicial(this));
     }
 
-    public GameData getGameData() { return this.gameData;}
+    public Tabuleiro getTabuleiro() { return this.tabuleiro;}
     public IState getState() { return this.state; }
     public void setState(IState state) { this.state = state; }
 
