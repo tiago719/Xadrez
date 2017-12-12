@@ -2,6 +2,7 @@ package pt.isec.tiagodaniel.xadrez.Logic;
 
 import android.widget.LinearLayout;
 
+import pt.isec.tiagodaniel.xadrez.States.EstadoEscolhePeca;
 import pt.isec.tiagodaniel.xadrez.States.EstadoInicial;
 import pt.isec.tiagodaniel.xadrez.States.IState;
 
@@ -15,7 +16,7 @@ public class GameModel {
 
     public GameModel(LinearLayout ll) {
         tabuleiro = new Tabuleiro(ll);
-        this.setState(new EstadoInicial(this));
+        this.setState(new EstadoEscolhePeca(this));
     }
 
     public Tabuleiro getTabuleiro() { return this.tabuleiro;}
@@ -39,8 +40,8 @@ public class GameModel {
         this.setState(this.state.comecarJogo());
     }
 
-    public void seguinte() {
-        this.setState(this.state.seguinte());
+    public void seguinte(Posicao posicaoPeca) {
+        this.setState(this.state.seguinte(posicaoPeca));
     }
     //endregion
 

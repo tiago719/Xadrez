@@ -20,6 +20,7 @@ public class Tabuleiro
     private ArrayList<Posicao> tabuleiro;
     private ArrayList<Jogador> jogadores;
     private Jogador jogadorAtual;
+    private Jogador jogadorAdversario;
     
     public Tabuleiro(LinearLayout ll)
     {
@@ -329,20 +330,30 @@ public class Tabuleiro
         return disponiveis;
     }
 
-    private Jogador getJogadorAdversario()
-    {
-        for(Jogador j : jogadores)
-            if(j!=jogadorAtual)
-                return j;
-
-        return null;
-    }
-
     public void movePara(Posicao posicaoOrigem, Posicao posicaoDestino)
     {
         if(posicaoDestino.isOcupado())
         {
-            getJogadorAdversario().addPecaMorta(posicaoDestino.getPeca());
+            this.jogadorAdversario.addPecaMorta(posicaoDestino.getPeca());
+        }
+    }
+
+    public Jogador getJogadorAtual() {
+        return this.jogadorAtual;
+    }
+
+    public void setJogadorAtual(Jogador jogador) {
+        if(jogador != null){
+            this.jogadorAtual = jogador;
+        }
+    }
+
+    public void trocaJogadorActual() {
+        for(Jogador jogador : this.jogadores){
+            if(jogador != this.getJogadorAtual()){
+                this.jogadorAdversario = this.getJogadorAtual();
+                this.setJogadorAtual(jogador);
+            }
         }
     }
 }
