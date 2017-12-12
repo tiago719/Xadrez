@@ -213,38 +213,39 @@ public class Tabuleiro
     {
         ArrayList<Posicao> disponiveis=new ArrayList<Posicao>();
         Posicao p=encontraPeca(peca);
+        Posicao nova;
 
         if(jogadorAtual instanceof Jogador1)
         {
-            if ((p = this.getPosicao(p.getLinha() + 1, (char) (p.getColuna()))) != null)
-                if (!p.isOcupado()) disponiveis.add(p);
+            if ((nova = this.getPosicao(p.getLinha() + 1, (char) (p.getColuna()))) != null)
+                if (!nova.isOcupado()) disponiveis.add(nova);
 
             if (peca.isPrimeiroLance())
-                if ((p = this.getPosicao(p.getLinha() + 2, (char) (p.getColuna()))) != null)
-                    if (!p.isOcupado()) disponiveis.add(p);
+                if ((nova = this.getPosicao(p.getLinha() + 2, (char) (p.getColuna()))) != null)
+                    if (!nova.isOcupado()) disponiveis.add(nova);
 
-            if ((p = this.getPosicao(p.getLinha() + 1, (char) (p.getColuna() + 1))) != null)
-                if (this.podeComer(p.getLinha(), p.getColuna(), jogadorAtual)) disponiveis.add(p);
+            if ((nova = this.getPosicao(p.getLinha() + 1, (char) (p.getColuna() + 1))) != null)
+                if (this.podeComer(nova.getLinha(), nova.getColuna(), jogadorAtual)) disponiveis.add(nova);
 
-            if ((p = this.getPosicao(p.getLinha() - 1, (char) (p.getColuna() + 1))) != null)
-                if (this.podeComer(p.getLinha(), p.getColuna(), jogadorAtual)) disponiveis.add(p);
+            if ((nova = this.getPosicao(p.getLinha() - 1, (char) (p.getColuna() + 1))) != null)
+                if (this.podeComer(nova.getLinha(), nova.getColuna(), jogadorAtual)) disponiveis.add(nova);
 
             //TODO: Leis da FIDE: Pág 6, 3.7, d)
         }
         else
         {
-            if ((p = this.getPosicao(p.getLinha() - 1, (char) (p.getColuna()))) != null)
-                if (!p.isOcupado()) disponiveis.add(p);
+            if ((nova = this.getPosicao(p.getLinha() - 1, (char) (p.getColuna()))) != null)
+                if (!nova.isOcupado()) disponiveis.add(nova);
 
             if (peca.isPrimeiroLance())
-                if ((p = this.getPosicao(p.getLinha() - 2, (char) (p.getColuna()))) != null)
-                    if (!p.isOcupado()) disponiveis.add(p);
+                if ((nova = this.getPosicao(p.getLinha() - 2, (char) (p.getColuna()))) != null)
+                    if (!nova.isOcupado()) disponiveis.add(nova);
 
-            if ((p = this.getPosicao(p.getLinha() + 1, (char) (p.getColuna() - 1))) != null)
-                if (this.podeComer(p.getLinha(), p.getColuna(), this.jogadorAtual)) disponiveis.add(p);
+            if ((nova = this.getPosicao(p.getLinha() + 1, (char) (p.getColuna() - 1))) != null)
+                if (this.podeComer(nova.getLinha(), nova.getColuna(), this.jogadorAtual)) disponiveis.add(nova);
 
-            if ((p = this.getPosicao(p.getLinha() - 1, (char) (p.getColuna() - 1))) != null)
-                if (this.podeComer(p.getLinha(), p.getColuna(), this.jogadorAtual)) disponiveis.add(p);
+            if ((nova = this.getPosicao(p.getLinha() - 1, (char) (p.getColuna() - 1))) != null)
+                if (this.podeComer(nova.getLinha(), nova.getColuna(), this.jogadorAtual)) disponiveis.add(nova);
 
             //TODO: Leis da FIDE: Pág 6, 3.7, d)
         }
