@@ -1,6 +1,7 @@
 package pt.isec.tiagodaniel.xadrez.States;
 
 import pt.isec.tiagodaniel.xadrez.Logic.GameModel;
+import pt.isec.tiagodaniel.xadrez.Logic.Posicao;
 
 /**
  * Created by drmoreira on 10-12-2017.
@@ -8,6 +9,8 @@ import pt.isec.tiagodaniel.xadrez.Logic.GameModel;
 
 public class StateAdapter implements IState {
     private GameModel game;
+    private Posicao posicaoOrigem;
+    private Posicao posicaoDestino;
 
     public StateAdapter(GameModel game)
     {
@@ -17,6 +20,22 @@ public class StateAdapter implements IState {
     public GameModel getGame()
     {
         return this.game;
+    }
+
+    public Posicao getPosicaoOrigem() {
+        return posicaoOrigem;
+    }
+
+    public void setPosicaoOrigem(Posicao posicaoOrigem) {
+        this.posicaoOrigem = posicaoOrigem;
+    }
+
+    public Posicao getPosicaoDestino() {
+        return posicaoDestino;
+    }
+
+    public void setPosicaoDestino(Posicao posicaoDestino) {
+        this.posicaoDestino = posicaoDestino;
     }
 
     @Override
@@ -40,7 +59,7 @@ public class StateAdapter implements IState {
     }
 
     @Override
-    public IState seguinte() {
+    public IState seguinte(Posicao posicaoPeca) {
         return this;
     }
 }

@@ -11,11 +11,4 @@ public class EstadoPerfilJogador extends StateAdapter {
     public EstadoPerfilJogador(GameModel game) {
         super(game);
     }
-
-    @Override
-    public IState seguinte() {
-        //Faz o que tem a fazer
-
-        return new EstadoHistoricoJogos(this.getGame());
-    }
 }
