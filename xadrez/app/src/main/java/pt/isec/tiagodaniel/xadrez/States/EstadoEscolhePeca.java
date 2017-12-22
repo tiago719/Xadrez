@@ -1,6 +1,12 @@
 package pt.isec.tiagodaniel.xadrez.States;
 
+import android.content.res.Resources;
+import android.widget.ImageView;
+
+import java.util.ArrayList;
+
 import pt.isec.tiagodaniel.xadrez.Logic.GameModel;
+import pt.isec.tiagodaniel.xadrez.Logic.Peca;
 import pt.isec.tiagodaniel.xadrez.Logic.Posicao;
 
 /**
@@ -14,10 +20,26 @@ public class EstadoEscolhePeca extends StateAdapter {
     }
 
     @Override
-    public IState seguinte(Posicao posicaoPeca) {
-        //Faz o que tem a fazer
-        this.setPosicaoOrigem(posicaoPeca);
+    public IState seguinte(int linha, char coluna) {
+        Peca pecaAtual;
+        ArrayList<Posicao> posicoesDisponiveis = new ArrayList<>();
+        Posicao posicaoPeca=getGame().getTabuleiro().getPosicao(linha, coluna);
 
-        return new EstadoEscolheDestino(this.getGame());
+        pecaAtual = posicaoPeca.getPeca();
+
+        if (pecaAtual == null)
+            return this;
+
+        if (pecaAtual.getJogador() == getGame().getTabuleiro().getJogadorAtual()) {
+            posicoesDisponiveis = pecaAtual.getDisponiveis();
+            getGame().getActivity().resetPosicoesDisponiveisAnteriores();
+            getGame().getActivity().setPosicoesJogaveis(posicoesDisponiveis);
+
+            if(posicoesDisponiveis.size()>0)
+            {
+                return new EstadoEscolheDestino(getGame(),posicaoPeca);
+            }
+        }
+        return this;
     }
 }

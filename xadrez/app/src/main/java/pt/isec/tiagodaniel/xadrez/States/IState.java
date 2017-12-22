@@ -1,5 +1,6 @@
 package pt.isec.tiagodaniel.xadrez.States;
 
+import pt.isec.tiagodaniel.xadrez.Logic.Peca;
 import pt.isec.tiagodaniel.xadrez.Logic.Posicao;
 
 /**
@@ -7,9 +8,5 @@ import pt.isec.tiagodaniel.xadrez.Logic.Posicao;
  */
 
 public interface IState {
-    IState configurar2Jogadores();
-    IState configurarJogoServidor();
-    IState configurarJogoCliente();
-    IState comecarJogo();
-    IState seguinte(Posicao posicaoPeca);
+    IState seguinte(int linha, char coluna);
 }

@@ -29,12 +29,11 @@ public abstract class Peca
 {
     protected Jogador jogador;
     protected Tabuleiro tabuleiro;
-    
-    public Peca(Tabuleiro tabuleiro, Jogador j, ImageView ll)
+
+    public Peca(Tabuleiro tabuleiro, Jogador j)
     {
         this.tabuleiro=tabuleiro;
         jogador=j;
-        desenhaPeca(ll);
     }
 
     public abstract ArrayList<Posicao> getDisponiveis();

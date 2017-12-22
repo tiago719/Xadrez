@@ -2,8 +2,8 @@ package pt.isec.tiagodaniel.xadrez.Logic;
 
 import android.widget.LinearLayout;
 
+import pt.isec.tiagodaniel.xadrez.Activities.JogarContraPCActivity;
 import pt.isec.tiagodaniel.xadrez.States.EstadoEscolhePeca;
-import pt.isec.tiagodaniel.xadrez.States.EstadoInicial;
 import pt.isec.tiagodaniel.xadrez.States.IState;
 
 /**
@@ -13,35 +13,26 @@ import pt.isec.tiagodaniel.xadrez.States.IState;
 public class GameModel {
     private Tabuleiro tabuleiro;
     private IState state;
+    private JogarContraPCActivity activity;
 
-    public GameModel(LinearLayout ll) {
+    public GameModel(LinearLayout ll, JogarContraPCActivity activity)
+    {
+        this.activity=activity;
         tabuleiro = new Tabuleiro(ll);
         this.setState(new EstadoEscolhePeca(this));
+    }
+
+    public JogarContraPCActivity getActivity()
+    {
+        return activity;
     }
 
     public Tabuleiro getTabuleiro() { return this.tabuleiro;}
     public IState getState() { return this.state; }
     public void setState(IState state) { this.state = state; }
 
-    //region Funções delegadas na máquina de estados
-    public void configurar2Jogadores() {
-        this.setState(this.state.configurar2Jogadores());
-    }
-
-    public void configurarJogoServidor() {
-        this.setState(this.state.configurarJogoServidor());
-    }
-
-    public void configurarJogoCliente() {
-        this.setState(this.state.configurarJogoCliente());
-    }
-
-    public void comecarJogo() {
-        this.setState(this.state.comecarJogo());
-    }
-
-    public void seguinte(Posicao posicaoPeca) {
-        this.setState(this.state.seguinte(posicaoPeca));
+    public void seguinte(int linha, char coluna) {
+        this.setState(this.state.seguinte(linha, coluna));
     }
     //endregion
 

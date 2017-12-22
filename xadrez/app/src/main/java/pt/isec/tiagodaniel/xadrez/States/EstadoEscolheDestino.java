@@ -1,6 +1,9 @@
 package pt.isec.tiagodaniel.xadrez.States;
 
+import java.util.ArrayList;
+
 import pt.isec.tiagodaniel.xadrez.Logic.GameModel;
+import pt.isec.tiagodaniel.xadrez.Logic.Peca;
 import pt.isec.tiagodaniel.xadrez.Logic.Posicao;
 
 /**
@@ -9,18 +12,40 @@ import pt.isec.tiagodaniel.xadrez.Logic.Posicao;
 
 public class EstadoEscolheDestino extends StateAdapter {
 
-    public EstadoEscolheDestino(GameModel game) {
+    public EstadoEscolheDestino(GameModel game, Posicao posicaoOriginal) {
         super(game);
+        setPosicaoOrigem(posicaoOriginal);
     }
 
     @Override
-    public IState seguinte(Posicao posicaoPeca) {
-        //Faz o que tem a fazer
-        this.setPosicaoDestino(posicaoPeca);
+    public IState seguinte(int linha, char coluna) {
 
-        this.getGame().getTabuleiro().movePara(this.getPosicaoOrigem(), this.getPosicaoDestino());
+        Peca pecaClick;
+        ArrayList<Posicao> posicoesDisponiveis;
+        Posicao posicaoDestino = getGame().getTabuleiro().getPosicao(linha, coluna);
 
-        this.getGame().getTabuleiro().trocaJogadorActual();
-        return new EstadoEscolhePeca(this.getGame());
+        if((pecaClick=posicaoDestino.getPeca())!=null)
+        {
+            if (pecaClick.getJogador() == getGame().getTabuleiro().getJogadorAtual())
+            {
+                getGame().getActivity().resetPosicoesDisponiveisAnteriores();
+                posicoesDisponiveis = pecaClick.getDisponiveis();
+                getGame().getActivity().setPosicoesJogaveis(posicoesDisponiveis);
+            }
+            return this;
+        }
+        else
+        {
+            if(getPosicaoOrigem().getPeca().getDisponiveis().contains(posicaoDestino))
+            {
+                getGame().getTabuleiro().movePara(getPosicaoOrigem(), posicaoDestino);
+                getGame().getActivity().resetPosicoesDisponiveisAnteriores();
+
+                this.getGame().getTabuleiro().trocaJogadorActual();
+                return new EstadoEscolhePeca(this.getGame());
+            }
+            else
+                return this;
+        }
     }
 }

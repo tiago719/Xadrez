@@ -136,6 +136,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/tabDark"
+                android:onClick="onClickQuadrado">
                 ></ImageView>
 
             <ImageView
@@ -345,6 +346,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="onClickQuadrado"
                 android:background="@color/tabLight"></ImageView>
             <ImageView
                 android:id="@+id/h5"

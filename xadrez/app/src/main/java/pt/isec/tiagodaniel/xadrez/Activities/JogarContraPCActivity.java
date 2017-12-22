@@ -22,6 +22,7 @@ public class JogarContraPCActivity extends Activity {
     LinearLayout ll;
     GameModel gameModel;
     ArrayList<Posicao> posicoesDisponiveisAnteriores = null;
+    Resources resources;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,53 +32,36 @@ public class JogarContraPCActivity extends Activity {
         ll = findViewById(R.id.tabuleiro);
 
         //tabuleiro=new Tabuleiro(ll);
-        this.gameModel = new GameModel(this.ll);
+        this.gameModel = new GameModel(this.ll, this);
 
         this.posicoesDisponiveisAnteriores = new ArrayList<>();
+        resources=getResources();
     }
 
     public void onClickQuadrado(View v) {
         ArrayList<Posicao> posicoesDisponiveis = new ArrayList<>();
         String res = getResources().getResourceEntryName(v.getId());
-        Resources resources = getResources();
         ImageView iv;
         Peca pecaClick;
+        Posicao posicaoDestino;
 
         int linha = Character.getNumericValue(res.charAt(1));
         char coluna = res.charAt(0);
 
-        //if((pecaClick=tabuleiro.getPosicao(linha,coluna).getPeca())!=null)
-        if (this.gameModel.getState() instanceof EstadoEscolhePeca) {
-            pecaClick = this.gameModel.getTabuleiro().getPosicao(linha, coluna).getPeca();
+        gameModel.seguinte(linha, coluna);
+    }
 
-            if (pecaClick == null)
-                return;
-
-            if (pecaClick.getJogador() == this.gameModel.getTabuleiro().getJogadorAtual()) {
-                posicoesDisponiveis = pecaClick.getDisponiveis();
-                this.gameModel.seguinte(this.gameModel.getTabuleiro().getPosicao(linha, coluna));
-            }
-
-        } else if (this.gameModel.getState() instanceof EstadoEscolheDestino) {
-            pecaClick = this.gameModel.getTabuleiro().getPosicao(linha, coluna).getPeca();
-            if (pecaClick.getJogador() == this.gameModel.getTabuleiro().getJogadorAtual()) {
-                this.resetPosicoesDisponiveisAnteriores();
-                posicoesDisponiveis = pecaClick.getDisponiveis();
-            } else {
-                this.gameModel.seguinte(this.gameModel.getTabuleiro().getPosicao(linha, coluna));
-            }
-        }
-
-        ViewGroup.MarginLayoutParams mlp;
+    public void setPosicoesJogaveis(ArrayList<Posicao> posicoesDisponiveis)
+    {
+        ImageView iv;
         for (Posicao p : posicoesDisponiveis) {
             iv = findViewById(resources.getIdentifier("" + p.getColuna() + p.getLinha(), "id", getBaseContext().getPackageName()));
             iv.setBackgroundColor(Color.BLACK);
             this.posicoesDisponiveisAnteriores.add(p);
         }
-
     }
 
-    private void resetPosicoesDisponiveisAnteriores() {
+    public void resetPosicoesDisponiveisAnteriores() {
         ImageView pecaImageView;
         for (Posicao posicao : this.posicoesDisponiveisAnteriores) {
             pecaImageView = findViewById(getResources().getIdentifier("" + posicao.getColuna()

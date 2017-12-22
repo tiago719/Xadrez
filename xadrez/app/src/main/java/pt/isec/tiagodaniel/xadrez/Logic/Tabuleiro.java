@@ -5,9 +5,9 @@
  */
 package pt.isec.tiagodaniel.xadrez.Logic;
 
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import static java.lang.System.in;
 import java.util.ArrayList;
 import static pt.isec.tiagodaniel.xadrez.Logic.Constantes.*;
 
@@ -30,13 +30,14 @@ public class Tabuleiro
         {
             for(int j=0;j<TABULEIRO_COLUNAS;j++)
             {
-                tabuleiro.add(new Posicao(i,(char)('a'+j)));
+                tabuleiro.add(new Posicao(i,(char)('a'+j), (ImageView)((LinearLayout) ll.getChildAt(8-i)).getChildAt(j)));
             }
         }
         jogadores=new ArrayList<Jogador>();
-        jogadores.add(new Jogador1(this, ll));
-        jogadores.add(new Jogador2(this, ll));
+        jogadores.add(new JogadorDark(this));
+        jogadores.add(new JogadorLight(this));
         jogadorAtual=jogadores.get(0);
+        jogadorAdversario=jogadores.get(1);
     }
     
     public boolean dentroLimites(int linha, char coluna)
@@ -44,7 +45,7 @@ public class Tabuleiro
         if(linha > TABULEIRO_LINHAS || linha<0 || (int)coluna >TABULEIRO_COLUNAS_SUP_CHAR_ASCII || (int)coluna <TABULEIRO_COLUNAS_INF_CHAR_ASCII)
             return false;
         return true;
-    }            
+    }
     
     public boolean isOcupado(Posicao p)
     {
@@ -124,7 +125,7 @@ public class Tabuleiro
         }
     }
 
-    private Posicao encontraPeca(Peca peca)
+    public Posicao encontraPeca(Peca peca)
     {
         for(Posicao posicao : tabuleiro)
         {
@@ -216,7 +217,7 @@ public class Tabuleiro
         Posicao p=encontraPeca(peca);
         Posicao nova;
 
-        if(jogadorAtual instanceof Jogador1)
+        if(jogadorAtual instanceof JogadorLight)
         {
             if ((nova = this.getPosicao(p.getLinha() + 1, (char) (p.getColuna()))) != null)
                 if (!nova.isOcupado()) disponiveis.add(nova);
@@ -336,6 +337,9 @@ public class Tabuleiro
         {
             this.jogadorAdversario.addPecaMorta(posicaoDestino.getPeca());
         }
+        posicaoOrigem.getPeca().desenhaPeca(posicaoDestino.getImageView());
+        posicaoDestino.setPeca(posicaoOrigem.getPeca());
+        posicaoOrigem.apagaPeca();
     }
 
     public Jogador getJogadorAtual() {
@@ -349,11 +353,8 @@ public class Tabuleiro
     }
 
     public void trocaJogadorActual() {
-        for(Jogador jogador : this.jogadores){
-            if(jogador != this.getJogadorAtual()){
-                this.jogadorAdversario = this.getJogadorAtual();
-                this.setJogadorAtual(jogador);
-            }
-        }
+        Jogador adversario=jogadorAdversario;
+        jogadorAdversario=jogadorAtual;
+        jogadorAtual=adversario;
     }
 }

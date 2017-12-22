@@ -1,6 +1,8 @@
 package pt.isec.tiagodaniel.xadrez.States;
 
+import pt.isec.tiagodaniel.xadrez.Activities.JogarContraPCActivity;
 import pt.isec.tiagodaniel.xadrez.Logic.GameModel;
+import pt.isec.tiagodaniel.xadrez.Logic.Peca;
 import pt.isec.tiagodaniel.xadrez.Logic.Posicao;
 
 /**
@@ -15,6 +17,8 @@ public class StateAdapter implements IState {
     public StateAdapter(GameModel game)
     {
         this.game = game;
+        posicaoOrigem=null;
+        posicaoDestino=null;
     }
 
     public GameModel getGame()
@@ -39,27 +43,7 @@ public class StateAdapter implements IState {
     }
 
     @Override
-    public IState configurar2Jogadores() {
-        return this;
-    }
-
-    @Override
-    public IState configurarJogoServidor() {
-        return this;
-    }
-
-    @Override
-    public IState configurarJogoCliente() {
-        return this;
-    }
-
-    @Override
-    public IState comecarJogo() {
-        return this;
-    }
-
-    @Override
-    public IState seguinte(Posicao posicaoPeca) {
+    public IState seguinte(int linha, char coluna) {
         return this;
     }
 }
