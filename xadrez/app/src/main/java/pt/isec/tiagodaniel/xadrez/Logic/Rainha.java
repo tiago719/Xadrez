@@ -6,7 +6,6 @@
 package pt.isec.tiagodaniel.xadrez.Logic;
 
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
@@ -18,9 +17,9 @@ import pt.isec.tiagodaniel.xadrez.R;
  */
 public class Rainha extends Peca
 {
-    public Rainha(Tabuleiro tabuleiro, Jogador j, ImageView ll)
+    public Rainha(Tabuleiro tabuleiro, Jogador j)
     {
-        super(tabuleiro,j,ll);
+        super(tabuleiro,j);
     }
     
     @Override
@@ -36,7 +35,7 @@ public class Rainha extends Peca
     @Override
     public void desenhaPeca(ImageView childAt)
     {
-        if(jogador instanceof Jogador1)
+        if(jogador instanceof JogadorLight)
             childAt.setImageResource(R.drawable.b_rainha);
         else
             childAt.setImageResource(R.drawable.p_rainha);

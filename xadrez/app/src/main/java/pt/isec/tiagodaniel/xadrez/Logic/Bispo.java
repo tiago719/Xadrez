@@ -4,9 +4,7 @@
  * and open the template in the editor.
  */
 package pt.isec.tiagodaniel.xadrez.Logic;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
@@ -18,9 +16,9 @@ import pt.isec.tiagodaniel.xadrez.R;
  */
 public class Bispo extends Peca
 {
-    public Bispo(Tabuleiro tabuleiro, Jogador j, ImageView ll)
+    public Bispo(Tabuleiro tabuleiro, Jogador j)
     {
-        super(tabuleiro,j,ll);
+        super(tabuleiro,j);
 
     }
 
@@ -35,7 +33,7 @@ public class Bispo extends Peca
     @Override
     public void desenhaPeca(ImageView childAt)
     {
-        if(jogador instanceof Jogador1)
+        if(jogador instanceof JogadorLight)
             childAt.setImageResource(R.drawable.b_bispo);
         else
             childAt.setImageResource(R.drawable.p_bispo);

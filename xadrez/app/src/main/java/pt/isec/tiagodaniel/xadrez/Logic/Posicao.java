@@ -5,6 +5,8 @@
  */
 package pt.isec.tiagodaniel.xadrez.Logic;
 
+import android.widget.ImageView;
+
 import java.util.ArrayList;
 
 /**
@@ -16,12 +18,14 @@ public class Posicao
     private int linha;
     private char coluna;
     private Peca peca;
+    private ImageView imageView;
     
-    public Posicao(int linha, char coluna)
+    public Posicao(int linha, char coluna, ImageView imageView)
     {
         this.linha=linha;
         this.coluna=coluna;
         peca=null;
+        this.imageView=imageView;
 
     }
     
@@ -30,6 +34,23 @@ public class Posicao
         this.linha=linha;
         this.coluna=coluna;
         peca=p;
+    }
+
+    public void desenhaPeca()
+    {
+        if(peca!=null)
+            peca.desenhaPeca(imageView);
+    }
+
+    public ImageView getImageView()
+    {
+        return imageView;
+    }
+
+    public void apagaPeca()
+    {
+        peca=null;
+        imageView.setImageDrawable(null);
     }
 
     public int getLinha()

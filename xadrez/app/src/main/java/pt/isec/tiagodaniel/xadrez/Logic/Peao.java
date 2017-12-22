@@ -6,7 +6,6 @@
 package pt.isec.tiagodaniel.xadrez.Logic;
 
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
@@ -20,9 +19,9 @@ public class Peao extends Peca
 {
     private boolean primeiroLance=true;
     
-    public Peao(Tabuleiro tabuleiro, Jogador j, ImageView ll)
+    public Peao(Tabuleiro tabuleiro, Jogador j)
     {
-        super(tabuleiro,j,ll);
+        super(tabuleiro,j);
     }
     
     public ArrayList<Posicao> getDisponiveis()
@@ -43,7 +42,7 @@ public class Peao extends Peca
     @Override
     public void desenhaPeca(ImageView childAt)
     {
-        if(jogador instanceof Jogador1)
+        if(jogador instanceof JogadorLight)
             childAt.setImageResource(R.drawable.b_peao);
         else
             childAt.setImageResource(R.drawable.p_peao);
