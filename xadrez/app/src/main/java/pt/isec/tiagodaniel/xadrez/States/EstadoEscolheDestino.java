@@ -23,29 +23,24 @@ public class EstadoEscolheDestino extends StateAdapter {
         Peca pecaClick;
         ArrayList<Posicao> posicoesDisponiveis;
         Posicao posicaoDestino = getGame().getTabuleiro().getPosicao(linha, coluna);
+        pecaClick=posicaoDestino.getPeca();
 
-        if((pecaClick=posicaoDestino.getPeca())!=null)
+        if (pecaClick!= null && pecaClick.getJogador() == getGame().getTabuleiro().getJogadorAtual()) // se clicou numa nova peca da sua equipa
         {
-            if (pecaClick.getJogador() == getGame().getTabuleiro().getJogadorAtual())
-            {
-                getGame().getActivity().resetPosicoesDisponiveisAnteriores();
-                posicoesDisponiveis = pecaClick.getDisponiveis();
-                getGame().getActivity().setPosicoesJogaveis(posicoesDisponiveis);
-            }
+            getGame().getActivity().resetPosicoesDisponiveisAnteriores();
+            posicoesDisponiveis = pecaClick.getDisponiveis();
+            getGame().getActivity().setPosicoesJogaveis(posicoesDisponiveis);
+            setPosicaoOrigem(posicaoDestino);
             return this;
         }
-        else
+        if(getPosicaoOrigem().getPeca().getDisponiveis().contains(posicaoDestino))// se clicou numa posicao disponivel
         {
-            if(getPosicaoOrigem().getPeca().getDisponiveis().contains(posicaoDestino))
-            {
-                getGame().getTabuleiro().movePara(getPosicaoOrigem(), posicaoDestino);
-                getGame().getActivity().resetPosicoesDisponiveisAnteriores();
+            getGame().getTabuleiro().movePara(getPosicaoOrigem(), posicaoDestino);
+            getGame().getActivity().resetPosicoesDisponiveisAnteriores();
 
-                this.getGame().getTabuleiro().trocaJogadorActual();
-                return new EstadoEscolhePeca(this.getGame());
-            }
-            else
-                return this;
+            this.getGame().getTabuleiro().trocaJogadorActual();
+            return new EstadoEscolhePeca(this.getGame());
         }
+        return this; // não muda de estado
     }
 }

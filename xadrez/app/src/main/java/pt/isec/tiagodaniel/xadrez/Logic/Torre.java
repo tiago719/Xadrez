@@ -17,9 +17,12 @@ import pt.isec.tiagodaniel.xadrez.R;
  */
 public class Torre extends Peca
 {
+    private boolean movido;
+
     public Torre(Tabuleiro tabuleiro, Jogador j)
     {
         super(tabuleiro,j);
+        movido=false;
     }
 
     @Override
@@ -35,5 +38,15 @@ public class Torre extends Peca
             childAt.setImageResource(R.drawable.b_torre);
         else
             childAt.setImageResource(R.drawable.p_torre);
+    }
+
+    public boolean isMovido()
+    {
+        return movido;
+    }
+
+    public void setMovido(boolean movido)
+    {
+        this.movido = movido;
     }
 }

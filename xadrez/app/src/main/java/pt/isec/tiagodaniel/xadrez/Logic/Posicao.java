@@ -19,6 +19,7 @@ public class Posicao
     private char coluna;
     private Peca peca;
     private ImageView imageView;
+    private boolean enPassant, rocado;
     
     public Posicao(int linha, char coluna, ImageView imageView)
     {
@@ -26,7 +27,8 @@ public class Posicao
         this.coluna=coluna;
         peca=null;
         this.imageView=imageView;
-
+        enPassant=false;
+        rocado=false;
     }
     
     public Posicao(int linha, char coluna, Peca p)
@@ -40,6 +42,16 @@ public class Posicao
     {
         if(peca!=null)
             peca.desenhaPeca(imageView);
+    }
+
+    public boolean isEnPassant()
+    {
+        return enPassant;
+    }
+
+    public void setEnPassant(boolean enPassant)
+    {
+        this.enPassant = enPassant;
     }
 
     public ImageView getImageView()
@@ -112,4 +124,13 @@ public class Posicao
         return peca != null;
     }
 
+    public boolean isRocado()
+    {
+        return rocado;
+    }
+
+    public void setRocado(boolean rocado)
+    {
+        this.rocado = rocado;
+    }
 }
