@@ -451,7 +451,7 @@ public class Tabuleiro
                     }
                     else
                     {
-                        if(posicao==getPosicao(posicaoDestino.getLinha(), (char) (posicaoDestino.getColuna()-1)))
+                        if(posicao==getPosicao(posicaoDestino.getLinha(), (char) (posicaoDestino.getColuna()-2)))
                         {
                             novaPosicaoTorre = getPosicao(posicaoOrigem.getLinha(), (char) (posicaoOrigem.getColuna() - 1));
                             posicao.getPeca().desenhaPeca(novaPosicaoTorre.getImageView());
