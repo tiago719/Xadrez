@@ -17,11 +17,13 @@ import pt.isec.tiagodaniel.xadrez.R;
  */
 public class Rei extends Peca
 {
+    private boolean movido;
     public Rei(Tabuleiro tabuleiro, Jogador j)
     {
         super(tabuleiro,j);
+        movido=false;
     }
-    
+
     @Override
     public ArrayList<Posicao> getDisponiveis()
     {
@@ -35,5 +37,15 @@ public class Rei extends Peca
             childAt.setImageResource(R.drawable.b_rei);
         else
             childAt.setImageResource(R.drawable.p_rei);
+    }
+
+    public boolean isMovido()
+    {
+        return movido;
+    }
+
+    public void setMovido(boolean movido)
+    {
+        this.movido = movido;
     }
 }

@@ -17,7 +17,7 @@ import pt.isec.tiagodaniel.xadrez.R;
  */
 public class Peao extends Peca
 {
-    private boolean primeiroLance=true;
+    private boolean primeiroLance=true, foiPrimeiroLance=false;
     
     public Peao(Tabuleiro tabuleiro, Jogador j)
     {
@@ -27,6 +27,16 @@ public class Peao extends Peca
     public ArrayList<Posicao> getDisponiveis()
     {
         return tabuleiro.peao(this);
+    }
+
+    public boolean isFoiPrimeiroLance()
+    {
+        return foiPrimeiroLance;
+    }
+
+    public void setFoiPrimeiroLance(boolean foiPrimeiroLance)
+    {
+        this.foiPrimeiroLance = foiPrimeiroLance;
     }
 
     public boolean isPrimeiroLance()

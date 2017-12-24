@@ -28,6 +28,16 @@ public class Jogador
         check=false;
     }
 
+    public ArrayList<Peca> getPecasTabuleiro()
+    {
+        return pecasTabuleiro;
+    }
+
+    public void setPecasTabuleiro(ArrayList<Peca> pecasTabuleiro)
+    {
+        this.pecasTabuleiro = pecasTabuleiro;
+    }
+
     public boolean isCheck()
     {
         return check;
