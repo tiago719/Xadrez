@@ -19,10 +19,22 @@ import pt.isec.tiagodaniel.xadrez.States.EstadoEscolheDestino;
 import pt.isec.tiagodaniel.xadrez.States.EstadoEscolhePeca;
 
 public class JogarContraPCActivity extends Activity {
-    LinearLayout ll;
-    GameModel gameModel;
-    ArrayList<Posicao> posicoesDisponiveisAnteriores = null;
-    Resources resources;
+    private LinearLayout ll;
+    private GameModel gameModel;
+    private ArrayList<Posicao> posicoesDisponiveisAnteriores = null;
+    private Resources resources;
+    private ImageView Check;
+    private Posicao reiCheck;
+
+    public ImageView getCheck()
+    {
+        return Check;
+    }
+
+    public void setCheck(ImageView check)
+    {
+        Check = check;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +42,8 @@ public class JogarContraPCActivity extends Activity {
         setContentView(R.layout.activity_jogar_contra_pc);
 
         ll = findViewById(R.id.tabuleiro);
+        Check=null;
+        reiCheck=null;
 
         //tabuleiro=new Tabuleiro(ll);
         this.gameModel = new GameModel(this.ll, this);
@@ -67,19 +81,41 @@ public class JogarContraPCActivity extends Activity {
             pecaImageView = findViewById(getResources().getIdentifier("" + posicao.getColuna()
                     + posicao.getLinha(), "id", getBaseContext().getPackageName()));
 
-            if ((int) posicao.getColuna() % 2 != 0) {
-                if (posicao.getLinha() % 2 != 0) {
-                    pecaImageView.setBackgroundColor(getResources().getColor(R.color.tabLight));
-                } else {
-                    pecaImageView.setBackgroundColor(getResources().getColor(R.color.tabDark));
-                }
+            resetCor(posicao, pecaImageView);
+        }
+    }
+
+    public void resetCor(Posicao posicao, ImageView pecaImageView)
+    {
+        if ((int) posicao.getColuna() % 2 != 0) {
+            if (posicao.getLinha() % 2 != 0) {
+                pecaImageView.setBackgroundColor(getResources().getColor(R.color.tabLight));
             } else {
-                if (posicao.getLinha() % 2 != 0) {
-                    pecaImageView.setBackgroundColor(getResources().getColor(R.color.tabDark));
-                } else {
-                    pecaImageView.setBackgroundColor(getResources().getColor(R.color.tabLight));
-                }
+                pecaImageView.setBackgroundColor(getResources().getColor(R.color.tabDark));
+            }
+        } else {
+            if (posicao.getLinha() % 2 != 0) {
+                pecaImageView.setBackgroundColor(getResources().getColor(R.color.tabDark));
+            } else {
+                pecaImageView.setBackgroundColor(getResources().getColor(R.color.tabLight));
             }
         }
+    }
+
+    public void setReiCheck(Posicao PosicaoRei)
+    {
+        if(Check!=null)
+            resetCheck();
+        reiCheck=PosicaoRei;
+        Check=findViewById(resources.getIdentifier("" + PosicaoRei.getColuna() + PosicaoRei.getLinha(), "id", getBaseContext().getPackageName()));
+        Check.setBackgroundColor(Color.RED);
+    }
+
+    public void resetCheck()
+    {
+        if(Check!=null && reiCheck!=null)
+            resetCor(reiCheck, Check);
+        Check=null;
+        reiCheck=null;
     }
 }

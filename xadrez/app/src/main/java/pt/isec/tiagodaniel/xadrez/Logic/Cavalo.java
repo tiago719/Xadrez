@@ -8,6 +8,7 @@ package pt.isec.tiagodaniel.xadrez.Logic;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import pt.isec.tiagodaniel.xadrez.R;
 
@@ -21,11 +22,26 @@ public class Cavalo extends Peca
     {
         super(tabuleiro,j);
     }
-    
+
+    @Override
+    public ArrayList<Posicao> verificaDisponiveisCheck()
+    {
+        return tabuleiro.cavalo(this);
+    }
+
     @Override
     public ArrayList<Posicao> getDisponiveis()
     {
-       return tabuleiro.cavalo(this);
+        ArrayList<Posicao> disponiveis= tabuleiro.cavalo(this);
+
+        for (Iterator<Posicao> iterator = disponiveis.iterator(); iterator.hasNext();) {
+            Posicao posicao = iterator.next();
+            if(tabuleiro.ficaEmCheckJogadorAtual(posicao, this))
+            {
+                iterator.remove();
+            }
+        }
+        return disponiveis;
     }
 
     @Override

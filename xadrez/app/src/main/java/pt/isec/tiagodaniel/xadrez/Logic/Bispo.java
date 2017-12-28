@@ -7,6 +7,7 @@ package pt.isec.tiagodaniel.xadrez.Logic;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import pt.isec.tiagodaniel.xadrez.R;
 
@@ -23,10 +24,23 @@ public class Bispo extends Peca
     }
 
     @Override
+    public ArrayList<Posicao> verificaDisponiveisCheck()
+    {
+        return tabuleiro.diagonal(this);
+    }
+
+    @Override
     public ArrayList<Posicao> getDisponiveis()
     {
-        ArrayList<Posicao> disponiveis=tabuleiro.diagonal(this);
-        
+        ArrayList<Posicao> disponiveis= tabuleiro.diagonal(this);
+
+        for (Iterator<Posicao> iterator = disponiveis.iterator(); iterator.hasNext();) {
+            Posicao posicao = iterator.next();
+            if(tabuleiro.ficaEmCheckJogadorAtual(posicao, this))
+            {
+                iterator.remove();
+            }
+        }
         return disponiveis;
     }
 

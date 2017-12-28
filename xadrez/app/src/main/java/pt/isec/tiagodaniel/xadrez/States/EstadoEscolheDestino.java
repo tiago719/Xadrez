@@ -1,5 +1,7 @@
 package pt.isec.tiagodaniel.xadrez.States;
 
+import android.app.Activity;
+
 import java.util.ArrayList;
 
 import pt.isec.tiagodaniel.xadrez.Logic.GameModel;
@@ -37,6 +39,11 @@ public class EstadoEscolheDestino extends StateAdapter {
         {
             getGame().getTabuleiro().movePara(getPosicaoOrigem(), posicaoDestino);
             getGame().getActivity().resetPosicoesDisponiveisAnteriores();
+
+            if(getGame().getTabuleiro().getJogadorAtual().isCheck())
+                getGame().getActivity().setReiCheck(getGame().getTabuleiro().getPosicaoRei());
+            else
+                getGame().getActivity().resetCheck();
 
             this.getGame().getTabuleiro().trocaJogadorActual();
             return new EstadoEscolhePeca(this.getGame());

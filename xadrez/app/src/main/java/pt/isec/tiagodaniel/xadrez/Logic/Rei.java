@@ -8,6 +8,7 @@ package pt.isec.tiagodaniel.xadrez.Logic;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import pt.isec.tiagodaniel.xadrez.R;
 
@@ -26,6 +27,21 @@ public class Rei extends Peca
 
     @Override
     public ArrayList<Posicao> getDisponiveis()
+    {
+        ArrayList<Posicao> disponiveis= tabuleiro.rei(this);
+
+        for (Iterator<Posicao> iterator = disponiveis.iterator(); iterator.hasNext();) {
+            Posicao posicao = iterator.next();
+            if(tabuleiro.ficaEmCheckJogadorAtual(posicao, this))
+            {
+                iterator.remove();
+            }
+        }
+        return disponiveis;
+    }
+
+    @Override
+    public ArrayList<Posicao> verificaDisponiveisCheck()
     {
         return tabuleiro.rei(this);
     }

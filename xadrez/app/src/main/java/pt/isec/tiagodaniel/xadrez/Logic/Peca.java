@@ -36,6 +36,7 @@ public abstract class Peca
         jogador=j;
     }
 
+    public abstract ArrayList<Posicao> verificaDisponiveisCheck();
     public abstract ArrayList<Posicao> getDisponiveis();
 
     public abstract void desenhaPeca(ImageView childAt);
@@ -53,14 +54,16 @@ public abstract class Peca
     public boolean poeCheck()
     {
         ArrayList<Posicao> disponiveis=new ArrayList<Posicao>();
-        disponiveis=getDisponiveis();
+        disponiveis=verificaDisponiveisCheck();
         Peca peca;
         
         for(Posicao posicao : disponiveis)
             if((peca=posicao.getPeca())!=null)
                 if(peca instanceof Rei)
+                {
+                    int a=0;
                     return true;
-        
+                }
         return false;
     }
 }
