@@ -7,9 +7,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 
-import pt.isec.tiagodaniel.xadrez.Logic.GameModel;
 import pt.isec.tiagodaniel.xadrez.R;
 
 public class MainActivity extends Activity {
@@ -43,13 +41,13 @@ public class MainActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater mi = new MenuInflater(this);
-        mi.inflate(R.menu.menu_perfil, menu);
+        mi.inflate(R.menu.menu_principal, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.menuPerfil) {
+        if (item.getItemId() == R.id.menuPrincipal) {
 
             Intent intent = new Intent(this, PerfilActivity.class);
             startActivity(intent);

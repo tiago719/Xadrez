@@ -11,6 +11,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -123,5 +126,23 @@ public class PerfilActivity extends Activity {
         this.mFerramentas.saveName(this.mTxtNome.getText().toString());
         this.mFerramentas.saveFoto(this.mPhotoPath);
         super.onBackPressed();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater mi = new MenuInflater(this);
+        mi.inflate(R.menu.menu_perfil, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menuPerfil) {
+
+            Intent intent = new Intent(this, PerfilActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

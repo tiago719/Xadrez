@@ -12,27 +12,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="50dp">
+        android:layout_marginTop="20dp">
 
         <TextView
+            android:id="@+id/lblNome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/lblNome"
+            android:layout_gravity="center"
+            android:fontFamily="@font/fonty"
             android:text="@string/perfil_name"
-            android:textColor="@color/white"
-            android:layout_gravity="center"/>
+            android:textColor="@color/title"
+            android:textSize="40sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/txtNome"
             android:labelFor="@+id/lblNome"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:ems="10"
             android:inputType="textPersonName"
+            android:fontFamily="@font/fonty"
+            android:textSize="30sp"
+            android:textStyle="bold"
             android:hint="@string/perfil_name_hint"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
+            android:textColor="@color/edit"
+            android:textColorHint="@color/edit"
             android:textAlignment="center" />
 
 
@@ -62,16 +68,20 @@
             android:id="@+id/btnPhoto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/ic_add_a_photo_white_24dp"
+            android:background="@null"
+            android:src="@mipmap/ic_add_a_photo_black_48dp"
             android:layout_marginEnd="20dp"
-            android:onClick="onTirarFoto"/>
+            android:onClick="onTirarFoto"
+            android:contentDescription="@string/btnPhoto" />
 
         <ImageButton
             android:id="@+id/btnGallery"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/ic_photo_white_24dp"
-            android:onClick="onSelecionarImagem"/>
+            android:onClick="onSelecionarImagem"
+            android:background="@null"
+            android:src="@mipmap/ic_insert_photo_black_48dp"
+            android:contentDescription="@string/btnGallery"/>
 
     </LinearLayout>
 

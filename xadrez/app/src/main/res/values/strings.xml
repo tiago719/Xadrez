@@ -3,10 +3,8 @@
     <string name="botao1MP">Jogar Contra PC</string>
     <string name="botao2MP">Modo 2 Jogadores</string>
     <string name="botao3MP">Criar Jogo Online</string>
-    <string name="botao4MP">Juntar-se a Jogo Online</string>
+    <string name="botao4MP">Juntar Jogo Online</string>
 
-
-    <string name="perfil_photo">Foto perfil</string>
     <string name="perfil_name">Nome Jogador:</string>
     <string name="perfil_name_hint">Campeão do Xadrez</string>
 
@@ -14,6 +12,10 @@
     <string name="saved_name">saved_name</string>
     <string name="saved_photo">saved_photo</string>
 
+    /**Image Descriptions**/
+    <string name="perfil_photo">Foto perfil</string>
+    <string name="btnPhoto">Tirar Fotografia</string>
+    <string name="btnGallery">Escolher da Galeria</string>
 
     /**Exceptions**/
     <string name="null_activity">Problema ao gravar dados (Null Activity)</string>
@@ -24,6 +26,10 @@
     /**Dialogs**/
     <string name="error_title">Problema!</string>
     <string name="error_positive_button">Ok</string>
+
+    /**Menus**/
+    <string name="perfil">Perfil</string>
+    <string name="historico">Histórico</string>
 
 
 </resources>
