@@ -38,7 +38,7 @@ public class Jogador
         this.pecasTabuleiro = pecasTabuleiro;
     }
 
-    public boolean isCheck()
+    public boolean poeCheck()
     {
         for(Peca p : pecasTabuleiro)
             if(p.poeCheck())
@@ -63,5 +63,15 @@ public class Jogador
         randomNum=0 + (int)(Math.random() * disponiveis.size());
         
         //peca.movePara(disponiveis.get(randomNum));
+    }
+
+    public boolean hasMovimentos()
+    {
+        for(Peca peca : pecasTabuleiro)
+        {
+            if(peca.getDisponiveis().size()>0)
+                return true;
+        }
+        return false;
     }
 }

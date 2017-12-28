@@ -40,12 +40,28 @@ public class EstadoEscolheDestino extends StateAdapter {
             getGame().getTabuleiro().movePara(getPosicaoOrigem(), posicaoDestino);
             getGame().getActivity().resetPosicoesDisponiveisAnteriores();
 
-            if(getGame().getTabuleiro().getJogadorAtual().isCheck())
+            if(getGame().getTabuleiro().getJogadorAtual().poeCheck())
+            {
                 getGame().getActivity().setReiCheck(getGame().getTabuleiro().getPosicaoRei());
+            }
             else
+            {
                 getGame().getActivity().resetCheck();
+            }
 
             this.getGame().getTabuleiro().trocaJogadorActual();
+
+            if(getGame().getTabuleiro().getJogadorAdversario().poeCheck())
+            {
+                if (!getGame().getTabuleiro().getJogadorAtual().hasMovimentos())
+                    System.out.println("Jogo acabou perdendo");
+            }
+            else
+            {
+                if (!getGame().getTabuleiro().getJogadorAtual().hasMovimentos())
+                    System.out.println("Jogo acabou empetado");
+            }
+
             return new EstadoEscolhePeca(this.getGame());
         }
         return this; // não muda de estado

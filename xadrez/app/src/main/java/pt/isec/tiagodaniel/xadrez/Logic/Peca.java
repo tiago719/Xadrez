@@ -56,14 +56,16 @@ public abstract class Peca
         ArrayList<Posicao> disponiveis=new ArrayList<Posicao>();
         disponiveis=verificaDisponiveisCheck();
         Peca peca;
-        
-        for(Posicao posicao : disponiveis)
-            if((peca=posicao.getPeca())!=null)
-                if(peca instanceof Rei)
+
+        if(disponiveis!=null)
+        {
+            for (Posicao posicao : disponiveis)
+                if ((peca = posicao.getPeca()) != null) if (peca instanceof Rei)
                 {
-                    int a=0;
+                    int a = 0;
                     return true;
                 }
+        }
         return false;
     }
 }
