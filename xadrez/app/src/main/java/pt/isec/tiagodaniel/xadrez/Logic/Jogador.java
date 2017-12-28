@@ -40,17 +40,16 @@ public class Jogador
 
     public boolean isCheck()
     {
-        return check;
-    }
-
-    public void setCheck(boolean check)
-    {
-        this.check = check;
+        for(Peca p : pecasTabuleiro)
+            if(p.poeCheck())
+                return true;
+        return false;
     }
 
     public void addPecaMorta(Peca p)
     {
         pecasMortas.add(p);
+        pecasTabuleiro.remove(p);
     }
     
     public void joga()
@@ -64,13 +63,5 @@ public class Jogador
         randomNum=0 + (int)(Math.random() * disponiveis.size());
         
         //peca.movePara(disponiveis.get(randomNum));
-    }
-    
-    public boolean poeEmCheck()
-    {
-        for(Peca p : pecasTabuleiro)
-            if(p.poeCheck())
-                return true;
-        return false;
     }
 }
