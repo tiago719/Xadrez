@@ -5,4 +5,25 @@
     <string name="botao3MP">Criar Jogo Online</string>
     <string name="botao4MP">Juntar-se a Jogo Online</string>
 
+
+    <string name="perfil_photo">Foto perfil</string>
+    <string name="perfil_name">Nome Jogador:</string>
+    <string name="perfil_name_hint">Campeão do Xadrez</string>
+
+    /**Shared Preferences**/
+    <string name="saved_name">saved_name</string>
+    <string name="saved_photo">saved_photo</string>
+
+
+    /**Exceptions**/
+    <string name="null_activity">Problema ao gravar dados (Null Activity)</string>
+    <string name="null_view">Problema na renderização dos componentes (Null View)</string>
+    <string name="null_shared_preferences">Problema ao gravar/obter dados\n(Shared Preferences not found)</string>
+    <string name="take_photo">Problema ao tirar foto</string>
+
+    /**Dialogs**/
+    <string name="error_title">Problema!</string>
+    <string name="error_positive_button">Ok</string>
+
+
 </resources>
