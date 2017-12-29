@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -133,5 +134,10 @@ public class JogarContraPCActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         gameModel.substituiPeao(resultCode,peaoSubstituir);
+    }
+
+    public void updateView()
+    {
+        ll.invalidate();
     }
 }
