@@ -25,6 +25,10 @@
         <activity android:name=".Activities.CriarJogoOnlineActivity" />
         <activity android:name=".Activities.JuntarJogoOnlineActivity" />
         <activity android:name=".Activities.PerfilActivity" />
+        <activity android:name=".Activities.ActivityPromocaoPeao"
+            android:noHistory="true"
+            android:theme="@style/AppTheme.PromovePeao">
+        </activity>
     </application>
 
 </manifest>

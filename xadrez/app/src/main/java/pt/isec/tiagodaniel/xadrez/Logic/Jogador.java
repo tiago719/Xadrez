@@ -68,6 +68,11 @@ public class Jogador
         pecasMortas.add(p);
         pecasTabuleiro.remove(p);
     }
+
+    public void addPeca(Peca p)
+    {
+        pecasTabuleiro.add(p);
+    }
     
     public void joga()
     {
