@@ -72,13 +72,17 @@ public class GameModel {
 
         if(tabuleiro.getJogadorAtual().isCheck())
         {
-            if (!tabuleiro.getJogadorAdversario().hasMovimentos())
+            if (!tabuleiro.getJogadorAdversario().hasMovimentos()) {
+                this.getTabuleiro().getHistorico().setVencedorJogo(this.getActivity(), this.getTabuleiro().getJogadorAtual(), false);
                 System.out.println("Jogo acabou perdendo");
+            }
         }
         else
         {
-            if (!tabuleiro.getJogadorAtual().hasMovimentos())
+            if (!tabuleiro.getJogadorAtual().hasMovimentos()) {
+                this.getTabuleiro().getHistorico().setVencedorJogo(this.getActivity(), this.getTabuleiro().getJogadorAtual(), true);
                 System.out.println("Jogo acabou empetado");
+            }
         }
     }
 
@@ -96,13 +100,17 @@ public class GameModel {
 
         if(getTabuleiro().getJogadorAtual().isCheck())
         {
-            if (!getTabuleiro().getJogadorAtual().hasMovimentos())
+            if (!getTabuleiro().getJogadorAtual().hasMovimentos()) {
+                this.getTabuleiro().getHistorico().setVencedorJogo(this.getActivity(), this.getTabuleiro().getJogadorAtual(), false);
                 System.out.println("Jogo acabou perdendo");
+            }
         }
         else
         {
-            if (!getTabuleiro().getJogadorAtual().hasMovimentos())
+            if (!getTabuleiro().getJogadorAtual().hasMovimentos()) {
+                this.getTabuleiro().getHistorico().setVencedorJogo(this.getActivity(), this.getTabuleiro().getJogadorAtual(), true);
                 System.out.println("Jogo acabou empetado");
+            }
         }
     }
     //endregion

@@ -1,10 +1,14 @@
 package pt.isec.tiagodaniel.xadrez.Logic.Historico;
 
+import android.app.Activity;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
+import pt.isec.tiagodaniel.xadrez.Exceptions.NullSharedPreferencesException;
 import pt.isec.tiagodaniel.xadrez.Logic.Constantes;
+import pt.isec.tiagodaniel.xadrez.Logic.Ferramentas;
 import pt.isec.tiagodaniel.xadrez.Logic.Jogador;
 import pt.isec.tiagodaniel.xadrez.Logic.JogadorLight;
 
@@ -33,7 +37,7 @@ public class Historico implements Serializable, Constantes {
         this.modoJogo = modoJogo;
     }
 
-    public void setVencedorJogo(Jogador jogadorActual, boolean empate) {
+    public void setVencedorJogo(Activity activity, Jogador jogadorActual, boolean empate) {
 
         if (empate) {
             this.vencedorJogo = EMPATE;
@@ -46,6 +50,18 @@ public class Historico implements Serializable, Constantes {
                     this.vencedorJogo = PECAS_BRANCAS;
                 } else {
                     this.vencedorJogo = PECAS_PRETAS;
+                }
+            }
+            case JOGADOR_VS_COMPUTADOR: {
+                if (jogadorActual instanceof JogadorLight) {
+                    try {
+                        Ferramentas ferramentas = new Ferramentas(activity);
+                        this.vencedorJogo = ferramentas.getSavedName();
+                    } catch (NullSharedPreferencesException e) {
+                        this.vencedorJogo = PECAS_BRANCAS;
+                    }
+                } else {
+                    this.vencedorJogo = PC;
                 }
             }
         }
