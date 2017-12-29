@@ -35,13 +35,13 @@ public class QuestionDialog extends DialogFragment {
                 .setMessage(this.mMessage)
                 .setPositiveButton(getString(R.string.question_positive_button), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        mListener.onComplete(Constantes.QUESTION_OK_SAIR);
+                        mListener.onComplete(Constantes.QUESTION_OK);
                     }
                 })
                 .setNegativeButton(getString(R.string.question_negative_button), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        mListener.onComplete(Constantes.QUESTION_CANCELAR_SAIR);
+                        mListener.onComplete(Constantes.QUESTION_CANCELAR);
                     }
                 });
         // Create the AlertDialog object and return it

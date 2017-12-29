@@ -33,6 +33,8 @@
     <string name="question_positive_button">Ok</string>
     <string name="question_negative_button">Cancelar</string>
     <string name="error_save_historic">Problema ao gravar o histórico do jogo.</string>
+    <string name="question_delete_historic_title">Apagar histórico</string>
+    <string name="question_delete_historic_message">De certeza que pretendes apagar o histórico?</string>
 
     /**Menus**/
     <string name="perfil">Perfil</string>
@@ -56,5 +58,7 @@
     <string name="headerHistoricoJogadaPeca">Peça</string>
     <string name="headerHistoricoJogadaOrigem">Origem</string>
     <string name="headerHistoricoJogadaDestino">Destino</string>
+    <string name="historicoVazio">Não existe histórico</string>
+    <string name="apagar_historico">Apagar Histórico</string>
 
 </resources>

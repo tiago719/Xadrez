@@ -17,5 +17,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@android:color/transparent"
-        android:dividerHeight="20.0sp"/>
+        android:dividerHeight="20.0sp" />
+
+    <TextView
+        android:id="@+id/empty_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:text="@string/historicoVazio"
+        android:textSize="40dp"
+        android:visibility="gone"
+        android:fontFamily="@font/fonty"
+        android:textStyle="bold"
+        android:textColor="@color/title"/>
 </LinearLayout>

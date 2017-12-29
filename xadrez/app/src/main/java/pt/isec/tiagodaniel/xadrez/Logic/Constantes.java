@@ -22,8 +22,8 @@ public interface Constantes {
     /**Dialogs**/
     String ERROR_DIALOG = "Error Dialog";
     String QUESTION_DIALOG = "Question Dialog";
-    int QUESTION_OK_SAIR = 1;
-    int QUESTION_CANCELAR_SAIR = 2;
+    int QUESTION_OK = 1;
+    int QUESTION_CANCELAR = 2;
     int ERROR_OK = 3;
 
     /**Modos de jogo**/
@@ -43,6 +43,7 @@ public interface Constantes {
     /**Jogadores**/
     String PECAS_BRANCAS = "Peças brancas";
     String PECAS_PRETAS = "Peças pretas";
+    String PC = "Computador";
     String EMPATE = "Empate";
     String DESISTIU = "Desistiu";
 

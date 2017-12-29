@@ -7,8 +7,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -148,7 +146,7 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
     @Override
     public void onComplete(int code) {
         switch (code) {
-            case QUESTION_OK_SAIR: {
+            case QUESTION_OK: {
                 try {
                     XadrezApplication xadrezApplication = ((XadrezApplication) this.getApplication());
                     xadrezApplication.saveHistoricList(this.gameModel.getTabuleiro().getHistorico());

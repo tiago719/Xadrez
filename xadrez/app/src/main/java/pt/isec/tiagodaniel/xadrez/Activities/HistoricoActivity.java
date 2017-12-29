@@ -2,7 +2,12 @@ package pt.isec.tiagodaniel.xadrez.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -11,42 +16,49 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 
+import pt.isec.tiagodaniel.xadrez.Dialogs.OnCompleteListener;
+import pt.isec.tiagodaniel.xadrez.Dialogs.QuestionDialog;
 import pt.isec.tiagodaniel.xadrez.Logic.Constantes;
 import pt.isec.tiagodaniel.xadrez.Logic.Historico.Historico;
 import pt.isec.tiagodaniel.xadrez.Logic.XadrezApplication;
 import pt.isec.tiagodaniel.xadrez.R;
 
-public class HistoricoActivity extends Activity implements Constantes {
+public class HistoricoActivity extends Activity implements Constantes, OnCompleteListener {
     ArrayList<HashMap<String, Object>> dados;
     ArrayList<Historico> listaHistorico;
+    XadrezApplication xadrezApplication;
+    MyAdapter myAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_historico);
 
-        XadrezApplication xadrezApplication = ((XadrezApplication) this.getApplication());
-        this.listaHistorico = xadrezApplication.getHistoricList();
+        xadrezApplication = ((XadrezApplication) this.getApplication());
+        this.listaHistorico = this.xadrezApplication.getHistoricList();
 
         dados = new ArrayList<>();
         this.mapearHistoricoParaDados();
 
         ListView lv = findViewById(R.id.lista);
-        ViewGroup header = (ViewGroup)getLayoutInflater().inflate(R.layout.header_historico, null);
+        ViewGroup header = (ViewGroup) getLayoutInflater().inflate(R.layout.header_historico, null);
         lv.addHeaderView(header);
-        lv.setAdapter(new MyAdapter());
+        lv.setEmptyView(findViewById(R.id.empty_list_view));
+        myAdapter = new MyAdapter();
+        lv.setAdapter(myAdapter);
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getApplicationContext(), HistoricoJogadasActivity.class);
-                intent.putExtra(PUT_EXTRA_JOGADAS, listaHistorico.get((int)l).getListaJogadas());
+                intent.putExtra(PUT_EXTRA_JOGADAS, listaHistorico.get((int) l).getListaJogadas());
                 startActivity(intent);
             }
         });
@@ -144,5 +156,43 @@ public class HistoricoActivity extends Activity implements Constantes {
         }
 
         return arrayList;
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater mi = new MenuInflater(this);
+        mi.inflate(R.menu.menu_historico, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.apagarHistorico) {
+            QuestionDialog questionDialog = new QuestionDialog(
+                    getString(R.string.question_delete_historic_title),
+                    getString(R.string.question_delete_historic_message));
+            questionDialog.show(getFragmentManager(), QUESTION_DIALOG);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public void onComplete(int code) {
+        switch (code) {
+            case QUESTION_OK: {
+                try {
+                    this.xadrezApplication.removeHistoric();
+                    this.dados.clear();
+                    this.myAdapter.notifyDataSetChanged();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            case QUESTION_CANCELAR: {
+                return;
+            }
+        }
     }
 }

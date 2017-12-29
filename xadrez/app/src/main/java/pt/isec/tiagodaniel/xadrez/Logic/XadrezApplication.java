@@ -2,12 +2,16 @@ package pt.isec.tiagodaniel.xadrez.Logic;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
 
 import pt.isec.tiagodaniel.xadrez.Logic.Historico.Historico;
@@ -63,4 +67,19 @@ public class XadrezApplication extends Application {
 
         this.historicList.add(historico);
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public boolean removeHistoric() throws IOException {
+        String directory = getFilesDir().getAbsolutePath();
+        File file = new File(directory, Constantes.HISTORIC_FILE_NAME);
+        boolean result = file.delete();
+
+        if(result) {
+            this.historicList.clear();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }
