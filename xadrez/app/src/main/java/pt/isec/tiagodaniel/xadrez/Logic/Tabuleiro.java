@@ -10,6 +10,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
+import java.util.Date;
+
+import pt.isec.tiagodaniel.xadrez.Logic.Historico.Historico;
+import pt.isec.tiagodaniel.xadrez.Logic.Historico.Jogada;
+
 import static pt.isec.tiagodaniel.xadrez.Logic.Constantes.*;
 
 /**
@@ -22,11 +27,13 @@ public class Tabuleiro
     private ArrayList<Jogador> jogadores;
     private Jogador jogadorAtual;
     private Jogador jogadorAdversario;
-    
+    private Historico mHistorico;
+
     public Tabuleiro(LinearLayout ll)
     {
         tabuleiro=new ArrayList<Posicao>();
-        
+        this.mHistorico = new Historico(new Date());
+
         for(int i=1;i<=TABULEIRO_LINHAS;i++)
         {
             for(int j=0;j<TABULEIRO_COLUNAS;j++)
@@ -475,6 +482,13 @@ public class Tabuleiro
             ((Torre) peca).setMovido(true);
         }
 
+        this.mHistorico.addJogadasJogo(
+                new Jogada(
+                        peca.getNomePeca(),
+                        Character.toUpperCase(posicaoOrigem.getColuna()) + Integer.toString(posicaoOrigem.getLinha()),
+                        Character.toUpperCase(posicaoDestino.getColuna()) + Integer.toString(posicaoDestino.getLinha())));
+
+
         peca.desenhaPeca(posicaoDestino.getImageView());
         posicaoDestino.setPeca(peca);
         posicaoOrigem.apagaPeca();
@@ -574,5 +588,9 @@ public class Tabuleiro
                 if(encontraPeca(peca).getLinha()==getUltimaLinhaJogadorAtual())
                     return encontraPeca(peca);
         return null;
+    }
+
+    public Historico getHistorico() {
+        return this.mHistorico;
     }
 }

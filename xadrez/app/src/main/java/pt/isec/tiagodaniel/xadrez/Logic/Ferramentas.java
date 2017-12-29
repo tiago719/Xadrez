@@ -14,15 +14,16 @@ import pt.isec.tiagodaniel.xadrez.R;
  * Created by drmoreira on 28-12-2017.
  */
 
-public class Ferramentas {
+public class Ferramentas implements Constantes {
     private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mEditor;
     private Activity mActivity;
 
     public Ferramentas(Activity activity) throws NullSharedPreferencesException {
         this.mActivity = activity;
+
         try {
-            this.mSharedPreferences = mActivity.getSharedPreferences(Constantes.PREFERENCES, Context.MODE_PRIVATE);
+            this.mSharedPreferences = mActivity.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
         } catch (Exception e) {
             throw new NullSharedPreferencesException(activity);
         }
@@ -35,7 +36,7 @@ public class Ferramentas {
      * @param mCurrentPhotoPath caminho para a imagem
      */
     public void setPic(ImageView mImageView, String mCurrentPhotoPath) {
-        if (mCurrentPhotoPath.equalsIgnoreCase(Constantes.PHOTO_NOT_FOUND)) {
+        if (mCurrentPhotoPath.equalsIgnoreCase(PHOTO_NOT_FOUND)) {
             mImageView.setBackgroundResource(R.drawable.b_peao);
         } else {
             // Get the dimensions of the View
@@ -75,6 +76,6 @@ public class Ferramentas {
     }
 
     public String getSavedPhotoPath() {
-        return this.mSharedPreferences.getString(this.mActivity.getString(R.string.saved_photo), Constantes.PHOTO_NOT_FOUND);
+        return this.mSharedPreferences.getString(this.mActivity.getString(R.string.saved_photo), PHOTO_NOT_FOUND);
     }
 }

@@ -19,5 +19,40 @@ public interface Constantes {
     String PREFERENCES = "AMOV";
     String PHOTO_NOT_FOUND = "Photo not Found";
 
+    /**Dialogs**/
     String ERROR_DIALOG = "Error Dialog";
+    String QUESTION_DIALOG = "Question Dialog";
+    int QUESTION_OK_SAIR = 1;
+    int QUESTION_CANCELAR_SAIR = 2;
+    int ERROR_OK = 3;
+
+    /**Modos de jogo**/
+    int JOGADOR_VS_JOGADOR = 0;
+    int JOGADOR_VS_COMPUTADOR = 1;
+    int CRIAR_JOGO_REDE = 2;
+    int JUNTAR_JOGO_REDE = 3;
+
+    /**Peças**/
+    String PEAO = "PEAO";
+    String BISPO = "BISPO";
+    String CAVALO = "CAVALO";
+    String RAINHA = "RAINHA";
+    String REI = "REI";
+    String TORRE = "TORRE";
+
+    /**Jogadores**/
+    String PECAS_BRANCAS = "Peças brancas";
+    String PECAS_PRETAS = "Peças pretas";
+    String EMPATE = "Empate";
+    String DESISTIU = "Desistiu";
+
+    /**Histórico**/
+    String HISTORIC_FILE_NAME = "historico.bin";
+    String HISTORICO_DATA = "DATA";
+    String HISTORICO_MODO_JOGO1 = "MODOJOGO1";
+    String HISTORICO_MODO_JOGO2 = "MODOJOGO2";
+    String HISTORICO_VENCEDOR = "VENCEDOR";
+
+    /**Intents**/
+    String PUT_EXTRA_JOGADAS = "JOGADAS";
 }

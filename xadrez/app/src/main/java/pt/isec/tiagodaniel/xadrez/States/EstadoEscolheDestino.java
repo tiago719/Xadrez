@@ -5,6 +5,7 @@ import android.app.Activity;
 import java.util.ArrayList;
 
 import pt.isec.tiagodaniel.xadrez.Activities.JogarContraPCActivity;
+import pt.isec.tiagodaniel.xadrez.Logic.Constantes;
 import pt.isec.tiagodaniel.xadrez.Logic.GameModel;
 import pt.isec.tiagodaniel.xadrez.Logic.Peca;
 import pt.isec.tiagodaniel.xadrez.Logic.Posicao;
@@ -13,7 +14,7 @@ import pt.isec.tiagodaniel.xadrez.Logic.Posicao;
  * Created by drmoreira on 10-12-2017.
  */
 
-public class EstadoEscolheDestino extends StateAdapter {
+public class EstadoEscolheDestino extends StateAdapter implements Constantes {
 
     public EstadoEscolheDestino(GameModel game, Posicao posicaoOriginal) {
         super(game);
