@@ -79,6 +79,30 @@ public class GameModel {
                 System.out.println("Jogo acabou empetado");
         }
     }
+
+    public void verificaCheck()
+    {
+        getTabuleiro().getJogadorAtual().verificaCheck();
+        if(getTabuleiro().getJogadorAtual().isCheck())
+        {
+            getActivity().setReiCheck(getTabuleiro().getPosicaoRei(getTabuleiro().getJogadorAtual()));
+        }
+        else
+        {
+            getActivity().resetCheck();
+        }
+
+        if(getTabuleiro().getJogadorAtual().isCheck())
+        {
+            if (!getTabuleiro().getJogadorAtual().hasMovimentos())
+                System.out.println("Jogo acabou perdendo");
+        }
+        else
+        {
+            if (!getTabuleiro().getJogadorAtual().hasMovimentos())
+                System.out.println("Jogo acabou empetado");
+        }
+    }
     //endregion
 
 }

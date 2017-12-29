@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import java.util.ArrayList;
 
+import pt.isec.tiagodaniel.xadrez.Activities.JogarContraPCActivity;
 import pt.isec.tiagodaniel.xadrez.Logic.GameModel;
 import pt.isec.tiagodaniel.xadrez.Logic.Peca;
 import pt.isec.tiagodaniel.xadrez.Logic.Posicao;
@@ -48,6 +49,25 @@ public class EstadoEscolheDestino extends StateAdapter {
 
             this.getGame().getTabuleiro().trocaJogadorActual();
 
+            if(getGame().getActivity() instanceof JogarContraPCActivity)
+            {
+                getGame().verificaCheck();
+
+                getGame().getActivity().updateView();
+                try
+                {
+                    Thread.sleep(2000);
+                }
+                catch (InterruptedException e)
+                {
+                    e.printStackTrace();
+                }
+                getGame().getTabuleiro().getJogadorAtual().joga();
+
+                getGame().verificaCheck();
+
+                this.getGame().getTabuleiro().trocaJogadorActual();
+            }
             return new EstadoEscolhePeca(this.getGame());
         }
         return this; // não muda de estado
