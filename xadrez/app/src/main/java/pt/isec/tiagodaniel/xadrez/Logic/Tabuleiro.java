@@ -88,7 +88,7 @@ public class Tabuleiro
         {
             if(atual==temp)
                 continue;
-            if(atual.poeCheck())
+            if(atual.poeCheck(jogadorAtual))
             {
                 original.setPeca(peca);
                 posicao.setPeca(temp);
@@ -236,6 +236,7 @@ public class Tabuleiro
 
     public ArrayList<Posicao> peao(Peao peca)
     {
+        boolean flag=false;
         ArrayList<Posicao> disponiveis=new ArrayList<Posicao>();
         Posicao p=encontraPeca(peca);
         if(p==null)
@@ -245,28 +246,34 @@ public class Tabuleiro
         if(peca.getJogador() instanceof JogadorLight)
         {
             if ((nova = this.getPosicao(p.getLinha() + 1, (char) (p.getColuna()))) != null)
-                if (!nova.isOcupado()) disponiveis.add(nova);
+            {
+                if (!nova.isOcupado())
+                {
+                    disponiveis.add(nova);
+                    flag=true;
+                }
+            }
 
-            if (peca.isPrimeiroLance())
+            if (peca.isPrimeiroLance() && flag)
                 if ((nova = this.getPosicao(p.getLinha() + 2, (char) (p.getColuna()))) != null)
                     if (!nova.isOcupado()) disponiveis.add(nova);
 
             if ((nova = this.getPosicao(p.getLinha() + 1, (char) (p.getColuna() + 1))) != null)
-                if (this.podeComer(nova.getLinha(), nova.getColuna(), this.jogadorAtual))
+                if (p.getPeca()!=null && this.podeComer(nova.getLinha(), nova.getColuna(),  p.getPeca().getJogador()))
                 {
                     nova.setEnPassant(false);
                     disponiveis.add(nova);
                 }
 
             if ((nova = this.getPosicao(p.getLinha() + 1, (char) (p.getColuna() - 1))) != null)
-                if (this.podeComer(nova.getLinha(), nova.getColuna(), this.jogadorAtual))
+                if (p.getPeca()!=null && this.podeComer(nova.getLinha(), nova.getColuna(),  p.getPeca().getJogador()))
                 {
                     nova.setEnPassant(false);
                     disponiveis.add(nova);
                 }
 
             if((nova=this.getPosicao(p.getLinha(), (char)(p.getColuna()+1)))!=null)
-                if(this.podeComer(nova.getLinha(), nova.getColuna(), jogadorAtual) && peca.isFoiPrimeiroLance())
+                if(p.getPeca()!=null && this.podeComer(nova.getLinha(), nova.getColuna(),  p.getPeca().getJogador()) && peca.isFoiPrimeiroLance())
                     if(dentroLimites(nova.getLinha()+1, (char)(nova.getColuna()+1)))
                     {
                         disponiveis.add(getPosicao(nova.getLinha() + 1, (char) (nova.getColuna() + 1)));
@@ -274,7 +281,7 @@ public class Tabuleiro
                     }
 
             if((nova=this.getPosicao(p.getLinha(), (char)(p.getColuna()-1)))!=null)
-                if(this.podeComer(nova.getLinha(), nova.getColuna(), jogadorAtual) && peca.isFoiPrimeiroLance())
+                if(p.getPeca()!=null && this.podeComer(nova.getLinha(), nova.getColuna(),  p.getPeca().getJogador()) && peca.isFoiPrimeiroLance())
                     if(dentroLimites(nova.getLinha()+1,nova.getColuna()))
                     {
                         disponiveis.add(getPosicao(nova.getLinha() + 1, nova.getColuna()));
@@ -284,29 +291,34 @@ public class Tabuleiro
         else
         {
             if ((nova = this.getPosicao(p.getLinha() - 1, (char) (p.getColuna()))) != null)
-                if (!nova.isOcupado()) disponiveis.add(nova);
+            {
+                if (!nova.isOcupado())
+                {
+                    disponiveis.add(nova);
+                    flag = true;
+                }
+            }
 
-            if (peca.isPrimeiroLance())
+            if (peca.isPrimeiroLance() && flag)
                 if ((nova = this.getPosicao(p.getLinha() - 2, (char) (p.getColuna()))) != null)
                     if (!nova.isOcupado()) disponiveis.add(nova);
 
             if ((nova = this.getPosicao(p.getLinha() - 1, (char) (p.getColuna() + 1))) != null)
-                if (this.podeComer(nova.getLinha(), nova.getColuna(), this.jogadorAtual))
+                if (p.getPeca()!=null && this.podeComer(nova.getLinha(), nova.getColuna(), p.getPeca().getJogador()))
                 {
                     nova.setEnPassant(false);
                     disponiveis.add(nova);
                 }
 
             if ((nova = this.getPosicao(p.getLinha() - 1, (char) (p.getColuna() - 1))) != null)
-                if (this.podeComer(nova.getLinha(), nova.getColuna(), this.jogadorAtual))
-                    if (this.podeComer(nova.getLinha(), nova.getColuna(), this.jogadorAtual))
-                    {
-                        nova.setEnPassant(false);
-                        disponiveis.add(nova);
-                    }
+                if (p.getPeca()!=null &&this.podeComer(nova.getLinha(), nova.getColuna(),  p.getPeca().getJogador()))
+                {
+                    nova.setEnPassant(false);
+                    disponiveis.add(nova);
+                }
 
             if ((nova = this.getPosicao(p.getLinha(), (char) (p.getColuna() + 1))) != null)
-                if (this.podeComer(nova.getLinha(), nova.getColuna(), jogadorAtual) && peca.isFoiPrimeiroLance())
+                if (p.getPeca()!=null && this.podeComer(nova.getLinha(), nova.getColuna(),  p.getPeca().getJogador()) && peca.isFoiPrimeiroLance())
                     if (dentroLimites(nova.getLinha() - 1,nova.getColuna()))
                     {
                         disponiveis.add(getPosicao(nova.getLinha() - 1, nova.getColuna()));
@@ -314,7 +326,7 @@ public class Tabuleiro
                     }
 
             if ((nova = this.getPosicao(p.getLinha(), (char) (p.getColuna() - 1))) != null)
-                if (this.podeComer(nova.getLinha(), nova.getColuna(), jogadorAtual) && peca.isFoiPrimeiroLance())
+                if (p.getPeca()!=null && this.podeComer(nova.getLinha(), nova.getColuna(),  p.getPeca().getJogador()) && peca.isFoiPrimeiroLance())
                     if (dentroLimites(nova.getLinha() - 1, (char) (nova.getColuna())))
                     {
                         disponiveis.add(getPosicao(nova.getLinha() - 1, nova.getColuna()));
@@ -364,7 +376,7 @@ public class Tabuleiro
         if(((Rei)rei).isMovido())
             return disponiveis;
 
-        for(Peca pecaJogador : jogadorAtual.getPecasTabuleiro())
+        for(Peca pecaJogador : rei.getJogador().getPecasTabuleiro())
             if(pecaJogador instanceof Torre)
             {
                 //TODO: pagina 8: 3.8 -> c -> 2 -> i
@@ -481,7 +493,7 @@ public class Tabuleiro
             if (posicao.isRocado())
             {
                 posicao.setRocado(false);
-                if (posicao.getPeca() != null)
+                if (posicao.getPeca() != null && peca instanceof Rei)
                 {
                     if (posicao.getColuna() - posicaoOrigem.getColuna() > 0)
                     {
@@ -528,9 +540,9 @@ public class Tabuleiro
     }
 
 
-    public Posicao getPosicaoRei()
+    public Posicao getPosicaoRei(Jogador jogador)
     {
-        for(Peca peca : jogadorAdversario.getPecasTabuleiro())
+        for(Peca peca : jogador.getPecasTabuleiro())
             if(peca instanceof Rei)
                 return encontraPeca(peca);
         return null;

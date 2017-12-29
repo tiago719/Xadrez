@@ -51,7 +51,7 @@ public abstract class Peca
         this.jogador = jogador;
     }
     
-    public boolean poeCheck()
+    public boolean poeCheck(Jogador jogador)
     {
         ArrayList<Posicao> disponiveis=new ArrayList<Posicao>();
         disponiveis=verificaDisponiveisCheck();
@@ -60,11 +60,12 @@ public abstract class Peca
         if(disponiveis!=null)
         {
             for (Posicao posicao : disponiveis)
-                if ((peca = posicao.getPeca()) != null) if (peca instanceof Rei)
-                {
-                    int a = 0;
-                    return true;
-                }
+                if ((peca = posicao.getPeca()) != null && peca.getJogador()==jogador)
+                    if (peca instanceof Rei)
+                    {
+                        int a = 0;
+                        return true;
+                    }
         }
         return false;
     }

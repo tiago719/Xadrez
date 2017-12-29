@@ -3,6 +3,7 @@ package pt.isec.tiagodaniel.xadrez.Activities;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,11 +78,13 @@ public class JogarContraPCActivity extends Activity {
 
     public void resetPosicoesDisponiveisAnteriores() {
         ImageView pecaImageView;
+        ColorDrawable drawable;
         for (Posicao posicao : this.posicoesDisponiveisAnteriores) {
             pecaImageView = findViewById(getResources().getIdentifier("" + posicao.getColuna()
                     + posicao.getLinha(), "id", getBaseContext().getPackageName()));
-
-            resetCor(posicao, pecaImageView);
+            drawable=(ColorDrawable) pecaImageView.getBackground();
+            if(drawable.getColor()==Color.BLACK)
+                resetCor(posicao, pecaImageView);
         }
     }
 
