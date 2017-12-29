@@ -27,7 +27,7 @@ public class EstadoEscolheDestino extends StateAdapter {
         Posicao posicaoDestino = getGame().getTabuleiro().getPosicao(linha, coluna);
         pecaClick=posicaoDestino.getPeca();
 
-        if (pecaClick!= null && pecaClick.getJogador() == getGame().getTabuleiro().getJogadorAtual()) // se clicou numa nova peca da sua equipa
+       if (pecaClick!= null && pecaClick.getJogador() == getGame().getTabuleiro().getJogadorAtual()) // se clicou numa nova peca da sua equipa
         {
             getGame().getActivity().resetPosicoesDisponiveisAnteriores();
             posicoesDisponiveis = pecaClick.getDisponiveis();
@@ -39,28 +39,8 @@ public class EstadoEscolheDestino extends StateAdapter {
         {
             getGame().getTabuleiro().movePara(getPosicaoOrigem(), posicaoDestino);
             getGame().getActivity().resetPosicoesDisponiveisAnteriores();
-
-            if(getGame().getTabuleiro().getJogadorAtual().poeCheck())
-            {
-                getGame().getActivity().setReiCheck(getGame().getTabuleiro().getPosicaoRei());
-            }
-            else
-            {
-                getGame().getActivity().resetCheck();
-            }
-
+            getGame().getTabuleiro().getJogadorAdversario().verificaCheck();
             this.getGame().getTabuleiro().trocaJogadorActual();
-
-            if(getGame().getTabuleiro().getJogadorAdversario().poeCheck())
-            {
-                if (!getGame().getTabuleiro().getJogadorAtual().hasMovimentos())
-                    System.out.println("Jogo acabou perdendo");
-            }
-            else
-            {
-                if (!getGame().getTabuleiro().getJogadorAtual().hasMovimentos())
-                    System.out.println("Jogo acabou empetado");
-            }
 
             return new EstadoEscolhePeca(this.getGame());
         }
