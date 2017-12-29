@@ -28,6 +28,7 @@ public class XadrezApplication extends Application {
     public void onCreate() {
         super.onCreate();
         singleton = this;
+        this.historicList = new ArrayList<>();
         this.getHistoricList();
     }
 

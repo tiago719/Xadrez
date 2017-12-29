@@ -17,6 +17,32 @@ public class EstadoEscolhePeca extends StateAdapter {
 
     public EstadoEscolhePeca(GameModel game) {
         super(game);
+
+        if(getGame().getTabuleiro().getJogadorAtual().isCheck())
+        {
+            getGame().getActivity().setReiCheck(getGame().getTabuleiro().getPosicaoRei(getGame().getTabuleiro().getJogadorAtual()));
+        }
+        else
+        {
+            getGame().getActivity().resetCheck();
+        }
+
+        if(getGame().getTabuleiro().getJogadorAtual().isCheck())
+        {
+            if (!getGame().getTabuleiro().getJogadorAtual().hasMovimentos()) {
+                this.getGame().getTabuleiro().getHistorico().setVencedorJogo(
+                        this.getGame().getTabuleiro().getJogadorAtual(), false);
+                System.out.println("Jogo acabou perdendo");
+            }
+        }
+        else
+        {
+            if (!getGame().getTabuleiro().getJogadorAtual().hasMovimentos()) {
+                this.getGame().getTabuleiro().getHistorico().setVencedorJogo(
+                        this.getGame().getTabuleiro().getJogadorAtual(), true);
+                System.out.println("Jogo acabou empetado");
+            }
+        }
     }
 
     @Override

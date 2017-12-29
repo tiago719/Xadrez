@@ -16,6 +16,8 @@
     <string name="perfil_photo">Foto perfil</string>
     <string name="btnPhoto">Tirar Fotografia</string>
     <string name="btnGallery">Escolher da Galeria</string>
+    <string name="historico_ModoJogo">Modo de jogo</string>
+    <string name="historicoJogadaPeca">Peça jogada</string>
 
     /**Exceptions**/
     <string name="null_activity">Problema ao gravar dados (Null Activity)</string>
@@ -35,6 +37,14 @@
     /**Menus**/
     <string name="perfil">Perfil</string>
     <string name="historico">Histórico</string>
+    <string name="historicoData">25 Dezembro</string>
+    <string name="historico_Vencedor">Vencedor</string>
 
+    /**Histórico**/
+    <string name="headerHistoricoData">Data</string>
+    <string name="headerHistoricoModoJogo">Jogo</string>
+    <string name="headerHistoricoVencedor">Vencedor</string>
+    <string name="historicoJogadaOrigem">Origem</string>
+    <string name="historicoJogadaDestino">Destino</string>
 
 </resources>

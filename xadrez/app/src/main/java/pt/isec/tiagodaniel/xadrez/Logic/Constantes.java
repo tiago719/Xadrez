@@ -48,4 +48,11 @@ public interface Constantes {
 
     /**Histórico**/
     String HISTORIC_FILE_NAME = "historico.bin";
+    String HISTORICO_DATA = "DATA";
+    String HISTORICO_MODO_JOGO1 = "MODOJOGO1";
+    String HISTORICO_MODO_JOGO2 = "MODOJOGO2";
+    String HISTORICO_VENCEDOR = "VENCEDOR";
+
+    /**Intents**/
+    String PUT_EXTRA_JOGADAS = "JOGADAS";
 }

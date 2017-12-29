@@ -29,24 +29,42 @@ public class Historico implements Serializable, Constantes {
         this.jogadasJogo.add(jogada);
     }
 
-    public void setModoJogo(int modoJogo) { this.modoJogo = modoJogo; }
+    public void setModoJogo(int modoJogo) {
+        this.modoJogo = modoJogo;
+    }
 
     public void setVencedorJogo(Jogador jogadorActual, boolean empate) {
 
-        if(empate) {
+        if (empate) {
             this.vencedorJogo = EMPATE;
             return;
         }
 
         switch (this.modoJogo) {
             case JOGADOR_VS_JOGADOR: {
-                if(jogadorActual instanceof JogadorLight) {
+                if (jogadorActual instanceof JogadorLight) {
                     this.vencedorJogo = PECAS_BRANCAS;
                 } else {
                     this.vencedorJogo = PECAS_PRETAS;
                 }
             }
         }
+    }
+
+    public Date getDataJogo() {
+        return this.dataJogo;
+    }
+
+    public int getModoJogo() {
+        return this.modoJogo;
+    }
+
+    public String getVencedorJogo() {
+        return this.vencedorJogo;
+    }
+
+    public ArrayList<Jogada> getListaJogadas() {
+        return this.jogadasJogo;
     }
 
     @Override

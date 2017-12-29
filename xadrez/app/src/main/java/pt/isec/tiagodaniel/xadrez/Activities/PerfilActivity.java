@@ -142,13 +142,8 @@ public class PerfilActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menuPerfil) {
-
-            XadrezApplication xadrezApplication = ((XadrezApplication) this.getApplication());
-            ArrayList<Historico> historico = xadrezApplication.getHistoricList();
-
-            for (Historico hist : historico) {
-                Log.i("DANIEL", hist.toString());
-            }
+            Intent intent = new Intent(this, HistoricoActivity.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

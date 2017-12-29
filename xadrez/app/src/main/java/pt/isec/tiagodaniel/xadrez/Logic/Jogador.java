@@ -19,6 +19,7 @@ public class Jogador
     protected ArrayList<Peca> pecasTabuleiro;
     protected ArrayList<Peca> pecasMortas;
     protected boolean check;
+    protected Tabuleiro tabuleiro;
     
     public Jogador(Tabuleiro t)
     {
@@ -26,6 +27,17 @@ public class Jogador
         pecasMortas=new ArrayList<Peca>();
 
         check=false;
+        tabuleiro=t;
+    }
+
+    public boolean isCheck()
+    {
+        return check;
+    }
+
+    public void setCheck(boolean check)
+    {
+        this.check = check;
     }
 
     public ArrayList<Peca> getPecasTabuleiro()
@@ -38,12 +50,17 @@ public class Jogador
         this.pecasTabuleiro = pecasTabuleiro;
     }
 
-    public boolean poeCheck()
+    public void verificaCheck()
     {
-        for(Peca p : pecasTabuleiro)
-            if(p.poeCheck())
-                return true;
-        return false;
+        Jogador jogador=tabuleiro.getJogadorAdversarioPeca(pecasTabuleiro.get(0));
+
+        for(Peca peca :jogador.getPecasTabuleiro())
+            if(peca.poeCheck(this))
+            {
+                check = true;
+                return;
+            }
+        check=false;
     }
 
     public void addPecaMorta(Peca p)

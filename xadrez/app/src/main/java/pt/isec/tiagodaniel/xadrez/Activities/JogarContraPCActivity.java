@@ -3,6 +3,7 @@ package pt.isec.tiagodaniel.xadrez.Activities;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,11 +15,8 @@ import java.util.ArrayList;
 import pt.isec.tiagodaniel.xadrez.Dialogs.ErrorDialog;
 import pt.isec.tiagodaniel.xadrez.Dialogs.OnCompleteListener;
 import pt.isec.tiagodaniel.xadrez.Dialogs.QuestionDialog;
-import pt.isec.tiagodaniel.xadrez.Exceptions.NullSharedPreferencesException;
 import pt.isec.tiagodaniel.xadrez.Logic.Constantes;
-import pt.isec.tiagodaniel.xadrez.Logic.Ferramentas;
 import pt.isec.tiagodaniel.xadrez.Logic.GameModel;
-import pt.isec.tiagodaniel.xadrez.Logic.Historico.Historico;
 import pt.isec.tiagodaniel.xadrez.Logic.Peca;
 import pt.isec.tiagodaniel.xadrez.Logic.Posicao;
 import pt.isec.tiagodaniel.xadrez.Logic.XadrezApplication;
@@ -80,11 +78,13 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
 
     public void resetPosicoesDisponiveisAnteriores() {
         ImageView pecaImageView;
+        ColorDrawable drawable;
         for (Posicao posicao : this.posicoesDisponiveisAnteriores) {
             pecaImageView = findViewById(getResources().getIdentifier("" + posicao.getColuna()
                     + posicao.getLinha(), "id", getBaseContext().getPackageName()));
-
-            resetCor(posicao, pecaImageView);
+            drawable=(ColorDrawable) pecaImageView.getBackground();
+            if(drawable.getColor()==Color.BLACK)
+                resetCor(posicao, pecaImageView);
         }
     }
 
