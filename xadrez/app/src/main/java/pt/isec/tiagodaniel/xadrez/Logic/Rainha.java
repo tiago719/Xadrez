@@ -16,11 +16,11 @@ import pt.isec.tiagodaniel.xadrez.R;
  *
  * @author Tiago Coutinho
  */
-public class Rainha extends Peca
+public class Rainha extends Peca implements Constantes
 {
     public Rainha(Tabuleiro tabuleiro, Jogador j)
     {
-        super(tabuleiro,j);
+        super(tabuleiro,j, RAINHA);
     }
     
     @Override

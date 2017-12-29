@@ -26,6 +26,11 @@
     /**Dialogs**/
     <string name="error_title">Problema!</string>
     <string name="error_positive_button">Ok</string>
+    <string name="question_title_leave_game">Sair do jogo</string>
+    <string name="question_message_leave_game">Pretende terminar o jogo?</string>
+    <string name="question_positive_button">Ok</string>
+    <string name="question_negative_button">Cancelar</string>
+    <string name="error_save_historic">Problema ao gravar o histórico do jogo.</string>
 
     /**Menus**/
     <string name="perfil">Perfil</string>

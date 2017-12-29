@@ -12,28 +12,36 @@ import pt.isec.tiagodaniel.xadrez.Logic.Constantes;
 import pt.isec.tiagodaniel.xadrez.R;
 
 /**
- * Created by drmoreira on 28-12-2017.
+ * Created by drmoreira on 29-12-2017.
  */
 
 @SuppressLint("ValidFragment")
-public class ErrorDialog extends DialogFragment {
+public class QuestionDialog extends DialogFragment {
     private String mMessage;
+    private String mTitle;
     private OnCompleteListener mListener;
 
-    public ErrorDialog(String message) {
-     this.mMessage = message;
+    public QuestionDialog(String title, String message) {
+        this.mTitle = title;
+        this.mMessage = message;
     }
 
     @Override
     public Dialog onCreateDialog(final Bundle savedInstanceState) {
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder .setTitle(getString(R.string.error_title))
-                .setIcon(R.mipmap.ic_error_black_24dp)
+        builder.setTitle(this.mTitle)
+                .setIcon(R.mipmap.ic_help_black_24dp)
                 .setMessage(this.mMessage)
-                .setPositiveButton(getString(R.string.error_positive_button), new DialogInterface.OnClickListener() {
+                .setPositiveButton(getString(R.string.question_positive_button), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        mListener.onComplete(Constantes.ERROR_OK);
+                        mListener.onComplete(Constantes.QUESTION_OK_SAIR);
+                    }
+                })
+                .setNegativeButton(getString(R.string.question_negative_button), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mListener.onComplete(Constantes.QUESTION_CANCELAR_SAIR);
                     }
                 });
         // Create the AlertDialog object and return it

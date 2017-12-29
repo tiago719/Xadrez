@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import java.util.ArrayList;
 
+import pt.isec.tiagodaniel.xadrez.Logic.Constantes;
 import pt.isec.tiagodaniel.xadrez.Logic.GameModel;
 import pt.isec.tiagodaniel.xadrez.Logic.Peca;
 import pt.isec.tiagodaniel.xadrez.Logic.Posicao;
@@ -12,7 +13,7 @@ import pt.isec.tiagodaniel.xadrez.Logic.Posicao;
  * Created by drmoreira on 10-12-2017.
  */
 
-public class EstadoEscolheDestino extends StateAdapter {
+public class EstadoEscolheDestino extends StateAdapter implements Constantes {
 
     public EstadoEscolheDestino(GameModel game, Posicao posicaoOriginal) {
         super(game);
@@ -53,13 +54,19 @@ public class EstadoEscolheDestino extends StateAdapter {
 
             if(getGame().getTabuleiro().getJogadorAdversario().poeCheck())
             {
-                if (!getGame().getTabuleiro().getJogadorAtual().hasMovimentos())
+                if (!getGame().getTabuleiro().getJogadorAtual().hasMovimentos()) {
+                    this.getGame().getTabuleiro().getHistorico().setVencedorJogo(
+                            this.getGame().getTabuleiro().getJogadorAtual(), false);
                     System.out.println("Jogo acabou perdendo");
+                }
             }
             else
             {
-                if (!getGame().getTabuleiro().getJogadorAtual().hasMovimentos())
+                if (!getGame().getTabuleiro().getJogadorAtual().hasMovimentos()) {
+                    this.getGame().getTabuleiro().getHistorico().setVencedorJogo(
+                            this.getGame().getTabuleiro().getJogadorAtual(), true);
                     System.out.println("Jogo acabou empetado");
+                }
             }
 
             return new EstadoEscolhePeca(this.getGame());

@@ -3,6 +3,7 @@ package pt.isec.tiagodaniel.xadrez.Logic;
 import android.widget.LinearLayout;
 
 import pt.isec.tiagodaniel.xadrez.Activities.JogarContraPCActivity;
+import pt.isec.tiagodaniel.xadrez.Logic.Historico.Historico;
 import pt.isec.tiagodaniel.xadrez.States.EstadoEscolhePeca;
 import pt.isec.tiagodaniel.xadrez.States.IState;
 
@@ -18,6 +19,7 @@ public class GameModel {
     public GameModel(LinearLayout ll, JogarContraPCActivity activity)
     {
         this.activity=activity;
+
         tabuleiro = new Tabuleiro(ll);
         this.setState(new EstadoEscolhePeca(this));
     }
