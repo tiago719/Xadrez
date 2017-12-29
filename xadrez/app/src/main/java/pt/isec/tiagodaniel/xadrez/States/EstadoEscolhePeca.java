@@ -18,6 +18,7 @@ public class EstadoEscolhePeca extends StateAdapter {
     public EstadoEscolhePeca(GameModel game) {
         super(game);
 
+        getGame().getTabuleiro().getJogadorAtual().verificaCheck();
         if(getGame().getTabuleiro().getJogadorAtual().isCheck())
         {
             getGame().getActivity().setReiCheck(getGame().getTabuleiro().getPosicaoRei(getGame().getTabuleiro().getJogadorAtual()));

@@ -23,6 +23,7 @@ public class EstadoEscolheDestino extends StateAdapter {
     public IState seguinte(int linha, char coluna) {
 
         Peca pecaClick;
+        Posicao posicaoPeao;
         ArrayList<Posicao> posicoesDisponiveis;
         Posicao posicaoDestino = getGame().getTabuleiro().getPosicao(linha, coluna);
         pecaClick=posicaoDestino.getPeca();
@@ -39,7 +40,12 @@ public class EstadoEscolheDestino extends StateAdapter {
         {
             getGame().getTabuleiro().movePara(getPosicaoOrigem(), posicaoDestino);
             getGame().getActivity().resetPosicoesDisponiveisAnteriores();
-            getGame().getTabuleiro().getJogadorAdversario().verificaCheck();
+
+            if((posicaoPeao=getGame().getTabuleiro().isPeaoUltimaLinha())!=null)
+            {
+                getGame().getActivity().peaoUltimaLinha(posicaoPeao);
+            }
+
             this.getGame().getTabuleiro().trocaJogadorActual();
 
             return new EstadoEscolhePeca(this.getGame());

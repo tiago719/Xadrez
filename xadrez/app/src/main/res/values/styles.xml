@@ -5,5 +5,9 @@
         <!-- Customize your theme here. -->
         <item name="android:textAllCaps">false</item>
     </style>
+    
+    <style name="AppTheme.PromovePeao">
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
 
 </resources>

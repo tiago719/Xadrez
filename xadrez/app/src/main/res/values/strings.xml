@@ -31,5 +31,11 @@
     <string name="perfil">Perfil</string>
     <string name="historico">Histórico</string>
 
+    /**Promover Peao**/
+    <string name="promover_peao_titilo">Escolha Peça</string>
+    <string name="rainha">Rainha</string>
+    <string name="torre">Torre</string>
+    <string name="bispo">Bispo</string>
+    <string name="cavalo">Cavalo</string>
 
 </resources>

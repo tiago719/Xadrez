@@ -1,6 +1,7 @@
 package pt.isec.tiagodaniel.xadrez.Activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -25,7 +26,7 @@ public class JogarContraPCActivity extends Activity {
     private ArrayList<Posicao> posicoesDisponiveisAnteriores = null;
     private Resources resources;
     private ImageView Check;
-    private Posicao reiCheck;
+    private Posicao reiCheck, peaoSubstituir;
 
     public ImageView getCheck()
     {
@@ -120,5 +121,17 @@ public class JogarContraPCActivity extends Activity {
             resetCor(reiCheck, Check);
         Check=null;
         reiCheck=null;
+    }
+
+    public void peaoUltimaLinha(Posicao posicao)
+    {
+        peaoSubstituir=posicao;
+        startActivityForResult(new Intent(JogarContraPCActivity.this,ActivityPromocaoPeao.class), 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        gameModel.substituiPeao(resultCode,peaoSubstituir);
     }
 }
