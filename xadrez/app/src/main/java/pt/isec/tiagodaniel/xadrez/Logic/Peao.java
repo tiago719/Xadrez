@@ -28,7 +28,7 @@ public class Peao extends Peca
     @Override
     public ArrayList<Posicao> verificaDisponiveisCheck()
     {
-        return tabuleiro.peao(this);
+        return tabuleiro.peaoVerificaCheck(this);
     }
     
     public ArrayList<Posicao> getDisponiveis()

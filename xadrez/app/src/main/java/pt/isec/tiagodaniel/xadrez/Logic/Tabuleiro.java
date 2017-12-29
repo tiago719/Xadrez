@@ -234,6 +234,76 @@ public class Tabuleiro
         return disponiveis;
     }
 
+    public ArrayList<Posicao> peaoVerificaCheck(Peao peca)
+    {
+        boolean flag=false;
+        ArrayList<Posicao> disponiveis=new ArrayList<Posicao>();
+        Posicao p=encontraPeca(peca);
+        if(p==null)
+            return null;
+        Posicao nova;
+
+        if(peca.getJogador() instanceof JogadorLight)
+        {
+            if ((nova = this.getPosicao(p.getLinha() + 1, (char) (p.getColuna()))) != null)
+            {
+                if (!nova.isOcupado())
+                {
+                    disponiveis.add(nova);
+                    flag=true;
+                }
+            }
+
+            if (peca.isPrimeiroLance() && flag)
+                if ((nova = this.getPosicao(p.getLinha() + 2, (char) (p.getColuna()))) != null)
+                    if (!nova.isOcupado()) disponiveis.add(nova);
+
+            if ((nova = this.getPosicao(p.getLinha() + 1, (char) (p.getColuna() + 1))) != null)
+                if (p.getPeca()!=null && this.podeComer(nova.getLinha(), nova.getColuna(),  p.getPeca().getJogador()))
+                {
+                    nova.setEnPassant(false);
+                    disponiveis.add(nova);
+                }
+
+            if ((nova = this.getPosicao(p.getLinha() + 1, (char) (p.getColuna() - 1))) != null)
+                if (p.getPeca()!=null && this.podeComer(nova.getLinha(), nova.getColuna(),  p.getPeca().getJogador()))
+                {
+                    nova.setEnPassant(false);
+                    disponiveis.add(nova);
+                }
+        }
+        else
+        {
+            if ((nova = this.getPosicao(p.getLinha() - 1, (char) (p.getColuna()))) != null)
+            {
+                if (!nova.isOcupado())
+                {
+                    disponiveis.add(nova);
+                    flag = true;
+                }
+            }
+
+            if (peca.isPrimeiroLance() && flag)
+                if ((nova = this.getPosicao(p.getLinha() - 2, (char) (p.getColuna()))) != null)
+                    if (!nova.isOcupado()) disponiveis.add(nova);
+
+            if ((nova = this.getPosicao(p.getLinha() - 1, (char) (p.getColuna() + 1))) != null)
+                if (p.getPeca()!=null && this.podeComer(nova.getLinha(), nova.getColuna(), p.getPeca().getJogador()))
+                {
+                    nova.setEnPassant(false);
+                    disponiveis.add(nova);
+                }
+
+            if ((nova = this.getPosicao(p.getLinha() - 1, (char) (p.getColuna() - 1))) != null)
+                if (p.getPeca()!=null &&this.podeComer(nova.getLinha(), nova.getColuna(),  p.getPeca().getJogador()))
+                {
+                    nova.setEnPassant(false);
+                    disponiveis.add(nova);
+                }
+        }
+        return disponiveis;
+    }
+
     public ArrayList<Posicao> peao(Peao peca)
     {
         boolean flag=false;
@@ -281,12 +351,16 @@ public class Tabuleiro
                     }
 
             if((nova=this.getPosicao(p.getLinha(), (char)(p.getColuna()-1)))!=null)
-                if(p.getPeca()!=null && this.podeComer(nova.getLinha(), nova.getColuna(),  p.getPeca().getJogador()) && peca.isFoiPrimeiroLance())
-                    if(dentroLimites(nova.getLinha()+1,nova.getColuna()))
+            {
+                if (p.getPeca() != null && this.podeComer(nova.getLinha(), nova.getColuna(), p.getPeca().getJogador()) && peca.isFoiPrimeiroLance())
+                {
+                    if (dentroLimites(nova.getLinha() + 1, nova.getColuna()))
                     {
                         disponiveis.add(getPosicao(nova.getLinha() + 1, nova.getColuna()));
                         nova.setEnPassant(true);
                     }
+                }
+            }
         }
         else
         {
@@ -462,7 +536,7 @@ public class Tabuleiro
         }
         if((peca=posicaoOrigem.getPeca()) instanceof Peao)
         {
-            if(posicaoDestino.getLinha()==4  || posicaoDestino.getLinha()==5  && ((Peao) peca).isPrimeiroLance())
+            if((posicaoDestino.getLinha()==4  || posicaoDestino.getLinha()==5)  && ((Peao) peca).isPrimeiroLance())
                 ((Peao) peca).setFoiPrimeiroLance(true);
             ((Peao) peca).setPrimeiroLance(false);
         }
