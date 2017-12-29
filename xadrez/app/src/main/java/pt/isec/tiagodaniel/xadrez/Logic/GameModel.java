@@ -36,6 +36,75 @@ public class GameModel {
     public void seguinte(int linha, char coluna) {
         this.setState(this.state.seguinte(linha, coluna));
     }
+
+
+    public void substituiPeao(int resultado, Posicao posicao)
+    {
+        tabuleiro.getJogadorAdversario().addPecaMorta(posicao.getPeca());
+        posicao.apagaPeca();
+        switch (resultado)
+        {
+            case 1:
+                posicao.setPeca(new Rainha(tabuleiro,tabuleiro.getJogadorAdversario()));
+                break;
+            case 2:
+                posicao.setPeca(new Torre(tabuleiro,tabuleiro.getJogadorAdversario()));
+                break;
+            case 3:
+                posicao.setPeca(new Bispo(tabuleiro,tabuleiro.getJogadorAdversario()));
+                break;
+            case 4:
+                posicao.setPeca(new Cavalo(tabuleiro,tabuleiro.getJogadorAdversario()));
+                break;
+        }
+        tabuleiro.getJogadorAdversario().addPeca(posicao.getPeca());
+        posicao.desenhaPeca();
+
+        tabuleiro.getJogadorAtual().verificaCheck();
+        if(getTabuleiro().getJogadorAtual().isCheck())
+        {
+            getActivity().setReiCheck(tabuleiro.getPosicaoRei(tabuleiro.getJogadorAtual()));
+        }
+        else
+        {
+            getActivity().resetCheck();
+        }
+
+        if(tabuleiro.getJogadorAtual().isCheck())
+        {
+            if (!tabuleiro.getJogadorAdversario().hasMovimentos())
+                System.out.println("Jogo acabou perdendo");
+        }
+        else
+        {
+            if (!tabuleiro.getJogadorAtual().hasMovimentos())
+                System.out.println("Jogo acabou empetado");
+        }
+    }
+
+    public void verificaCheck()
+    {
+        getTabuleiro().getJogadorAtual().verificaCheck();
+        if(getTabuleiro().getJogadorAtual().isCheck())
+        {
+            getActivity().setReiCheck(getTabuleiro().getPosicaoRei(getTabuleiro().getJogadorAtual()));
+        }
+        else
+        {
+            getActivity().resetCheck();
+        }
+
+        if(getTabuleiro().getJogadorAtual().isCheck())
+        {
+            if (!getTabuleiro().getJogadorAtual().hasMovimentos())
+                System.out.println("Jogo acabou perdendo");
+        }
+        else
+        {
+            if (!getTabuleiro().getJogadorAtual().hasMovimentos())
+                System.out.println("Jogo acabou empetado");
+        }
+    }
     //endregion
 
 }

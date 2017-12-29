@@ -28,12 +28,12 @@ public class Tabuleiro
     private Jogador jogadorAtual;
     private Jogador jogadorAdversario;
     private Historico mHistorico;
-    
+
     public Tabuleiro(LinearLayout ll)
     {
         tabuleiro=new ArrayList<Posicao>();
         this.mHistorico = new Historico(new Date());
-        
+
         for(int i=1;i<=TABULEIRO_LINHAS;i++)
         {
             for(int j=0;j<TABULEIRO_COLUNAS;j++)
@@ -380,14 +380,13 @@ public class Tabuleiro
         if((nova=this.getPosicao(p.getLinha()-1,(char) (p.getColuna())))!=null)
             adiciona(disponiveis, nova, rei.getJogador());
 
-        if(((Rei)rei).isMovido())
+        if(((Rei)rei).isMovido() || rei.getJogador().isCheck())
             return disponiveis;
 
         for(Peca pecaJogador : rei.getJogador().getPecasTabuleiro())
             if(pecaJogador instanceof Torre)
             {
-                //TODO: pagina 8: 3.8 -> c -> 2 -> i
-                for(int i=1;i<TABULEIRO_COLUNAS && encontraPeca(pecaJogador).getLinha()==getLinhaTorreOriginal();i++)
+                for(int i=1;i<TABULEIRO_COLUNAS && encontraPeca(pecaJogador)!=null && encontraPeca(pecaJogador).getLinha()==getLinhaTorreOriginal();i++)
                 {
                     if ((char) (encontraPeca(pecaJogador).getColuna() + i) == encontraPeca(rei).getColuna())
                     {
@@ -398,7 +397,7 @@ public class Tabuleiro
                         break;
                 }
 
-                for(int i=1;i<TABULEIRO_COLUNAS && encontraPeca(pecaJogador).getLinha()==getLinhaTorreOriginal();i++)
+                for(int i=1;i<TABULEIRO_COLUNAS && encontraPeca(pecaJogador)!=null && encontraPeca(pecaJogador).getLinha()==getLinhaTorreOriginal();i++)
                 {
                     if ((char) (encontraPeca(pecaJogador).getColuna() - i) == encontraPeca(rei).getColuna())
                     {
@@ -486,8 +485,8 @@ public class Tabuleiro
         this.mHistorico.addJogadasJogo(
                 new Jogada(
                         peca.getNomePeca(),
-                        posicaoOrigem.getColuna() + Integer.toString(posicaoOrigem.getLinha()),
-                        posicaoDestino.getColuna() + Integer.toString(posicaoDestino.getLinha())));
+                        Character.toUpperCase(posicaoOrigem.getColuna()) + Integer.toString(posicaoOrigem.getLinha()),
+                        Character.toUpperCase(posicaoDestino.getColuna()) + Integer.toString(posicaoDestino.getLinha())));
 
 
         peca.desenhaPeca(posicaoDestino.getImageView());
@@ -571,6 +570,23 @@ public class Tabuleiro
                 else
                     return jogadorAdversario;
             }
+        return null;
+    }
+
+    private int getUltimaLinhaJogadorAtual()
+    {
+        if(jogadorAtual instanceof JogadorLight)
+            return 8;
+        else
+            return 1;
+    }
+
+    public Posicao isPeaoUltimaLinha()
+    {
+        for(Peca peca : jogadorAtual.getPecasTabuleiro())
+            if(peca instanceof Peao)
+                if(encontraPeca(peca).getLinha()==getUltimaLinhaJogadorAtual())
+                    return encontraPeca(peca);
         return null;
     }
 

@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -44,12 +45,8 @@ public class HistoricoActivity extends Activity implements Constantes {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if( (i-1) < 1 || (i-1) > 5 ) {
-                    return;
-                }
-
                 Intent intent = new Intent(getApplicationContext(), HistoricoJogadasActivity.class);
-                intent.putExtra(PUT_EXTRA_JOGADAS, listaHistorico.get(i-1).getListaJogadas());
+                intent.putExtra(PUT_EXTRA_JOGADAS, listaHistorico.get((int)l).getListaJogadas());
                 startActivity(intent);
             }
         });

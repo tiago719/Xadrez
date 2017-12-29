@@ -68,18 +68,29 @@ public class Jogador
         pecasMortas.add(p);
         pecasTabuleiro.remove(p);
     }
+
+    public void addPeca(Peca p)
+    {
+        pecasTabuleiro.add(p);
+    }
     
     public void joga()
     {
-        int randomNum = 0 + (int)(Math.random() * pecasTabuleiro.size());
-        
-        Peca peca=pecasTabuleiro.get(randomNum);
-        
+        int randomNum;
+        Peca peca;
+
+        do
+        {
+            randomNum = 0 + (int)(Math.random() * pecasTabuleiro.size());
+            peca=pecasTabuleiro.get(randomNum);
+
+        }while(peca.getDisponiveis().size()==0);
+
         ArrayList<Posicao> disponiveis=peca.getDisponiveis();
         
         randomNum=0 + (int)(Math.random() * disponiveis.size());
-        
-        //peca.movePara(disponiveis.get(randomNum));
+
+        tabuleiro.movePara(tabuleiro.encontraPeca(peca), disponiveis.get(randomNum));
     }
 
     public boolean hasMovimentos()

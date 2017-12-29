@@ -17,7 +17,7 @@
     <string name="btnPhoto">Tirar Fotografia</string>
     <string name="btnGallery">Escolher da Galeria</string>
     <string name="historico_ModoJogo">Modo de jogo</string>
-    <string name="historicoJogadaPeca">Peça jogada</string>
+    <string name="historicoJogadaPeca">Peca</string>
 
     /**Exceptions**/
     <string name="null_activity">Problema ao gravar dados (Null Activity)</string>
@@ -46,5 +46,15 @@
     <string name="headerHistoricoVencedor">Vencedor</string>
     <string name="historicoJogadaOrigem">Origem</string>
     <string name="historicoJogadaDestino">Destino</string>
+
+    /**Promover Peao**/
+    <string name="promover_peao_titilo">Escolha Peça</string>
+    <string name="rainha">Rainha</string>
+    <string name="torre">Torre</string>
+    <string name="bispo">Bispo</string>
+    <string name="cavalo">Cavalo</string>
+    <string name="headerHistoricoJogadaPeca">Peça</string>
+    <string name="headerHistoricoJogadaOrigem">Origem</string>
+    <string name="headerHistoricoJogadaDestino">Destino</string>
 
 </resources>
