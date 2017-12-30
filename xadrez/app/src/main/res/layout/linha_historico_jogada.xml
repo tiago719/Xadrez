@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/tabLightTransparent"
+    android:padding="20dp"
+    android:id="@+id/linhaJogada">
+
+    <ImageView
+        android:id="@+id/historicoJogadaPeca"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:contentDescription="@string/historico_ModoJogo"
+        android:src="@android:drawable/ic_menu_rotate"
+        android:scaleType="fitStart"/>
+
+    <TextView
+        android:textSize="34sp"
+        android:text="@string/historicoJogadaOrigem"
+        android:gravity="start"
+        android:layout_gravity="center_vertical"
+        android:id="@+id/historicoJogadaOrigem"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fonty"
+        android:textStyle="bold"
+        android:textColor="@color/title"/>
+
+    <TextView
+        android:textSize="34sp"
+        android:text="@string/historicoJogadaDestino"
+        android:gravity="center"
+        android:layout_gravity="center_vertical"
+        android:id="@+id/historicoJogadaDestino"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fonty"
+        android:textStyle="bold"
+        android:textColor="@color/title"/>
+
+</LinearLayout>

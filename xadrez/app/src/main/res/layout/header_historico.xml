@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/tabLight"
+    android:padding="20dp"
+    android:id="@+id/headerLinha">
+
+    <TextView
+        android:textSize="24sp"
+        android:text="@string/headerHistoricoData"
+        android:gravity="center"
+        android:id="@+id/headerHistoricoData"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fonty"
+        android:textStyle="bold"
+        android:textColor="@color/title"/>
+
+    <TextView
+        android:textSize="24sp"
+        android:text="@string/headerHistoricoModoJogo"
+        android:gravity="center"
+        android:id="@+id/headerHistoricoModoJogo"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fonty"
+        android:textStyle="bold"
+        android:textColor="@color/title"/>
+
+    <TextView
+        android:textSize="24sp"
+        android:text="@string/headerHistoricoVencedor"
+        android:gravity="center"
+        android:id="@+id/headerHistoricoVencedor"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fonty"
+        android:textStyle="bold"
+        android:textColor="@color/title"/>
+</LinearLayout>
