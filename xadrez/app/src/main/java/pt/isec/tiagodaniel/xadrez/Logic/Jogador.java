@@ -5,6 +5,7 @@
  */
 package pt.isec.tiagodaniel.xadrez.Logic;
 
+import android.os.Handler;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
@@ -90,7 +91,8 @@ public class Jogador
         
         randomNum=0 + (int)(Math.random() * disponiveis.size());
 
-        tabuleiro.movePara(tabuleiro.encontraPeca(peca), disponiveis.get(randomNum));
+        DelayMovePara delayMovePara = new DelayMovePara(peca, disponiveis, randomNum);
+        new Handler().postDelayed(delayMovePara, 1000);
     }
 
     public boolean hasMovimentos()
@@ -101,5 +103,22 @@ public class Jogador
                 return true;
         }
         return false;
+    }
+
+    public class DelayMovePara implements Runnable {
+        private Peca peca;
+        private ArrayList<Posicao> disponiveis;
+        private int randomNum;
+
+        public DelayMovePara(Peca peca, ArrayList<Posicao> disponiveis, int randomNum) {
+            this.peca = peca;
+            this.disponiveis = disponiveis;
+            this.randomNum = randomNum;
+        }
+
+        @Override
+        public void run() {
+            tabuleiro.movePara(tabuleiro.encontraPeca(peca), disponiveis.get(randomNum));
+        }
     }
 }
