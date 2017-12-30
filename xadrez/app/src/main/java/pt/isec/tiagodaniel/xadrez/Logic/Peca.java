@@ -29,13 +29,11 @@ public abstract class Peca
 {
     protected Jogador jogador;
     protected Tabuleiro tabuleiro;
-    protected String nome;
 
-    public Peca(Tabuleiro tabuleiro, Jogador j, String nomePeca)
+    public Peca(Tabuleiro tabuleiro, Jogador j)
     {
         this.tabuleiro=tabuleiro;
         jogador=j;
-        this.nome = nomePeca;
     }
 
     public abstract ArrayList<Posicao> verificaDisponiveisCheck();
@@ -70,9 +68,5 @@ public abstract class Peca
                     }
         }
         return false;
-    }
-
-    public String getNomePeca() {
-        return this.nome;
     }
 }

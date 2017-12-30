@@ -16,13 +16,13 @@ import pt.isec.tiagodaniel.xadrez.R;
  *
  * @author Tiago Coutinho
  */
-public class Torre extends Peca implements Constantes
+public class Torre extends Peca
 {
     private boolean movido;
 
     public Torre(Tabuleiro tabuleiro, Jogador j)
     {
-        super(tabuleiro,j, TORRE);
+        super(tabuleiro,j);
         movido=false;
     }
 

@@ -15,11 +15,11 @@ import pt.isec.tiagodaniel.xadrez.R;
  *
  * @author Tiago Coutinho
  */
-public class Bispo extends Peca implements Constantes
+public class Bispo extends Peca
 {
     public Bispo(Tabuleiro tabuleiro, Jogador j)
     {
-        super(tabuleiro,j, BISPO);
+        super(tabuleiro,j);
 
     }
 

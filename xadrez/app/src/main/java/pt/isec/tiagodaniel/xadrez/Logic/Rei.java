@@ -16,12 +16,12 @@ import pt.isec.tiagodaniel.xadrez.R;
  *
  * @author Tiago Coutinho
  */
-public class Rei extends Peca implements Constantes
+public class Rei extends Peca
 {
     private boolean movido;
     public Rei(Tabuleiro tabuleiro, Jogador j)
     {
-        super(tabuleiro,j, REI);
+        super(tabuleiro,j);
         movido=false;
     }
 
