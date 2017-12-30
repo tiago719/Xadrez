@@ -16,6 +16,8 @@
     <string name="perfil_photo">Foto perfil</string>
     <string name="btnPhoto">Tirar Fotografia</string>
     <string name="btnGallery">Escolher da Galeria</string>
+    <string name="historico_ModoJogo">Modo de jogo</string>
+    <string name="historicoJogadaPeca">Peca</string>
 
     /**Exceptions**/
     <string name="null_activity">Problema ao gravar dados (Null Activity)</string>
@@ -26,10 +28,26 @@
     /**Dialogs**/
     <string name="error_title">Problema!</string>
     <string name="error_positive_button">Ok</string>
+    <string name="question_title_leave_game">Sair do jogo</string>
+    <string name="question_message_leave_game">Pretende terminar o jogo?</string>
+    <string name="question_positive_button">Ok</string>
+    <string name="question_negative_button">Cancelar</string>
+    <string name="error_save_historic">Problema ao gravar o histórico do jogo.</string>
+    <string name="question_delete_historic_title">Apagar histórico</string>
+    <string name="question_delete_historic_message">De certeza que pretendes apagar o histórico?</string>
 
     /**Menus**/
     <string name="perfil">Perfil</string>
     <string name="historico">Histórico</string>
+    <string name="historicoData">25 Dezembro</string>
+    <string name="historico_Vencedor">Vencedor</string>
+
+    /**Histórico**/
+    <string name="headerHistoricoData">Data</string>
+    <string name="headerHistoricoModoJogo">Jogo</string>
+    <string name="headerHistoricoVencedor">Vencedor</string>
+    <string name="historicoJogadaOrigem">Origem</string>
+    <string name="historicoJogadaDestino">Destino</string>
 
     /**Promover Peao**/
     <string name="promover_peao_titilo">Escolha Peça</string>
@@ -37,5 +55,10 @@
     <string name="torre">Torre</string>
     <string name="bispo">Bispo</string>
     <string name="cavalo">Cavalo</string>
+    <string name="headerHistoricoJogadaPeca">Peça</string>
+    <string name="headerHistoricoJogadaOrigem">Origem</string>
+    <string name="headerHistoricoJogadaDestino">Destino</string>
+    <string name="historicoVazio">Não existe histórico</string>
+    <string name="apagar_historico">Apagar Histórico</string>
 
 </resources>

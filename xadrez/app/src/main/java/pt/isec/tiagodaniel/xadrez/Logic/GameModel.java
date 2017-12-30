@@ -3,6 +3,7 @@ package pt.isec.tiagodaniel.xadrez.Logic;
 import android.widget.LinearLayout;
 
 import pt.isec.tiagodaniel.xadrez.Activities.JogarContraPCActivity;
+import pt.isec.tiagodaniel.xadrez.Logic.Historico.Historico;
 import pt.isec.tiagodaniel.xadrez.States.EstadoEscolhePeca;
 import pt.isec.tiagodaniel.xadrez.States.IState;
 
@@ -18,6 +19,7 @@ public class GameModel {
     public GameModel(LinearLayout ll, JogarContraPCActivity activity)
     {
         this.activity=activity;
+
         tabuleiro = new Tabuleiro(ll);
         this.setState(new EstadoEscolhePeca(this));
     }
@@ -38,29 +40,50 @@ public class GameModel {
 
     public void substituiPeao(int resultado, Posicao posicao)
     {
-        Jogador atual=posicao.getPeca().getJogador();
-        Jogador adversario=tabuleiro.getJogadorAdversarioPeca(posicao.getPeca());
-        atual.addPecaMorta(posicao.getPeca());
+        tabuleiro.getJogadorAdversario().addPecaMorta(posicao.getPeca());
         posicao.apagaPeca();
         switch (resultado)
         {
             case 1:
-                posicao.setPeca(new Rainha(tabuleiro,atual));
+                posicao.setPeca(new Rainha(tabuleiro,tabuleiro.getJogadorAdversario()));
                 break;
             case 2:
-                posicao.setPeca(new Torre(tabuleiro,atual));
+                posicao.setPeca(new Torre(tabuleiro,tabuleiro.getJogadorAdversario()));
                 break;
             case 3:
-                posicao.setPeca(new Bispo(tabuleiro,atual));
+                posicao.setPeca(new Bispo(tabuleiro,tabuleiro.getJogadorAdversario()));
                 break;
             case 4:
-                posicao.setPeca(new Cavalo(tabuleiro,atual));
+                posicao.setPeca(new Cavalo(tabuleiro,tabuleiro.getJogadorAdversario()));
                 break;
         }
-        atual.addPeca(posicao.getPeca());
+        tabuleiro.getJogadorAdversario().addPeca(posicao.getPeca());
         posicao.desenhaPeca();
 
-        verificaCheck();
+        tabuleiro.getJogadorAtual().verificaCheck();
+        if(getTabuleiro().getJogadorAtual().isCheck())
+        {
+            getActivity().setReiCheck(tabuleiro.getPosicaoRei(tabuleiro.getJogadorAtual()));
+        }
+        else
+        {
+            getActivity().resetCheck();
+        }
+
+        if(tabuleiro.getJogadorAtual().isCheck())
+        {
+            if (!tabuleiro.getJogadorAdversario().hasMovimentos()) {
+                this.getTabuleiro().getHistorico().setVencedorJogo(this.getActivity(), this.getTabuleiro().getJogadorAtual(), false);
+                System.out.println("Jogo acabou perdendo");
+            }
+        }
+        else
+        {
+            if (!tabuleiro.getJogadorAtual().hasMovimentos()) {
+                this.getTabuleiro().getHistorico().setVencedorJogo(this.getActivity(), this.getTabuleiro().getJogadorAtual(), true);
+                System.out.println("Jogo acabou empetado");
+            }
+        }
     }
 
     public void verificaCheck()
@@ -77,13 +100,17 @@ public class GameModel {
 
         if(getTabuleiro().getJogadorAtual().isCheck())
         {
-            if (!getTabuleiro().getJogadorAtual().hasMovimentos())
+            if (!getTabuleiro().getJogadorAtual().hasMovimentos()) {
+                this.getTabuleiro().getHistorico().setVencedorJogo(this.getActivity(), this.getTabuleiro().getJogadorAtual(), false);
                 System.out.println("Jogo acabou perdendo");
+            }
         }
         else
         {
-            if (!getTabuleiro().getJogadorAtual().hasMovimentos())
+            if (!getTabuleiro().getJogadorAtual().hasMovimentos()) {
+                this.getTabuleiro().getHistorico().setVencedorJogo(this.getActivity(), this.getTabuleiro().getJogadorAtual(), true);
                 System.out.println("Jogo acabou empetado");
+            }
         }
     }
     //endregion
