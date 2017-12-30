@@ -30,6 +30,9 @@
         <activity android:name=".Activities.HistoricoActivity" />
         <activity android:name=".Activities.HistoricoJogadasActivity" />
         <activity android:name=".Activities.Configurar2Jogadores"></activity>
+        <activity android:name=".Activities.HistoricoActivity" />
+        <activity android:name=".Activities.HistoricoJogadasActivity" />
+        <activity android:name=".Dialogs.WinDialog"></activity>
     </application>
 
 </manifest>

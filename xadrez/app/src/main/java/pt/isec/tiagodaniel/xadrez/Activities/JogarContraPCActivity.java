@@ -14,13 +14,17 @@ import android.widget.TextView;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import pt.isec.tiagodaniel.xadrez.Dialogs.DrawDialog;
 import pt.isec.tiagodaniel.xadrez.Dialogs.ErrorDialog;
 import pt.isec.tiagodaniel.xadrez.Dialogs.OnCompleteListener;
 import pt.isec.tiagodaniel.xadrez.Dialogs.QuestionDialog;
 import pt.isec.tiagodaniel.xadrez.Exceptions.NullSharedPreferencesException;
+import pt.isec.tiagodaniel.xadrez.Dialogs.WinDialog;
 import pt.isec.tiagodaniel.xadrez.Logic.Constantes;
 import pt.isec.tiagodaniel.xadrez.Logic.Ferramentas;
 import pt.isec.tiagodaniel.xadrez.Logic.GameModel;
+import pt.isec.tiagodaniel.xadrez.Logic.Jogador;
+import pt.isec.tiagodaniel.xadrez.Logic.JogadorLight;
 import pt.isec.tiagodaniel.xadrez.Logic.Peca;
 import pt.isec.tiagodaniel.xadrez.Logic.Posicao;
 import pt.isec.tiagodaniel.xadrez.Logic.XadrezApplication;
@@ -39,6 +43,7 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
     private TextView mTxtNomeJogador1, mTxtNomeJogador2;
     private ImageView mImvFotoJogador1, mImvFotoJogador2;
     XadrezApplication xadrezApplication;
+    private Jogador atual;
 
     public ImageView getCheck() {
         return Check;
@@ -59,6 +64,7 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
         this.configuracoesIniciais();
         this.posicoesDisponiveisAnteriores = new ArrayList<>();
         resources = getResources();
+
     }
 
     public void onClickQuadrado(View v) {
@@ -126,14 +132,36 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
         reiCheck = null;
     }
 
-    public void peaoUltimaLinha(Posicao posicao) {
-        peaoSubstituir = posicao;
-        startActivityForResult(new Intent(JogarContraPCActivity.this, ActivityPromocaoPeao.class), 1);
+    public void peaoUltimaLinha(Posicao posicao, Jogador atual)
+    {
+        peaoSubstituir=posicao;
+        this.atual=atual;
+        startActivityForResult(new Intent(JogarContraPCActivity.this,ActivityPromocaoPeao.class), 1);
+    }
+
+    public void mostrarVencedor(Jogador vencedor)
+    {
+        String titulo;
+
+        if(vencedor instanceof JogadorLight)
+            titulo=PECAS_BRANCAS +" "+ getString(R.string.win_title);
+        else
+            titulo=PECAS_PRETAS + " " + getString(R.string.win_title);
+
+        WinDialog winDialog = new WinDialog(titulo);
+        winDialog.show(getFragmentManager(), WIN_DIALOG);
+    }
+
+    public void mostrarEmpate()
+    {
+        DrawDialog drawDialog = new DrawDialog();
+        drawDialog.show(getFragmentManager(), DRAW_DIALOG);
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        gameModel.substituiPeao(resultCode, peaoSubstituir);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        gameModel.substituiPeao(resultCode,peaoSubstituir, atual);
     }
 
     public void updateView() {

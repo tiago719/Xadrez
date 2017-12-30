@@ -22,6 +22,8 @@ public interface Constantes {
     /**Dialogs**/
     String ERROR_DIALOG = "Error Dialog";
     String QUESTION_DIALOG = "Question Dialog";
+    String WIN_DIALOG = "Win Dialog";
+    String DRAW_DIALOG = "Draw Dialog";
     int QUESTION_OK = 1;
     int QUESTION_CANCELAR = 2;
     int ERROR_OK = 3;
@@ -41,8 +43,8 @@ public interface Constantes {
     String TORRE = "TORRE";
 
     /**Jogadores**/
-    String PECAS_BRANCAS = "Peças brancas";
-    String PECAS_PRETAS = "Peças pretas";
+    String PECAS_BRANCAS = "Peças Brancas";
+    String PECAS_PRETAS = "Peças Pretas";
     String PC = "Computador";
     String EMPATE = "Empate";
     String DESISTIU = "Desistiu";
@@ -76,4 +78,10 @@ public interface Constantes {
 
     /**Request Codes**/
     int PHOTO_REQUEST = 20;
+
+    /**Promocao do Peao**/
+    static final int RAINHA_ESCOLHIDA=1;
+    static final int BISPO_ESCOLHIDA=2;
+    static final int TORRE_ESCOLHIDA=3;
+    static final int CAVALO_ESCOLHIDA=4;
 }

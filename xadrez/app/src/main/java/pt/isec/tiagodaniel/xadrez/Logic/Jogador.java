@@ -91,7 +91,7 @@ public class Jogador
         
         randomNum=0 + (int)(Math.random() * disponiveis.size());
 
-        DelayMovePara delayMovePara = new DelayMovePara(peca, disponiveis, randomNum);
+        DelayMovePara delayMovePara = new DelayMovePara(peca, disponiveis, randomNum, tabuleiro.getJogadorAtual(), tabuleiro.getJogadorAdversario());
         new Handler().postDelayed(delayMovePara, 1000);
     }
 
@@ -109,16 +109,19 @@ public class Jogador
         private Peca peca;
         private ArrayList<Posicao> disponiveis;
         private int randomNum;
+        private Jogador atual, adversario;
 
-        public DelayMovePara(Peca peca, ArrayList<Posicao> disponiveis, int randomNum) {
+        public DelayMovePara(Peca peca, ArrayList<Posicao> disponiveis, int randomNum, Jogador atual, Jogador adversario) {
             this.peca = peca;
             this.disponiveis = disponiveis;
             this.randomNum = randomNum;
+            this.atual=atual;
+            this.adversario=adversario;
         }
 
         @Override
         public void run() {
-            tabuleiro.movePara(tabuleiro.encontraPeca(peca), disponiveis.get(randomNum));
+            tabuleiro.movePara(tabuleiro.encontraPeca(peca), disponiveis.get(randomNum), atual, adversario);
         }
     }
 }
