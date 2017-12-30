@@ -70,8 +70,8 @@ public class Configurar2Jogadores extends Activity implements OnCompleteListener
         bundle.putString(FOTO_JOGADOR2_JOGvsJOG, this.fotoJogador2Path);
         bundle.putBoolean(TEMPO_JOGO_JOGvsJOG, jogarComTempo);
         if (jogarComTempo) {
-            bundle.putInt(TEMPO_MAX_JOGO_JOGvsJOG, this.mSeekBarTempoMaximo.getProgress());
-            bundle.putInt(TEMPO_GANHO_JOGO_JOGvsJOG, this.mSeekBarTempoGanho.getProgress());
+            bundle.putLong(TEMPO_MAX_JOGO_JOGvsJOG, this.mSeekBarTempoMaximo.getProgress());
+            bundle.putLong(TEMPO_GANHO_JOGO_JOGvsJOG, this.mSeekBarTempoGanho.getProgress());
         }
 
         intent.putExtras(bundle);
