@@ -29,6 +29,7 @@ public class EstadoEscolheDestino extends StateAdapter implements Constantes {
         ArrayList<Posicao> posicoesDisponiveis;
         Posicao posicaoDestino = getGame().getTabuleiro().getPosicao(linha, coluna);
         pecaClick=posicaoDestino.getPeca();
+        boolean flag1=true;
 
        if (pecaClick!= null && pecaClick.getJogador() == getGame().getTabuleiro().getJogadorAtual()) // se clicou numa nova peca da sua equipa
         {
@@ -45,21 +46,19 @@ public class EstadoEscolheDestino extends StateAdapter implements Constantes {
 
             if((posicaoPeao=getGame().getTabuleiro().isPeaoUltimaLinha())!=null)
             {
-                getGame().getActivity().peaoUltimaLinha(posicaoPeao);
+                flag1=false;
+                getGame().getActivity().peaoUltimaLinha(posicaoPeao, getGame().getTabuleiro().getJogadorAtual());
             }
 
-            this.getGame().getTabuleiro().trocaJogadorActual();
-
-           /* if(getGame().getActivity() instanceof JogarContraPCActivity)
+            if(flag1 && getGame().getActivity() instanceof JogarContraPCActivity)
             {
-                getGame().verificaCheck();
-
-                getGame().getActivity().updateView();
-
-                getGame().getTabuleiro().getJogadorAtual().joga();
-
                 this.getGame().getTabuleiro().trocaJogadorActual();
-            }*/
+                if (jogaPC()) return this;
+            }
+
+            if(getGame().verificaCheck(getGame().getTabuleiro().getJogadorAdversario()))
+                return this;
+
             return new EstadoEscolhePeca(this.getGame());
         }
         return this; // não muda de estado

@@ -35,6 +35,7 @@
     <string name="error_save_historic">Problema ao gravar o histórico do jogo.</string>
     <string name="question_delete_historic_title">Apagar histórico</string>
     <string name="question_delete_historic_message">De certeza que pretendes apagar o histórico?</string>
+    <string name="win_title"> Venceu</string>
 
     /**Menus**/
     <string name="perfil">Perfil</string>
