@@ -5,6 +5,7 @@ import android.widget.ImageView;
 
 import java.util.ArrayList;
 
+import pt.isec.tiagodaniel.xadrez.Logic.Cavalo;
 import pt.isec.tiagodaniel.xadrez.Logic.GameModel;
 import pt.isec.tiagodaniel.xadrez.Logic.Peca;
 import pt.isec.tiagodaniel.xadrez.Logic.Posicao;

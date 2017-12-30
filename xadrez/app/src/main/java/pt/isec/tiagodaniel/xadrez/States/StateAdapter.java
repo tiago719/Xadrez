@@ -44,17 +44,19 @@ public class StateAdapter implements IState {
 
     public boolean jogaPC()
     {
-        if(getGame().verificaCheck(getGame().getTabuleiro().getJogadorAdversario()))
-            return true;
-
-        getGame().getActivity().updateView();
+        Posicao posicaoPeao;
 
         getGame().getTabuleiro().getJogadorAtual().joga();
 
-        this.getGame().getTabuleiro().trocaJogadorActual();
-
-        if(getGame().verificaCheck(getGame().getTabuleiro().getJogadorAdversario()))
+        if(getGame().verificaCheck(getGame().getTabuleiro().getJogadorAtual()))
             return true;
+
+        if((posicaoPeao=getGame().getTabuleiro().isPeaoUltimaLinha())!=null)
+        {
+            getGame().getActivity().peaoUltimaLinha(posicaoPeao, getGame().getTabuleiro().getJogadorAtual());
+        }
+
+        this.getGame().getTabuleiro().trocaJogadorActual();
 
         return false;
     }

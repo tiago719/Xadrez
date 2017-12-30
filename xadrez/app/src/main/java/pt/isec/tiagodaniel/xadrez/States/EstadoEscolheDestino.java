@@ -44,6 +44,9 @@ public class EstadoEscolheDestino extends StateAdapter implements Constantes {
             getGame().getTabuleiro().movePara(getPosicaoOrigem(), posicaoDestino, getGame().getTabuleiro().getJogadorAtual(), getGame().getTabuleiro().getJogadorAdversario());
             getGame().getActivity().resetPosicoesDisponiveisAnteriores();
 
+            if(getGame().verificaCheck(getGame().getTabuleiro().getJogadorAtual()))
+                return this;
+
             if((posicaoPeao=getGame().getTabuleiro().isPeaoUltimaLinha())!=null)
             {
                 flag1=false;
@@ -55,9 +58,6 @@ public class EstadoEscolheDestino extends StateAdapter implements Constantes {
                 this.getGame().getTabuleiro().trocaJogadorActual();
                 if (jogaPC()) return this;
             }
-
-            if(getGame().verificaCheck(getGame().getTabuleiro().getJogadorAdversario()))
-                return this;
 
             return new EstadoEscolhePeca(this.getGame());
         }
