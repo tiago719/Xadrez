@@ -9,4 +9,6 @@ import pt.isec.tiagodaniel.xadrez.Logic.Posicao;
 
 public interface IState {
     IState seguinte(int linha, char coluna);
+
+    boolean jogaPC();
 }

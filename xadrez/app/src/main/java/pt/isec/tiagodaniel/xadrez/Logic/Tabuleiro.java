@@ -673,4 +673,12 @@ public class Tabuleiro
     public Historico getHistorico() {
         return this.mHistorico;
     }
+
+    public Jogador getOutroJogador(Jogador j)
+    {
+        if(j==jogadorAdversario)
+            return jogadorAtual;
+        else
+            return jogadorAdversario;
+    }
 }
