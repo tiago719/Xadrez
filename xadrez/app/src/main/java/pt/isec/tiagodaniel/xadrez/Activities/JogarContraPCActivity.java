@@ -9,14 +9,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
+import android.widget.TextView;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import pt.isec.tiagodaniel.xadrez.Dialogs.ErrorDialog;
 import pt.isec.tiagodaniel.xadrez.Dialogs.OnCompleteListener;
 import pt.isec.tiagodaniel.xadrez.Dialogs.QuestionDialog;
+import pt.isec.tiagodaniel.xadrez.Exceptions.NullSharedPreferencesException;
 import pt.isec.tiagodaniel.xadrez.Logic.Constantes;
+import pt.isec.tiagodaniel.xadrez.Logic.Ferramentas;
 import pt.isec.tiagodaniel.xadrez.Logic.GameModel;
 import pt.isec.tiagodaniel.xadrez.Logic.Peca;
 import pt.isec.tiagodaniel.xadrez.Logic.Posicao;
@@ -53,6 +55,19 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
 
         this.posicoesDisponiveisAnteriores = new ArrayList<>();
         resources = getResources();
+
+        try {
+            TextView txtNomeJogador = findViewById(R.id.txtNomeJogador_JOGvsPC);
+            ImageView imvFotoJogador = findViewById(R.id.imvFotoJogador_JOGvsPC);
+
+            Ferramentas ferramentas = new Ferramentas(this);
+            txtNomeJogador.setText(ferramentas.getSavedName());
+            ferramentas.setPic(imvFotoJogador, ferramentas.getSavedPhotoPath());
+
+        } catch (NullSharedPreferencesException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void onClickQuadrado(View v) {
