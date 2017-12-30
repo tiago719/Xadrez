@@ -157,6 +157,19 @@ public class Tabuleiro
 
     public Posicao encontraPeca(Peca peca)
     {
+        int cont=0;
+        for(Posicao posicao : tabuleiro)
+        {
+            if(posicao.getPeca()!=null)
+                cont++;
+        }
+        int a;
+        if(cont!=32)
+        {
+            a = 10;
+            a++;
+        }
+
         for(Posicao posicao : tabuleiro)
         {
             if(posicao.getPeca()==peca)
@@ -214,6 +227,9 @@ public class Tabuleiro
         ArrayList<Posicao> disponiveis=new ArrayList<Posicao>();
         Posicao p=encontraPeca(peca), nova;
 
+        if(p==null)
+            return disponiveis;
+
         if((nova=this.getPosicao(p.getLinha()+2,(char) (p.getColuna()+1)))!=null)
             adiciona(disponiveis, nova, peca.getJogador());
 
@@ -246,8 +262,8 @@ public class Tabuleiro
             boolean flag=false;
             ArrayList<Posicao> disponiveis=new ArrayList<Posicao>();
             Posicao p=encontraPeca(peca);
-            if(p==null)
-                    return null;
+            if(p==null || peca==null)
+                    return disponiveis;
             Posicao nova;
 
                     if(peca.getJogador() instanceof JogadorLight)
@@ -316,8 +332,8 @@ public class Tabuleiro
         boolean flag=false;
         ArrayList<Posicao> disponiveis=new ArrayList<Posicao>();
         Posicao p=encontraPeca(peca);
-        if(p==null)
-            return null;
+        if(p==null || peca==null)
+            return disponiveis;
         Posicao nova;
 
         if(peca.getJogador() instanceof JogadorLight)
@@ -426,6 +442,9 @@ public class Tabuleiro
         ArrayList<Posicao> disponiveis=new ArrayList<Posicao>();
         Posicao p=encontraPeca(rei), nova;
 
+        if(p==null || rei==null)
+            return  disponiveis;
+
         if((nova=this.getPosicao(p.getLinha(),(char) (p.getColuna()+1)))!=null)
             adiciona(disponiveis, nova, rei.getJogador());
 
@@ -486,6 +505,9 @@ public class Tabuleiro
         Posicao posicao=encontraPeca(peca);
         ArrayList<Posicao> disponiveis=new ArrayList<Posicao>();
         Posicao nova;
+
+        if(posicao==null || peca==null)
+            return disponiveis;
 
         for(int i=1;;i++)
         {
@@ -625,6 +647,7 @@ public class Tabuleiro
 
     public Posicao getPosicaoRei(Jogador jogador)
     {
+
         for(Peca peca : jogador.getPecasTabuleiro())
             if(peca instanceof Rei)
                 return encontraPeca(peca);
@@ -656,16 +679,8 @@ public class Tabuleiro
         for(Peca peca : jogadorAtual.getPecasTabuleiro())
             if(peca instanceof Peao)
             {
-                try
-                {
-                    if (encontraPeca(peca).getLinha() == getUltimaLinhaJogadorAtual())
-                        return encontraPeca(peca);
-                }
-                catch(Exception e)
-                {
-                    int a=0;
-                    this.jogadorAtual=null;
-                }
+                if (encontraPeca(peca).getLinha() == getUltimaLinhaJogadorAtual())
+                    return encontraPeca(peca);
             }
         return null;
     }
