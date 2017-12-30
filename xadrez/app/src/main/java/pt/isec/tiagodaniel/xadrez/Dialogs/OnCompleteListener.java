@@ -5,5 +5,5 @@ package pt.isec.tiagodaniel.xadrez.Dialogs;
  */
 
 public interface OnCompleteListener {
-    void onComplete(int code);
+    void onComplete(int code, String tag);
 }
