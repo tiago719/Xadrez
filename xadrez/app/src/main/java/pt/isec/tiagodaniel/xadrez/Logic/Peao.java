@@ -16,19 +16,19 @@ import pt.isec.tiagodaniel.xadrez.R;
  *
  * @author Tiago Coutinho
  */
-public class Peao extends Peca
+public class Peao extends Peca implements Constantes
 {
     private boolean primeiroLance=true, foiPrimeiroLance=false;
     
     public Peao(Tabuleiro tabuleiro, Jogador j)
     {
-        super(tabuleiro,j);
+        super(tabuleiro,j, PEAO);
     }
 
     @Override
     public ArrayList<Posicao> verificaDisponiveisCheck()
     {
-        return tabuleiro.peaoVerificaCheck(this);
+        return tabuleiro.peao(this);
     }
     
     public ArrayList<Posicao> getDisponiveis()
