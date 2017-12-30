@@ -183,7 +183,7 @@ public class HistoricoActivity extends Activity implements Constantes, OnComplet
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public void onComplete(int code) {
+    public void onComplete(int code, String tag) {
         switch (code) {
             case QUESTION_OK: {
                 try {

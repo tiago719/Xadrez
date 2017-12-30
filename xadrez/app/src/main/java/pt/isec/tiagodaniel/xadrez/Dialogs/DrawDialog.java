@@ -19,20 +19,21 @@ import pt.isec.tiagodaniel.xadrez.R;
 public class DrawDialog extends DialogFragment {
     private String title;
     private OnCompleteListener mListener;
+    private String mTag = Constantes.TAG_EMPTY;
 
     public DrawDialog() {
-        title=Constantes.EMPATE;
+        title = Constantes.EMPATE;
     }
 
     @Override
     public Dialog onCreateDialog(final Bundle savedInstanceState) {
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder .setTitle(title)
+        builder.setTitle(title)
                 .setIcon(R.mipmap.ic_draw)
                 .setPositiveButton(getString(R.string.error_positive_button), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        mListener.onComplete(Constantes.ERROR_OK);
+                        mListener.onComplete(Constantes.DRAW_OK, mTag);
                     }
                 });
         // Create the AlertDialog object and return it

@@ -37,6 +37,8 @@
     <string name="question_delete_historic_title">Apagar histórico</string>
     <string name="question_delete_historic_message">De certeza que pretendes apagar o histórico?</string>
     <string name="win_title"> Venceu</string>
+    <string name="question_title_alterar_jogo">Alterar jogo</string>
+    <string name="question_message_alterar_jogo">Pretendes alterar o modo de jogo?\nIrás jogar contra o bot!</string>
 
     /**Menus**/
     <string name="perfil">Perfil</string>
@@ -73,5 +75,6 @@
     <string name="Jogador2_JOGvsJOG">Jogador 2 (pretas)</string>
     <string name="iniciarJogo_JOGvsJOG">Iniciar jogo</string>
     <string name="nomeJogador2_JOGvsJOG">Nome jogador2</string>
+    <string name="alterarJogo">Alterar jogo</string>
 
 </resources>

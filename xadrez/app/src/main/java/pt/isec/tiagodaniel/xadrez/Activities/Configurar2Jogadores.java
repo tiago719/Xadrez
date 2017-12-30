@@ -115,7 +115,7 @@ public class Configurar2Jogadores extends Activity implements OnCompleteListener
     }
 
     @Override
-    public void onComplete(int code) {
+    public void onComplete(int code, String tag) {
         switch (code) {
             case ERROR_OK: {
                 this.finish();

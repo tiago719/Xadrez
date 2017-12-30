@@ -6,6 +6,9 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -170,26 +173,11 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
 
     @Override
     public void onBackPressed() {
-        QuestionDialog questionDialog = new QuestionDialog(getString(R.string.question_title_leave_game), getString(R.string.question_message_leave_game));
+        QuestionDialog questionDialog = new QuestionDialog(
+                getString(R.string.question_title_leave_game),
+                getString(R.string.question_message_leave_game),
+                TAG_SAIR_JOGO);
         questionDialog.show(getFragmentManager(), QUESTION_DIALOG);
-    }
-
-    @Override
-    public void onComplete(int code) {
-        switch (code) {
-            case QUESTION_OK: {
-                try {
-                    this.xadrezApplication.saveHistoricList(this.gameModel.getTabuleiro().getHistorico());
-                    super.onBackPressed();
-                } catch (IOException e) {
-                    ErrorDialog errorDialog = new ErrorDialog(getString(R.string.error_save_historic));
-                    errorDialog.show(getFragmentManager(), ERROR_DIALOG);
-                }
-            }
-            case ERROR_OK: {
-                this.finish();
-            }
-        }
     }
 
     private void configuracoesIniciais() {
@@ -248,6 +236,59 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
         if (this.jogoComTempo) {
             this.tempoMaximo = bundle.getLong(TEMPO_MAX_JOGO_JOGvsJOG);
             this.tempoGanho = bundle.getLong(TEMPO_GANHO_JOGO_JOGvsJOG);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if(this.xadrezApplication.getModoJogo() == JOGADOR_VS_JOGADOR) {
+            MenuInflater mi = new MenuInflater(this);
+            mi.inflate(R.menu.menu_jogo, menu);
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.alterarJogo) {
+            QuestionDialog questionDialog = new QuestionDialog(
+                    getString(R.string.question_title_alterar_jogo),
+                    getString(R.string.question_message_alterar_jogo),
+                    TAG_ALTERAR_JOGO);
+            questionDialog.show(getFragmentManager(), QUESTION_DIALOG);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onComplete(int code, String tag) {
+        switch (code) {
+            case QUESTION_OK: {
+                if(tag.equals(TAG_SAIR_JOGO)) {
+                    try {
+                        this.xadrezApplication.saveHistoricList(this.gameModel.getTabuleiro().getHistorico());
+                        super.onBackPressed();
+                    } catch (IOException e) {
+                        ErrorDialog errorDialog = new ErrorDialog(getString(R.string.error_save_historic));
+                        errorDialog.show(getFragmentManager(), ERROR_DIALOG);
+                    }
+                } else if(tag.equals(TAG_ALTERAR_JOGO)) {
+                    if(this.xadrezApplication.getModoJogo() == JOGADOR_VS_JOGADOR) {
+                        this.xadrezApplication.setModoJogo(JOGADOR_VS_COMPUTADOR);
+                        this.gameModel.getTabuleiro().getHistorico().setModoJogo(JOGADOR_VS_COMPUTADOR);
+                    }
+                }
+                break;
+            }
+            case QUESTION_CANCELAR: {
+                break;
+            }
+            case ERROR_OK:
+            case DRAW_OK:
+            case WIN_OK: {
+                this.finish();
+                break;
+            }
         }
     }
 }
