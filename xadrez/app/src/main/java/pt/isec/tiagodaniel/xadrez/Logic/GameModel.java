@@ -40,50 +40,29 @@ public class GameModel {
 
     public void substituiPeao(int resultado, Posicao posicao)
     {
-        tabuleiro.getJogadorAdversario().addPecaMorta(posicao.getPeca());
+        Jogador atual=posicao.getPeca().getJogador();
+        Jogador adversario=tabuleiro.getJogadorAdversarioPeca(posicao.getPeca());
+        atual.addPecaMorta(posicao.getPeca());
         posicao.apagaPeca();
         switch (resultado)
         {
             case 1:
-                posicao.setPeca(new Rainha(tabuleiro,tabuleiro.getJogadorAdversario()));
+                posicao.setPeca(new Rainha(tabuleiro,atual));
                 break;
             case 2:
-                posicao.setPeca(new Torre(tabuleiro,tabuleiro.getJogadorAdversario()));
+                posicao.setPeca(new Torre(tabuleiro,atual));
                 break;
             case 3:
-                posicao.setPeca(new Bispo(tabuleiro,tabuleiro.getJogadorAdversario()));
+                posicao.setPeca(new Bispo(tabuleiro,atual));
                 break;
             case 4:
-                posicao.setPeca(new Cavalo(tabuleiro,tabuleiro.getJogadorAdversario()));
+                posicao.setPeca(new Cavalo(tabuleiro,atual));
                 break;
         }
-        tabuleiro.getJogadorAdversario().addPeca(posicao.getPeca());
+        atual.addPeca(posicao.getPeca());
         posicao.desenhaPeca();
 
         tabuleiro.getJogadorAtual().verificaCheck();
-        if(getTabuleiro().getJogadorAtual().isCheck())
-        {
-            getActivity().setReiCheck(tabuleiro.getPosicaoRei(tabuleiro.getJogadorAtual()));
-        }
-        else
-        {
-            getActivity().resetCheck();
-        }
-
-        if(tabuleiro.getJogadorAtual().isCheck())
-        {
-            if (!tabuleiro.getJogadorAdversario().hasMovimentos()) {
-                this.getTabuleiro().getHistorico().setVencedorJogo(this.getActivity(), this.getTabuleiro().getJogadorAtual(), false);
-                System.out.println("Jogo acabou perdendo");
-            }
-        }
-        else
-        {
-            if (!tabuleiro.getJogadorAtual().hasMovimentos()) {
-                this.getTabuleiro().getHistorico().setVencedorJogo(this.getActivity(), this.getTabuleiro().getJogadorAtual(), true);
-                System.out.println("Jogo acabou empetado");
-            }
-        }
     }
 
     public void verificaCheck()
