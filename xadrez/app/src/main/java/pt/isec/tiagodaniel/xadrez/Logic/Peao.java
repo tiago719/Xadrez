@@ -28,7 +28,7 @@ public class Peao extends Peca implements Constantes
     @Override
     public ArrayList<Posicao> verificaDisponiveisCheck()
     {
-        return tabuleiro.peao(this);
+        return tabuleiro.peaoVerificaCheck(this);
     }
     
     public ArrayList<Posicao> getDisponiveis()
