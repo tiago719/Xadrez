@@ -60,14 +60,14 @@ public class Configurar2Jogadores extends Activity implements OnCompleteListener
     }
 
     public void onComecarJogo_JOGvsJOG(View v) {
-        Intent intent = new Intent(this, Modo2JogadoresActivity.class);
+        Intent intent = new Intent(this, JogarContraPCActivity.class);
         Bundle bundle = new Bundle();
         if (this.mTxtNomeJogador2.getText().toString().equals("")) {
-            bundle.putString(NOME_JOGADOR2_JOGvsJOG, NOME_JOGADOR2_VAZIO);
+            bundle.putString(NOME_JOGADOR2, NOME_JOGADOR2_VAZIO);
         } else {
-            bundle.putString(NOME_JOGADOR2_JOGvsJOG, this.mTxtNomeJogador2.getText().toString());
+            bundle.putString(NOME_JOGADOR2, this.mTxtNomeJogador2.getText().toString());
         }
-        bundle.putString(FOTO_JOGADOR2_JOGvsJOG, this.fotoJogador2Path);
+        bundle.putString(FOTO_JOGADOR2, this.fotoJogador2Path);
         bundle.putBoolean(TEMPO_JOGO_JOGvsJOG, jogarComTempo);
         if (jogarComTempo) {
             bundle.putLong(TEMPO_MAX_JOGO_JOGvsJOG, this.mSeekBarTempoMaximo.getProgress());
@@ -75,7 +75,9 @@ public class Configurar2Jogadores extends Activity implements OnCompleteListener
         }
 
         intent.putExtras(bundle);
+        intent.setAction(Constantes.ACTION_JOGvsJOG);
         startActivity(intent);
+        this.finish();
     }
 
     public void onTirarFoto(View v) throws IOException {

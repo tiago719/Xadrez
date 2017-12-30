@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -34,8 +35,14 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
     private GameModel gameModel;
     private ArrayList<Posicao> posicoesDisponiveisAnteriores = null;
     private Resources resources;
-    private ImageView Check;
-    private Posicao reiCheck, peaoSubstituir;
+    private ImageView Check = null;
+    private Posicao reiCheck = null, peaoSubstituir;
+    private Ferramentas ferramentas;
+    private boolean jogoComTempo = false;
+    private long tempoMaximo, tempoGanho;
+    private TextView mTxtNomeJogador1, mTxtNomeJogador2;
+    private ImageView mImvFotoJogador1, mImvFotoJogador2;
+    XadrezApplication xadrezApplication;
     private Jogador atual;
 
     public ImageView getCheck() {
@@ -52,26 +59,11 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
         setContentView(R.layout.activity_jogar_contra_pc);
 
         ll = findViewById(R.id.tabuleiro);
-        Check = null;
-        reiCheck = null;
-
         this.gameModel = new GameModel(this.ll, this);
-        this.gameModel.getTabuleiro().getHistorico().setModoJogo(JOGADOR_VS_COMPUTADOR);
 
+        this.configuracoesIniciais();
         this.posicoesDisponiveisAnteriores = new ArrayList<>();
         resources = getResources();
-
-        try {
-            TextView txtNomeJogador = findViewById(R.id.txtNomeJogador_JOGvsPC);
-            ImageView imvFotoJogador = findViewById(R.id.imvFotoJogador_JOGvsPC);
-
-            Ferramentas ferramentas = new Ferramentas(this);
-            txtNomeJogador.setText(ferramentas.getSavedName());
-            ferramentas.setPic(imvFotoJogador, ferramentas.getSavedPhotoPath());
-
-        } catch (NullSharedPreferencesException e) {
-            e.printStackTrace();
-        }
 
     }
 
@@ -103,8 +95,8 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
         for (Posicao posicao : this.posicoesDisponiveisAnteriores) {
             pecaImageView = findViewById(getResources().getIdentifier("" + posicao.getColuna()
                     + posicao.getLinha(), "id", getBaseContext().getPackageName()));
-            drawable=(ColorDrawable) pecaImageView.getBackground();
-            if(drawable.getColor()==Color.BLACK)
+            drawable = (ColorDrawable) pecaImageView.getBackground();
+            if (drawable.getColor() == Color.BLACK)
                 resetCor(posicao, pecaImageView);
         }
     }
@@ -172,8 +164,7 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
         gameModel.substituiPeao(resultCode,peaoSubstituir, atual);
     }
 
-    public void updateView()
-    {
+    public void updateView() {
         ll.invalidate();
     }
 
@@ -188,8 +179,7 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
         switch (code) {
             case QUESTION_OK: {
                 try {
-                    XadrezApplication xadrezApplication = ((XadrezApplication) this.getApplication());
-                    xadrezApplication.saveHistoricList(this.gameModel.getTabuleiro().getHistorico());
+                    this.xadrezApplication.saveHistoricList(this.gameModel.getTabuleiro().getHistorico());
                     super.onBackPressed();
                 } catch (IOException e) {
                     ErrorDialog errorDialog = new ErrorDialog(getString(R.string.error_save_historic));
@@ -199,6 +189,65 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
             case ERROR_OK: {
                 this.finish();
             }
+        }
+    }
+
+    private void configuracoesIniciais() {
+        this.xadrezApplication = ((XadrezApplication) this.getApplication());
+        Intent intent = getIntent();
+        if (intent.getAction().equals("")) {
+            finish();
+        } else if (intent.getAction().equals(ACTION_JOGvsPC)) {
+            this.configuraJogador1();
+            this.configuraJogador2(true, null);
+            this.gameModel.getTabuleiro().getHistorico().setModoJogo(JOGADOR_VS_COMPUTADOR);
+            this.xadrezApplication.setModoJogo(JOGADOR_VS_COMPUTADOR);
+        } else if (intent.getAction().equals(ACTION_JOGvsJOG)) {
+            this.configuraJogador1();
+            this.configuraJogador2(false, intent.getExtras());
+            this.configuraTempo(intent.getExtras());
+            this.gameModel.getTabuleiro().getHistorico().setModoJogo(JOGADOR_VS_JOGADOR);
+            this.xadrezApplication.setModoJogo(JOGADOR_VS_JOGADOR);
+        }
+
+    }
+
+    private void configuraJogador1() {
+        this.mTxtNomeJogador1 = findViewById(R.id.txtNomeJogador1);
+        this.mImvFotoJogador1 = findViewById(R.id.imvFotoJogador1);
+
+        try {
+            this.ferramentas = new Ferramentas(this);
+            this.mTxtNomeJogador1.setText(ferramentas.getSavedName());
+            ferramentas.setPic(this.mImvFotoJogador1, ferramentas.getSavedPhotoPath());
+
+        } catch (NullSharedPreferencesException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void configuraJogador2(boolean bot, Bundle bundle) {
+        if (bot) return;
+        if (bundle == null) finish();
+
+        this.mTxtNomeJogador2 = findViewById(R.id.txtNomeJogador2);
+        this.mImvFotoJogador2 = findViewById(R.id.imvFotoJogador2);
+
+        this.mTxtNomeJogador2.setText(bundle.getString(NOME_JOGADOR2));
+        if (bundle.getString(FOTO_JOGADOR2).equals("")) {
+            this.mImvFotoJogador2.setImageResource(R.drawable.computador);
+        } else {
+            this.ferramentas.setPic(this.mImvFotoJogador2, bundle.getString(FOTO_JOGADOR2));
+        }
+
+
+    }
+
+    private void configuraTempo(Bundle bundle) {
+        this.jogoComTempo = bundle.getBoolean(TEMPO_JOGO_JOGvsJOG);
+        if (this.jogoComTempo) {
+            this.tempoMaximo = bundle.getLong(TEMPO_MAX_JOGO_JOGvsJOG);
+            this.tempoGanho = bundle.getLong(TEMPO_GANHO_JOGO_JOGvsJOG);
         }
     }
 }

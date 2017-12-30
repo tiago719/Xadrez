@@ -8,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import pt.isec.tiagodaniel.xadrez.Logic.Constantes;
 import pt.isec.tiagodaniel.xadrez.Logic.XadrezApplication;
 import pt.isec.tiagodaniel.xadrez.R;
 
@@ -21,6 +22,7 @@ public class MainActivity extends Activity {
 
     public void onJogarContraPC(View v) {
         Intent intent = new Intent(this, JogarContraPCActivity.class);
+        intent.setAction(Constantes.ACTION_JOGvsPC);
         startActivity(intent);
     }
 
@@ -30,13 +32,10 @@ public class MainActivity extends Activity {
     }
 
     public void onCriarJogoOnline(View v) {
-        Intent intent = new Intent(this, CriarJogoOnlineActivity.class);
-        startActivity(intent);
+
     }
 
     public void onJuntarJogoOnline(View v) {
-        Intent intent = new Intent(this, JuntarJogoOnlineActivity.class);
-        startActivity(intent);
     }
 
     @Override

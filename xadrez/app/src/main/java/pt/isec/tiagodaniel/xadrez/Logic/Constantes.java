@@ -58,12 +58,15 @@ public interface Constantes {
 
     /**Intents**/
     String PUT_EXTRA_JOGADAS = "JOGADAS";
-    String NOME_JOGADOR2_JOGvsJOG = "NOMEJOGADOR2";
-    String FOTO_JOGADOR2_JOGvsJOG = "FOTOJOGADOR2";
+    String NOME_JOGADOR2 = "NOMEJOGADOR2";
+    String FOTO_JOGADOR2 = "FOTOJOGADOR2";
     String TEMPO_JOGO_JOGvsJOG = "TEMPOJOGO";
     String TEMPO_MAX_JOGO_JOGvsJOG = "TEMPOMAXIMO";
     String TEMPO_GANHO_JOGO_JOGvsJOG = "TEMPOGANHO";
     String NOME_JOGADOR2_VAZIO = "Jogador 2";
+    /**Actions**/
+    String ACTION_JOGvsPC = "JOGADORVSBOT";
+    String ACTION_JOGvsJOG = "JOGADORVSJOGADOR";
 
     /**Jogador VS Jogador**/
     int TEMPO_MAXIMO_MIN = 2;

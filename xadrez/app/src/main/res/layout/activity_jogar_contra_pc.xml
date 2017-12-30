@@ -23,7 +23,7 @@
             android:padding="5dp">
 
             <TextView
-                android:id="@+id/txtNomeJogador_JOGvsPC"
+                android:id="@+id/txtNomeJogador1"
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
                 android:layout_marginBottom="10dp"
@@ -34,7 +34,7 @@
                 android:textColor="@color/title" />
 
             <ImageView
-                android:id="@+id/imvFotoJogador_JOGvsPC"
+                android:id="@+id/imvFotoJogador1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -70,7 +70,7 @@
             android:padding="5dp">
 
             <TextView
-                android:id="@+id/txtNomeComputador_JOGvsPC"
+                android:id="@+id/txtNomeJogador2"
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
                 android:layout_marginBottom="10dp"
@@ -81,7 +81,7 @@
                 android:textColor="@color/title" />
 
             <ImageView
-                android:id="@+id/imvFotoComputador_JOGvsPC"
+                android:id="@+id/imvFotoJogador2"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
