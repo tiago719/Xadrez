@@ -62,7 +62,7 @@ public class GameModel {
         atual.addPeca(posicao.getPeca());
         posicao.desenhaPeca();
 
-        tabuleiro.getJogadorAtual().verificaCheck();
+        verificaCheck();
     }
 
     public void verificaCheck()
