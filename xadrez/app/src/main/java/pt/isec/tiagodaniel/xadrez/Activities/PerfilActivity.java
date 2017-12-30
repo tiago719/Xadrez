@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,15 +22,12 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 import pt.isec.tiagodaniel.xadrez.Dialogs.ErrorDialog;
 import pt.isec.tiagodaniel.xadrez.Exceptions.NullSharedPreferencesException;
 import pt.isec.tiagodaniel.xadrez.Logic.Constantes;
 import pt.isec.tiagodaniel.xadrez.Logic.Ferramentas;
-import pt.isec.tiagodaniel.xadrez.Logic.Historico.Historico;
-import pt.isec.tiagodaniel.xadrez.Logic.XadrezApplication;
 import pt.isec.tiagodaniel.xadrez.R;
 
 public class PerfilActivity extends Activity {
@@ -57,9 +53,9 @@ public class PerfilActivity extends Activity {
 
         try {
             this.mFerramentas = new Ferramentas(this);
-            this.mTxtNome = (EditText) findViewById(R.id.txtNome);
+            this.mTxtNome = findViewById(R.id.txtNome);
             this.mTxtNome.setText(this.mFerramentas.getSavedName());
-            this.mImvPhoto = (ImageView) findViewById(R.id.imvPhoto);
+            this.mImvPhoto = findViewById(R.id.imvPhoto);
             this.mPhotoPath = this.mFerramentas.getSavedPhotoPath();
             this.mFerramentas.setPic(this.mImvPhoto, this.mPhotoPath);
         } catch (NullSharedPreferencesException e) {

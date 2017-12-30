@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:background="@drawable/rounded_button"
-            android:drawableEnd="@mipmap/ic_computer_black_18dp"
+            android:drawableEnd="@mipmap/ic_android_black_18dp"
             android:drawableStart="@mipmap/ic_face_black_18dp"
             android:fontFamily="@font/fonty"
             android:onClick="onJogarContraPC"

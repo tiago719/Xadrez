@@ -17,7 +17,6 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        XadrezApplication appState = ((XadrezApplication)this.getApplication());
     }
 
     public void onJogarContraPC(View v) {
@@ -26,7 +25,7 @@ public class MainActivity extends Activity {
     }
 
     public void onModo2Jogadores(View v) {
-        Intent intent = new Intent(this, Modo2JogadoresActivity.class);
+        Intent intent = new Intent(this, Configurar2Jogadores.class);
         startActivity(intent);
     }
 
