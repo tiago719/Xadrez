@@ -42,6 +42,23 @@ public class StateAdapter implements IState {
         this.posicaoDestino = posicaoDestino;
     }
 
+    public boolean jogaPC()
+    {
+        if(getGame().verificaCheck(getGame().getTabuleiro().getJogadorAdversario()))
+            return true;
+
+        getGame().getActivity().updateView();
+
+        getGame().getTabuleiro().getJogadorAtual().joga();
+
+        this.getGame().getTabuleiro().trocaJogadorActual();
+
+        if(getGame().verificaCheck(getGame().getTabuleiro().getJogadorAdversario()))
+            return true;
+
+        return false;
+    }
+
     @Override
     public IState seguinte(int linha, char coluna) {
         return this;

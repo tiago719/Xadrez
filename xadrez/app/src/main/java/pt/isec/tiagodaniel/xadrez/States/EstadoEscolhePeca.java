@@ -17,8 +17,6 @@ public class EstadoEscolhePeca extends StateAdapter {
 
     public EstadoEscolhePeca(GameModel game) {
         super(game);
-
-        getGame().verificaCheck();
     }
 
     @Override
