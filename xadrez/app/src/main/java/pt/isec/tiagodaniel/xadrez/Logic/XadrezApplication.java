@@ -23,6 +23,7 @@ import pt.isec.tiagodaniel.xadrez.Logic.Historico.Historico;
 public class XadrezApplication extends Application {
     private static XadrezApplication singleton;
     private ArrayList<Historico> historicList;
+    private int modoJogo;
 
     public static XadrezApplication getInstance() {
         return singleton;
@@ -82,4 +83,11 @@ public class XadrezApplication extends Application {
         }
     }
 
+    public void setModoJogo(int modoJogo) {
+        this.modoJogo = modoJogo;
+    }
+
+    public int getModoJogo() {
+        return this.modoJogo;
+    }
 }

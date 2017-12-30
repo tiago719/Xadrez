@@ -51,6 +51,7 @@ public class Historico implements Serializable, Constantes {
                 } else {
                     this.vencedorJogo = PECAS_PRETAS;
                 }
+                break;
             }
             case JOGADOR_VS_COMPUTADOR: {
                 if (jogadorActual instanceof JogadorLight) {
@@ -63,6 +64,7 @@ public class Historico implements Serializable, Constantes {
                 } else {
                     this.vencedorJogo = PC;
                 }
+                break;
             }
         }
     }

@@ -132,21 +132,25 @@ public class HistoricoActivity extends Activity implements Constantes, OnComplet
                 arrayList.clear();
                 arrayList.add(0, R.mipmap.ic_face_black_18dp);
                 arrayList.add(1, R.mipmap.ic_face_black_18dp);
+                break;
             }
             case JOGADOR_VS_COMPUTADOR: {
                 arrayList.clear();
                 arrayList.add(0, R.mipmap.ic_face_black_18dp);
                 arrayList.add(1, R.mipmap.ic_computer_black_18dp);
+                break;
             }
             case CRIAR_JOGO_REDE: {
                 arrayList.clear();
                 arrayList.add(0, R.mipmap.ic_wifi_black_18dp);
                 arrayList.add(1, R.mipmap.ic_face_black_18dp);
+                break;
             }
             case JUNTAR_JOGO_REDE: {
                 arrayList.clear();
                 arrayList.add(0, R.mipmap.ic_face_black_18dp);
                 arrayList.add(1, R.mipmap.ic_wifi_black_18dp);
+                break;
             }
             default: {
                 arrayList.clear();
@@ -189,6 +193,7 @@ public class HistoricoActivity extends Activity implements Constantes, OnComplet
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                break;
             }
             case QUESTION_CANCELAR: {
                 return;
