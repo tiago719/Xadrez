@@ -55,14 +55,7 @@ public class EstadoEscolheDestino extends StateAdapter implements Constantes {
                 getGame().verificaCheck();
 
                 getGame().getActivity().updateView();
-                try
-                {
-                    Thread.sleep(2000);
-                }
-                catch (InterruptedException e)
-                {
-                    e.printStackTrace();
-                }
+
                 getGame().getTabuleiro().getJogadorAtual().joga();
 
                 getGame().verificaCheck();
