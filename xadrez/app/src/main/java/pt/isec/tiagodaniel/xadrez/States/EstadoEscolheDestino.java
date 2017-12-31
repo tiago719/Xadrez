@@ -55,10 +55,12 @@ public class EstadoEscolheDestino extends StateAdapter implements Constantes {
                 getGame().getActivity().peaoUltimaLinha(posicaoPeao, getGame().getTabuleiro().getJogadorAtual());
             }
 
-            if(flag1 && getGame().getActivity() instanceof JogarContraPCActivity)
+            if(flag1 && this.getGame().getXadrezApplication().getModoJogo() == JOGADOR_VS_COMPUTADOR)
             {
                 this.getGame().getTabuleiro().trocaJogadorActual();
-                jogaPC.start(); //return this;
+                jogaPC.start();
+            } else if (flag1 && this.getGame().getXadrezApplication().getModoJogo() == JOGADOR_VS_JOGADOR) {
+                this.getGame().getTabuleiro().trocaJogadorActual();
             }
 
             return new EstadoEscolhePeca(this.getGame());

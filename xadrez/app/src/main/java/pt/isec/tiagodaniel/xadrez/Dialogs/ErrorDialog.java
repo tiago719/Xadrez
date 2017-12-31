@@ -19,6 +19,7 @@ import pt.isec.tiagodaniel.xadrez.R;
 public class ErrorDialog extends DialogFragment {
     private String mMessage;
     private OnCompleteListener mListener;
+    private String mTag = Constantes.TAG_EMPTY;
 
     public ErrorDialog(String message) {
      this.mMessage = message;
@@ -33,7 +34,7 @@ public class ErrorDialog extends DialogFragment {
                 .setMessage(this.mMessage)
                 .setPositiveButton(getString(R.string.error_positive_button), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        mListener.onComplete(Constantes.ERROR_OK);
+                        mListener.onComplete(Constantes.ERROR_OK, mTag);
                     }
                 });
         // Create the AlertDialog object and return it

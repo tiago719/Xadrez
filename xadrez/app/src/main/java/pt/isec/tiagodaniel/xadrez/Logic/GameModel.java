@@ -15,10 +15,12 @@ public class GameModel {
     private Tabuleiro tabuleiro;
     private IState state;
     private JogarContraPCActivity activity;
+    private XadrezApplication xadrezApplication;
 
     public GameModel(LinearLayout ll, JogarContraPCActivity activity)
     {
         this.activity=activity;
+        this.xadrezApplication = ((XadrezApplication) this.activity.getApplication());
 
         tabuleiro = new Tabuleiro(ll);
         this.setState(new EstadoEscolhePeca(this));
@@ -102,4 +104,7 @@ public class GameModel {
     }
     //endregion
 
+    public XadrezApplication getXadrezApplication() {
+        return this.xadrezApplication;
+    }
 }

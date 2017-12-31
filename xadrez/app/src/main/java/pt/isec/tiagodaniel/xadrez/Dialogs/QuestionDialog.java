@@ -20,10 +20,24 @@ public class QuestionDialog extends DialogFragment {
     private String mMessage;
     private String mTitle;
     private OnCompleteListener mListener;
+    private String mTag = Constantes.TAG_EMPTY;
 
     public QuestionDialog(String title, String message) {
         this.mTitle = title;
         this.mMessage = message;
+    }
+
+    /**
+     * Construtor usado quando este dialog é chamado várias vezes para saber o resultado
+     * e a tag de quem o invocou
+     * @param title
+     * @param message
+     * @param tag
+     */
+    public QuestionDialog(String title, String message, String tag) {
+        this.mTitle = title;
+        this.mMessage = message;
+        this.mTag = tag;
     }
 
     @Override
@@ -35,13 +49,13 @@ public class QuestionDialog extends DialogFragment {
                 .setMessage(this.mMessage)
                 .setPositiveButton(getString(R.string.question_positive_button), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        mListener.onComplete(Constantes.QUESTION_OK);
+                        mListener.onComplete(Constantes.QUESTION_OK, mTag);
                     }
                 })
                 .setNegativeButton(getString(R.string.question_negative_button), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        mListener.onComplete(Constantes.QUESTION_CANCELAR);
+                        mListener.onComplete(Constantes.QUESTION_CANCELAR, mTag);
                     }
                 });
         // Create the AlertDialog object and return it

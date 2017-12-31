@@ -27,6 +27,11 @@ public interface Constantes {
     int QUESTION_OK = 1;
     int QUESTION_CANCELAR = 2;
     int ERROR_OK = 3;
+    int DRAW_OK = 4;
+    int WIN_OK = 5;
+    String TAG_EMPTY = "EMPTY_TAG";
+    String TAG_ALTERAR_JOGO = "ALTERARJOGO";
+    String TAG_SAIR_JOGO = "SAIRJOGO";
 
     /**Modos de jogo**/
     int JOGADOR_VS_JOGADOR = 0;
@@ -58,11 +63,30 @@ public interface Constantes {
 
     /**Intents**/
     String PUT_EXTRA_JOGADAS = "JOGADAS";
+    String NOME_JOGADOR2 = "NOMEJOGADOR2";
+    String FOTO_JOGADOR2 = "FOTOJOGADOR2";
+    String TEMPO_JOGO_JOGvsJOG = "TEMPOJOGO";
+    String TEMPO_MAX_JOGO_JOGvsJOG = "TEMPOMAXIMO";
+    String TEMPO_GANHO_JOGO_JOGvsJOG = "TEMPOGANHO";
+    String NOME_JOGADOR2_VAZIO = "Jogador 2";
+    /**Actions**/
+    String ACTION_JOGvsPC = "JOGADORVSBOT";
+    String ACTION_JOGvsJOG = "JOGADORVSJOGADOR";
+
+    /**Jogador VS Jogador**/
+    int TEMPO_MAXIMO_MIN = 2;
+    int TEMPO_MAXIMO_MAX = 20;
+    String MINUTOS = "m";
+    int TEMPO_GANHO_MIN = 0;
+    int TEMPO_GANHO_MAX = 60;
+    String SEGUNDOS = "s";
+
+    /**Request Codes**/
+    int PHOTO_REQUEST = 20;
 
     /**Promocao do Peao**/
-    static final int RAINHA_ESCOLHIDA=1;
-    static final int BISPO_ESCOLHIDA=2;
-    static final int TORRE_ESCOLHIDA=3;
-    static final int CAVALO_ESCOLHIDA=4;
-
+    int RAINHA_ESCOLHIDA=1;
+    int BISPO_ESCOLHIDA=2;
+    int TORRE_ESCOLHIDA=3;
+    int CAVALO_ESCOLHIDA=4;
 }
