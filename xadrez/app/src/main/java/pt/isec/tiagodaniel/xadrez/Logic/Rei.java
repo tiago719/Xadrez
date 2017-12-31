@@ -26,13 +26,13 @@ public class Rei extends Peca implements Constantes
     }
 
     @Override
-    public ArrayList<Posicao> getDisponiveis()
+    public ArrayList<Posicao> getDisponiveis(Jogador atual)
     {
         ArrayList<Posicao> disponiveis= tabuleiro.rei(this);
 
         for (Iterator<Posicao> iterator = disponiveis.iterator(); iterator.hasNext();) {
             Posicao posicao = iterator.next();
-            if(tabuleiro.ficaEmCheckJogadorAtual(posicao, this))
+            if(atual.ficaEmCheck(posicao, this))
             {
                 iterator.remove();
             }

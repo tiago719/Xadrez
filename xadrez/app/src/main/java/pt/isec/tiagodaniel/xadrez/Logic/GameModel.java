@@ -37,9 +37,9 @@ public class GameModel {
         this.setState(this.state.seguinte(linha, coluna));
     }
 
-
     public void substituiPeao(int resultado, Posicao posicao, Jogador atual)
     {
+        JogaPC jogaPC=new JogaPC(this);
         atual.addPecaMorta(posicao.getPeca());
         posicao.apagaPeca();
         switch (resultado)
@@ -64,7 +64,7 @@ public class GameModel {
 
         getTabuleiro().trocaJogadorActual();
 
-        state.jogaPC();
+        jogaPC.start();
     }
 
     //true - acabou o jogo
@@ -84,7 +84,7 @@ public class GameModel {
 
         if(adversario.isCheck())
         {
-            if (!adversario.hasMovimentos()) {
+            if (!adversario.hasMovimentos(adversario)) {
                 this.getTabuleiro().getHistorico().setVencedorJogo(this.getActivity(), atual, false);
                 getActivity().mostrarVencedor(atual);
                 return true;
@@ -92,7 +92,7 @@ public class GameModel {
         }
         else
         {
-            if (!adversario.hasMovimentos()) {
+            if (!adversario.hasMovimentos(adversario)) {
                 this.getTabuleiro().getHistorico().setVencedorJogo(this.getActivity(), atual, true);
                 getActivity().mostrarEmpate();
                 return true;

@@ -31,13 +31,13 @@ public class Peao extends Peca implements Constantes
         return tabuleiro.peaoVerificaCheck(this);
     }
     
-    public ArrayList<Posicao> getDisponiveis()
+    public ArrayList<Posicao> getDisponiveis(Jogador atual)
     {
         ArrayList<Posicao> disponiveis= tabuleiro.peao(this);
 
         for (Iterator<Posicao> iterator = disponiveis.iterator(); iterator.hasNext();) {
             Posicao posicao = iterator.next();
-            if(tabuleiro.ficaEmCheckJogadorAtual(posicao, this))
+            if(atual.ficaEmCheck(posicao, this))
             {
                 iterator.remove();
             }

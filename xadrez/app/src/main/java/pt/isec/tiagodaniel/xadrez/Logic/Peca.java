@@ -39,7 +39,7 @@ public abstract class Peca
     }
 
     public abstract ArrayList<Posicao> verificaDisponiveisCheck();
-    public abstract ArrayList<Posicao> getDisponiveis();
+    public abstract ArrayList<Posicao> getDisponiveis(Jogador atual);
 
     public abstract void desenhaPeca(ImageView childAt);
 
