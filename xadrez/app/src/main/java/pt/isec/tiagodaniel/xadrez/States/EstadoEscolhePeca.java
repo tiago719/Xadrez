@@ -28,7 +28,7 @@ public class EstadoEscolhePeca extends StateAdapter {
             return this;
 
         if (pecaAtual.getJogador() == getGame().getTabuleiro().getJogadorAtual()) {
-            posicoesDisponiveis = pecaAtual.getDisponiveis();
+            posicoesDisponiveis = pecaAtual.getDisponiveis(pecaAtual.getJogador());
             getGame().getActivity().resetPosicoesDisponiveisAnteriores();
             getGame().getActivity().setPosicoesJogaveis(posicoesDisponiveis);
 

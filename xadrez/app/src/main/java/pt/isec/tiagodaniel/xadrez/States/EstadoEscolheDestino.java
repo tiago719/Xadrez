@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import pt.isec.tiagodaniel.xadrez.Activities.JogarContraPCActivity;
 import pt.isec.tiagodaniel.xadrez.Logic.Constantes;
 import pt.isec.tiagodaniel.xadrez.Logic.GameModel;
+import pt.isec.tiagodaniel.xadrez.Logic.JogaPC;
 import pt.isec.tiagodaniel.xadrez.Logic.Peca;
 import pt.isec.tiagodaniel.xadrez.Logic.Posicao;
 
@@ -30,16 +31,17 @@ public class EstadoEscolheDestino extends StateAdapter implements Constantes {
         Posicao posicaoDestino = getGame().getTabuleiro().getPosicao(linha, coluna);
         pecaClick=posicaoDestino.getPeca();
         boolean flag1=true;
+        JogaPC jogaPC=new JogaPC(getGame());
 
        if (pecaClick!= null && pecaClick.getJogador() == getGame().getTabuleiro().getJogadorAtual()) // se clicou numa nova peca da sua equipa
         {
             getGame().getActivity().resetPosicoesDisponiveisAnteriores();
-            posicoesDisponiveis = pecaClick.getDisponiveis();
+            posicoesDisponiveis = pecaClick.getDisponiveis(pecaClick.getJogador());
             getGame().getActivity().setPosicoesJogaveis(posicoesDisponiveis);
             setPosicaoOrigem(posicaoDestino);
             return this;
         }
-        if(getPosicaoOrigem().getPeca().getDisponiveis().contains(posicaoDestino))// se clicou numa posicao disponivel
+        if(getPosicaoOrigem().getPeca().getDisponiveis(getGame().getTabuleiro().getJogadorAtual()).contains(posicaoDestino))// se clicou numa posicao disponivel
         {
             getGame().getTabuleiro().movePara(getPosicaoOrigem(), posicaoDestino, getGame().getTabuleiro().getJogadorAtual(), getGame().getTabuleiro().getJogadorAdversario());
             getGame().getActivity().resetPosicoesDisponiveisAnteriores();
@@ -56,7 +58,7 @@ public class EstadoEscolheDestino extends StateAdapter implements Constantes {
             if(flag1 && this.getGame().getXadrezApplication().getModoJogo() == JOGADOR_VS_COMPUTADOR)
             {
                 this.getGame().getTabuleiro().trocaJogadorActual();
-                if (jogaPC()) return this;
+                jogaPC.start();
             } else if (flag1 && this.getGame().getXadrezApplication().getModoJogo() == JOGADOR_VS_JOGADOR) {
                 this.getGame().getTabuleiro().trocaJogadorActual();
             }

@@ -9,6 +9,9 @@ import android.os.Handler;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.PriorityQueue;
+
 import static pt.isec.tiagodaniel.xadrez.Logic.Constantes.*;
 
 /**
@@ -77,35 +80,55 @@ public class Jogador
     
     public void joga()
     {
-        int randomNum;
-        Peca peca;
+        Comparator<Jogada> comparator = new ComparadorJogadasPC();
+        PriorityQueue<Jogada> queue = new PriorityQueue<Jogada>(16, comparator);
 
-        do
-        {
-            randomNum = 0 + (int)(Math.random() * pecasTabuleiro.size());
-            peca=pecasTabuleiro.get(randomNum);
+        for(Peca peca : pecasTabuleiro)
+            for(Posicao posicao : peca.getDisponiveis(this))
+                queue.add(new Jogada(tabuleiro.encontraPeca(peca), posicao, tabuleiro.getJogadorAtual(), tabuleiro));
 
-        }while(peca.getDisponiveis().size()==0);
+        Jogada jogada=queue.remove();
 
-        ArrayList<Posicao> disponiveis=peca.getDisponiveis();
-        
-        randomNum=0 + (int)(Math.random() * disponiveis.size());
+        tabuleiro.movePara(jogada.getPosicaoOriginal(), jogada.getPosicaoDestino(), tabuleiro.getJogadorAtual(), tabuleiro.getJogadorAdversario());
 
-        DelayMovePara delayMovePara = new DelayMovePara(peca, disponiveis, randomNum, tabuleiro.getJogadorAtual(), tabuleiro.getJogadorAdversario());
-        new Handler().postDelayed(delayMovePara, 1000);
+        //DelayMovePara delayMovePara = new DelayMovePara(peca, disponiveis, randomNum, tabuleiro.getJogadorAtual(), tabuleiro.getJogadorAdversario());
+        //new Handler().postDelayed(delayMovePara, 1000);
     }
 
-    public boolean hasMovimentos()
+    public boolean ficaEmCheck(Posicao posicao, Peca peca)
+    {
+        Peca temp=posicao.getPeca();
+        Posicao original=tabuleiro.encontraPeca(peca);
+        posicao.setPeca(peca);
+        original.setPeca(null);
+
+        for(Peca atual : tabuleiro.getOutroJogador(this).getPecasTabuleiro())
+        {
+            if(atual==temp)
+                continue;
+            if(atual.poeCheck(this))
+            {
+                original.setPeca(peca);
+                posicao.setPeca(temp);
+                return true;
+            }
+        }
+        original.setPeca(peca);
+        posicao.setPeca(temp);
+        return false;
+    }
+
+    public boolean hasMovimentos(Jogador atual)
     {
         for(Peca peca : pecasTabuleiro)
         {
-            if(peca.getDisponiveis().size()>0)
+            if(peca.getDisponiveis(atual).size()>0)
                 return true;
         }
         return false;
     }
 
-    public class DelayMovePara implements Runnable {
+   /* public class DelayMovePara implements Runnable {
         private Peca peca;
         private ArrayList<Posicao> disponiveis;
         private int randomNum;
@@ -123,5 +146,5 @@ public class Jogador
         public void run() {
             tabuleiro.movePara(tabuleiro.encontraPeca(peca), disponiveis.get(randomNum), atual, adversario);
         }
-    }
+    }*/
 }
