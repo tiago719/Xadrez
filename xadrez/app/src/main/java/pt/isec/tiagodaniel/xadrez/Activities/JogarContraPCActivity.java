@@ -227,8 +227,6 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
         } else {
             this.ferramentas.setPic(this.mImvFotoJogador2, bundle.getString(FOTO_JOGADOR2));
         }
-
-
     }
 
     private void configuraTempo(Bundle bundle) {
@@ -241,7 +239,7 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if(this.xadrezApplication.getModoJogo() == JOGADOR_VS_JOGADOR) {
+        if(this.xadrezApplication.getModoJogo() == JOGADOR_VS_JOGADOR || this.xadrezApplication.getModoJogo() == JOGADOR_VS_COMPUTADOR) {
             MenuInflater mi = new MenuInflater(this);
             mi.inflate(R.menu.menu_jogo, menu);
         }
@@ -250,10 +248,16 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.alterarJogo) {
+        String message="";
+        if (item.getItemId() == R.id.alterarJogo)
+        {
+            if(this.xadrezApplication.getModoJogo()==JOGADOR_VS_COMPUTADOR)
+                message=getString(R.string.question_message_alterar_jogo_para_contra_humano);
+            else
+                message=getString(R.string.question_message_alterar_jogo_para_contra_bot);
             QuestionDialog questionDialog = new QuestionDialog(
                     getString(R.string.question_title_alterar_jogo),
-                    getString(R.string.question_message_alterar_jogo),
+                    message,
                     TAG_ALTERAR_JOGO);
             questionDialog.show(getFragmentManager(), QUESTION_DIALOG);
         }
@@ -276,6 +280,11 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
                     if(this.xadrezApplication.getModoJogo() == JOGADOR_VS_JOGADOR) {
                         this.xadrezApplication.setModoJogo(JOGADOR_VS_COMPUTADOR);
                         this.gameModel.getTabuleiro().getHistorico().setModoJogo(JOGADOR_VS_COMPUTADOR);
+                    }
+                    else if(this.xadrezApplication.getModoJogo() == JOGADOR_VS_COMPUTADOR)
+                    {
+                        this.xadrezApplication.setModoJogo(JOGADOR_VS_JOGADOR);
+                        this.gameModel.getTabuleiro().getHistorico().setModoJogo(JOGADOR_VS_JOGADOR);
                     }
                 }
                 break;

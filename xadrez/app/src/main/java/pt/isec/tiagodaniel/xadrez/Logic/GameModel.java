@@ -7,6 +7,8 @@ import pt.isec.tiagodaniel.xadrez.Logic.Historico.Historico;
 import pt.isec.tiagodaniel.xadrez.States.EstadoEscolhePeca;
 import pt.isec.tiagodaniel.xadrez.States.IState;
 
+import static pt.isec.tiagodaniel.xadrez.Logic.Constantes.*;
+
 /**
  * Created by drmoreira on 10-12-2017.
  */
@@ -64,9 +66,13 @@ public class GameModel {
 
         verificaCheck(atual);
 
-        getTabuleiro().trocaJogadorActual();
-
-        jogaPC.start();
+        if(getXadrezApplication().getModoJogo() == JOGADOR_VS_COMPUTADOR)
+        {
+            getTabuleiro().trocaJogadorActual();
+            jogaPC.start();
+        } else if (getXadrezApplication().getModoJogo() == JOGADOR_VS_JOGADOR) {
+            getTabuleiro().trocaJogadorActual();
+        }
     }
 
     //true - acabou o jogo
