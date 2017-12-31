@@ -6,6 +6,7 @@
 package pt.isec.tiagodaniel.xadrez.Logic;
 
 import android.os.Handler;
+import android.widget.Chronometer;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
@@ -24,12 +25,22 @@ public class Jogador
     protected ArrayList<Peca> pecasMortas;
     protected boolean check;
     protected Tabuleiro tabuleiro;
-    
+    protected Chronometer tempo;
+
     public Jogador(Tabuleiro t)
     {
         pecasTabuleiro=new ArrayList<Peca>();
         pecasMortas=new ArrayList<Peca>();
+        tempo = null;
+        check=false;
+        tabuleiro=t;
+    }
 
+    public Jogador(Tabuleiro t, Chronometer tempo)
+    {
+        pecasTabuleiro=new ArrayList<Peca>();
+        pecasMortas=new ArrayList<Peca>();
+        this.tempo = tempo;
         check=false;
         tabuleiro=t;
     }
@@ -90,9 +101,6 @@ public class Jogador
         Jogada jogada=queue.remove();
 
         tabuleiro.movePara(jogada.getPosicaoOriginal(), jogada.getPosicaoDestino(), tabuleiro.getJogadorAtual(), tabuleiro.getJogadorAdversario());
-
-        //DelayMovePara delayMovePara = new DelayMovePara(peca, disponiveis, randomNum, tabuleiro.getJogadorAtual(), tabuleiro.getJogadorAdversario());
-        //new Handler().postDelayed(delayMovePara, 1000);
     }
 
     public boolean ficaEmCheck(Posicao posicao, Peca peca)
@@ -128,23 +136,18 @@ public class Jogador
         return false;
     }
 
-   /* public class DelayMovePara implements Runnable {
-        private Peca peca;
-        private ArrayList<Posicao> disponiveis;
-        private int randomNum;
-        private Jogador atual, adversario;
+    public void setTempo(int segundos)
+    {
+        tempo.setBase(segundos);
+    }
 
-        public DelayMovePara(Peca peca, ArrayList<Posicao> disponiveis, int randomNum, Jogador atual, Jogador adversario) {
-            this.peca = peca;
-            this.disponiveis = disponiveis;
-            this.randomNum = randomNum;
-            this.atual=atual;
-            this.adversario=adversario;
-        }
+    public void contaTempo()
+    {
+        tempo.start();
+    }
 
-        @Override
-        public void run() {
-            tabuleiro.movePara(tabuleiro.encontraPeca(peca), disponiveis.get(randomNum), atual, adversario);
-        }
-    }*/
+    public void paraTempo()
+    {
+        tempo.stop();
+    }
 }

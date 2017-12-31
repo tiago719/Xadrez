@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -47,6 +48,7 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
     private ImageView mImvFotoJogador1, mImvFotoJogador2;
     XadrezApplication xadrezApplication;
     private Jogador atual;
+    Chronometer CronometroJogBrancas,CronometroJogPretas;
 
     public ImageView getCheck() {
         return Check;
@@ -62,12 +64,12 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
         setContentView(R.layout.activity_jogar_contra_pc);
 
         ll = findViewById(R.id.tabuleiro);
-        this.gameModel = new GameModel(this.ll, this);
+
+        this.gameModel = new GameModel(this.ll, this, CronometroJogBrancas,CronometroJogPretas);
 
         this.configuracoesIniciais();
         this.posicoesDisponiveisAnteriores = new ArrayList<>();
         resources = getResources();
-
     }
 
     public void onClickQuadrado(View v) {
@@ -87,7 +89,7 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
         ImageView iv;
         for (Posicao p : posicoesDisponiveis) {
             iv = findViewById(resources.getIdentifier("" + p.getColuna() + p.getLinha(), "id", getBaseContext().getPackageName()));
-            iv.setBackgroundColor(Color.BLACK);
+            iv.setBackgroundColor(Color.GREEN);
             this.posicoesDisponiveisAnteriores.add(p);
         }
     }
@@ -99,7 +101,7 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
             pecaImageView = findViewById(getResources().getIdentifier("" + posicao.getColuna()
                     + posicao.getLinha(), "id", getBaseContext().getPackageName()));
             drawable = (ColorDrawable) pecaImageView.getBackground();
-            if (drawable.getColor() == Color.BLACK)
+            if (drawable.getColor() == Color.GREEN)
                 resetCor(posicao, pecaImageView);
         }
     }
@@ -190,12 +192,13 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
             this.configuraJogador2(true, null);
             this.gameModel.getTabuleiro().getHistorico().setModoJogo(JOGADOR_VS_COMPUTADOR);
             this.xadrezApplication.setModoJogo(JOGADOR_VS_COMPUTADOR);
+            this.configuraTempo(intent.getExtras());
         } else if (intent.getAction().equals(ACTION_JOGvsJOG)) {
             this.configuraJogador1();
             this.configuraJogador2(false, intent.getExtras());
-            this.configuraTempo(intent.getExtras());
             this.gameModel.getTabuleiro().getHistorico().setModoJogo(JOGADOR_VS_JOGADOR);
             this.xadrezApplication.setModoJogo(JOGADOR_VS_JOGADOR);
+            this.configuraTempo(intent.getExtras());
         }
 
     }
@@ -230,10 +233,20 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
     }
 
     private void configuraTempo(Bundle bundle) {
-        this.jogoComTempo = bundle.getBoolean(TEMPO_JOGO_JOGvsJOG);
-        if (this.jogoComTempo) {
+        CronometroJogBrancas = findViewById(R.id.tempoJogBrancas);
+        CronometroJogPretas = findViewById(R.id.tempoJogPretas);
+        if (xadrezApplication.getModoJogo()!=JOGADOR_VS_COMPUTADOR && bundle.getBoolean(TEMPO_JOGO_JOGvsJOG)) {
+            this.jogoComTempo=true;
             this.tempoMaximo = bundle.getLong(TEMPO_MAX_JOGO_JOGvsJOG);
             this.tempoGanho = bundle.getLong(TEMPO_GANHO_JOGO_JOGvsJOG);
+            CronometroJogBrancas.setBase(this.tempoMaximo);
+            CronometroJogPretas.setBase(this.tempoMaximo);
+            gameModel.setTempo((int)tempoMaximo);
+        }
+        else
+        {
+            CronometroJogBrancas.setVisibility(View.GONE);
+            CronometroJogPretas.setVisibility(View.GONE);
         }
     }
 
@@ -299,5 +312,15 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
                 break;
             }
         }
+    }
+
+    public boolean isJogoComTempo()
+    {
+        return jogoComTempo;
+    }
+
+    public void atualizaSegundosBrancas(int segundos)
+    {
+        //
     }
 }

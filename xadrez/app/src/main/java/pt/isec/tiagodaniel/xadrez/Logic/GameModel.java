@@ -1,5 +1,6 @@
 package pt.isec.tiagodaniel.xadrez.Logic;
 
+import android.widget.Chronometer;
 import android.widget.LinearLayout;
 
 import pt.isec.tiagodaniel.xadrez.Activities.JogarContraPCActivity;
@@ -19,12 +20,12 @@ public class GameModel {
     private JogarContraPCActivity activity;
     private XadrezApplication xadrezApplication;
 
-    public GameModel(LinearLayout ll, JogarContraPCActivity activity)
+    public GameModel(LinearLayout ll, JogarContraPCActivity activity, Chronometer chronometer1, Chronometer chronometer2)
     {
         this.activity=activity;
         this.xadrezApplication = ((XadrezApplication) this.activity.getApplication());
 
-        tabuleiro = new Tabuleiro(ll);
+        tabuleiro = new Tabuleiro(ll, chronometer1, chronometer2);
         this.setState(new EstadoEscolhePeca(this));
     }
 
@@ -68,9 +69,16 @@ public class GameModel {
 
         if(getXadrezApplication().getModoJogo() == JOGADOR_VS_COMPUTADOR)
         {
+            if(getActivity().isJogoComTempo())
+                getTabuleiro().getJogadorAtual().paraTempo();
+
             getTabuleiro().trocaJogadorActual();
             jogaPC.start();
-        } else if (getXadrezApplication().getModoJogo() == JOGADOR_VS_JOGADOR) {
+        } else if (getXadrezApplication().getModoJogo() == JOGADOR_VS_JOGADOR)
+        {
+            if(getActivity().isJogoComTempo())
+                getTabuleiro().getJogadorAtual().paraTempo();
+
             getTabuleiro().trocaJogadorActual();
         }
     }
@@ -112,5 +120,11 @@ public class GameModel {
 
     public XadrezApplication getXadrezApplication() {
         return this.xadrezApplication;
+    }
+
+    public void setTempo(int segundos)
+    {
+        getTabuleiro().getJogadorAtual().setTempo(segundos);
+        getTabuleiro().getJogadorAdversario().setTempo(segundos);
     }
 }

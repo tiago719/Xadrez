@@ -14,6 +14,8 @@ public class EstadoEscolhePeca extends StateAdapter {
 
     public EstadoEscolhePeca(GameModel game) {
         super(game);
+        if(getGame().getActivity().isJogoComTempo())
+            getGame().getTabuleiro().getJogadorAtual().contaTempo();
     }
 
     @Override

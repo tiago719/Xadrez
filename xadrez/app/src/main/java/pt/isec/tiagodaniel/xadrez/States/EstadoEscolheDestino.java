@@ -59,7 +59,12 @@ public class EstadoEscolheDestino extends StateAdapter implements Constantes {
             {
                 this.getGame().getTabuleiro().trocaJogadorActual();
                 jogaPC.start();
-            } else if (flag1 && this.getGame().getXadrezApplication().getModoJogo() == JOGADOR_VS_JOGADOR) {
+            } else if (flag1 && this.getGame().getXadrezApplication().getModoJogo() == JOGADOR_VS_JOGADOR)
+            {
+                if(getGame().getActivity().isJogoComTempo())
+                {
+                    getGame().getTabuleiro().getJogadorAtual().paraTempo();
+                }
                 this.getGame().getTabuleiro().trocaJogadorActual();
             }
 

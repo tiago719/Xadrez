@@ -52,11 +52,13 @@
             android:orientation="vertical">
 
             <Chronometer
+                android:id="@+id/tempoJogBrancas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="20dp" />
 
             <Chronometer
+                android:id="@+id/tempoJogPretas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="20dp" />
