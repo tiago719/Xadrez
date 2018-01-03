@@ -355,13 +355,7 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
         switch (code) {
             case QUESTION_OK: {
                 if(tag.equals(TAG_SAIR_JOGO)) {
-                    try {
-                        this.xadrezApplication.saveHistoricList(this.gameModel.getTabuleiro().getHistorico());
-                        super.onBackPressed();
-                    } catch (IOException e) {
-                        ErrorDialog errorDialog = new ErrorDialog(getString(R.string.error_save_historic));
-                        errorDialog.show(getFragmentManager(), ERROR_DIALOG);
-                    }
+                    this.saveHistoric();
                 } else if(tag.equals(TAG_ALTERAR_JOGO)) {
                     if(this.xadrezApplication.getModoJogo() == JOGADOR_VS_JOGADOR) {
                         CronometroJogBrancas.setVisibility(View.GONE);
@@ -380,10 +374,13 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
             case QUESTION_CANCELAR: {
                 break;
             }
-            case ERROR_OK:
+            case ERROR_OK: {
+                this.finish();
+                break;
+            }
             case DRAW_OK:
             case WIN_OK: {
-                this.finish();
+                this.saveHistoric();
                 break;
             }
         }
@@ -392,5 +389,15 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
     public boolean isJogoComTempo()
     {
         return jogoComTempo;
+    }
+
+    private void saveHistoric() {
+        try {
+            this.xadrezApplication.saveHistoricList(this.gameModel.getTabuleiro().getHistorico());
+            super.onBackPressed();
+        } catch (IOException e) {
+            ErrorDialog errorDialog = new ErrorDialog(getString(R.string.error_save_historic));
+            errorDialog.show(getFragmentManager(), ERROR_DIALOG);
+        }
     }
 }

@@ -26,12 +26,10 @@
         <activity
             android:name=".Activities.ActivityPromocaoPeao"
             android:noHistory="true"
-            android:theme="@style/AppTheme.PromovePeao"></activity>
+            android:theme="@style/AppTheme.PromovePeao" />
         <activity android:name=".Activities.HistoricoActivity" />
         <activity android:name=".Activities.HistoricoJogadasActivity" />
-        <activity android:name=".Activities.Configurar2Jogadores"></activity>
-        <activity android:name=".Activities.HistoricoActivity" />
-        <activity android:name=".Activities.HistoricoJogadasActivity" />
+        <activity android:name=".Activities.Configurar2Jogadores" />
         <activity android:name=".Dialogs.WinDialog"></activity>
     </application>
 
