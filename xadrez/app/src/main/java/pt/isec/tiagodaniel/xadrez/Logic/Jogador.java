@@ -25,22 +25,11 @@ public class Jogador
     protected ArrayList<Peca> pecasMortas;
     protected boolean check;
     protected Tabuleiro tabuleiro;
-    protected Chronometer tempo;
 
     public Jogador(Tabuleiro t)
     {
         pecasTabuleiro=new ArrayList<Peca>();
         pecasMortas=new ArrayList<Peca>();
-        tempo = null;
-        check=false;
-        tabuleiro=t;
-    }
-
-    public Jogador(Tabuleiro t, Chronometer tempo)
-    {
-        pecasTabuleiro=new ArrayList<Peca>();
-        pecasMortas=new ArrayList<Peca>();
-        this.tempo = tempo;
         check=false;
         tabuleiro=t;
     }
@@ -134,20 +123,5 @@ public class Jogador
                 return true;
         }
         return false;
-    }
-
-    public void setTempo(int segundos)
-    {
-        tempo.setBase(segundos);
-    }
-
-    public void contaTempo()
-    {
-        tempo.start();
-    }
-
-    public void paraTempo()
-    {
-        tempo.stop();
     }
 }

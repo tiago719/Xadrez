@@ -12,9 +12,9 @@ import static pt.isec.tiagodaniel.xadrez.Logic.Constantes.TABULEIRO_COLUNAS;
 
 public class JogadorLight extends Jogador
 {
-    public JogadorLight(Tabuleiro t, Chronometer chronometer)
+    public JogadorLight(Tabuleiro t)
     {
-        super(t, chronometer);
+        super(t);
         criaPecas();
     }
 

@@ -69,15 +69,12 @@ public class GameModel {
 
         if(getXadrezApplication().getModoJogo() == JOGADOR_VS_COMPUTADOR)
         {
-            if(getActivity().isJogoComTempo())
-                getTabuleiro().getJogadorAtual().paraTempo();
-
             getTabuleiro().trocaJogadorActual();
             jogaPC.start();
         } else if (getXadrezApplication().getModoJogo() == JOGADOR_VS_JOGADOR)
         {
             if(getActivity().isJogoComTempo())
-                getTabuleiro().getJogadorAtual().paraTempo();
+                getActivity().paraTempo(getTabuleiro().getJogadorAtual());
 
             getTabuleiro().trocaJogadorActual();
         }
@@ -120,11 +117,5 @@ public class GameModel {
 
     public XadrezApplication getXadrezApplication() {
         return this.xadrezApplication;
-    }
-
-    public void setTempo(int segundos)
-    {
-        getTabuleiro().getJogadorAtual().setTempo(segundos);
-        getTabuleiro().getJogadorAdversario().setTempo(segundos);
     }
 }

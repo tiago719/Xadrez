@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="pt.isec.tiagodaniel.xadrez.MainActivity"
+    tools:context="pt.isec.tiagodaniel.xadrez.Activities.MainActivity"
     android:padding="40dp"
     android:background="@drawable/background">
 

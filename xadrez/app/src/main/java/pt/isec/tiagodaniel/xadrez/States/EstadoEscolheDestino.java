@@ -63,7 +63,7 @@ public class EstadoEscolheDestino extends StateAdapter implements Constantes {
             {
                 if(getGame().getActivity().isJogoComTempo())
                 {
-                    getGame().getTabuleiro().getJogadorAtual().paraTempo();
+                    getGame().getActivity().paraTempo(getGame().getTabuleiro().getJogadorAtual());
                 }
                 this.getGame().getTabuleiro().trocaJogadorActual();
             }

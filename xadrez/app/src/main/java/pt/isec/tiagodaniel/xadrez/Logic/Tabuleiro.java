@@ -43,8 +43,8 @@ public class Tabuleiro
             }
         }
         jogadores=new ArrayList<Jogador>();
-        jogadores.add(new JogadorDark(this, chronometer1));
-        jogadores.add(new JogadorLight(this, chronometer2));
+        jogadores.add(new JogadorDark(this));
+        jogadores.add(new JogadorLight(this));
         jogadorAtual=jogadores.get(1);
         jogadorAdversario=jogadores.get(0);
     }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">xadrez</string>
+    <string name="app_name">Xadrez</string>
     <string name="botao1MP">Jogar Contra Bot</string>
     <string name="botao2MP">Modo 2 Jogadores</string>
     <string name="botao3MP">Criar Jogo Online</string>
