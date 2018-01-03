@@ -3,11 +3,14 @@
     <color name="colorPrimary">#293fac</color>
     <color name="colorPrimaryDark">#03062b</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="tabLight">#f5d5b5</color>
-    <color name="tabDark">#9c5703</color>
+    <color name="tabLight">#f5e0b5</color>
+    <color name="tabDark">#804703</color>
     <color name="tabLightTransparent">#74f5d5b5</color>
     <color name="yellow">#eff23a</color>
     <color name="white">#f9f6f3</color>
     <color name="title">#613318</color>
     <color name="edit">#855723</color>
+    <color name="paddingTabuleiro">#3e2509</color>
+    <color name="branco">#ffffff</color>
+    <color name="preto">#000000</color>
 </resources>

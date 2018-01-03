@@ -28,6 +28,7 @@ public class MainActivity extends Activity {
 
     public void onModo2Jogadores(View v) {
         Intent intent = new Intent(this, Configurar2Jogadores.class);
+        intent.setAction(Constantes.ACTION_JOGvsJOG);
         startActivity(intent);
     }
 

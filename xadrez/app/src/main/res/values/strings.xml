@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">xadrez</string>
+    <string name="app_name">Xadrez</string>
     <string name="botao1MP">Jogar Contra Bot</string>
     <string name="botao2MP">Modo 2 Jogadores</string>
     <string name="botao3MP">Criar Jogo Online</string>
@@ -38,7 +38,8 @@
     <string name="question_delete_historic_message">De certeza que pretendes apagar o histórico?</string>
     <string name="win_title"> Venceu</string>
     <string name="question_title_alterar_jogo">Alterar jogo</string>
-    <string name="question_message_alterar_jogo">Pretendes alterar o modo de jogo?\nIrás jogar contra o bot!</string>
+    <string name="question_message_alterar_jogo_para_contra_bot">Pretendes alterar o modo de jogo?\nIrás jogar contra o bot!</string>
+    <string name="question_message_alterar_jogo_para_contra_humano">Pretendes alterar o modo de jogo para 2 Jogadores - 1 Dispositivo?</string>
 
     /**Menus**/
     <string name="perfil">Perfil</string>

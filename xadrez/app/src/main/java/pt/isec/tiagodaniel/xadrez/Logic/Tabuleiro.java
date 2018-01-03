@@ -6,6 +6,7 @@
 package pt.isec.tiagodaniel.xadrez.Logic;
 
 import android.app.Activity;
+import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -29,7 +30,7 @@ public class Tabuleiro
     private Jogador jogadorAdversario;
     private Historico mHistorico;
 
-    public Tabuleiro(LinearLayout ll)
+    public Tabuleiro(LinearLayout ll, Chronometer chronometer1, Chronometer chronometer2)
     {
         tabuleiro=new ArrayList<Posicao>();
         this.mHistorico = new Historico(new Date());
