@@ -34,7 +34,7 @@
             android:textSize="30sp"
             android:textStyle="bold"
             android:textColor="@color/edit"
-            android:textColorHint="@color/edit"/>
+            android:textColorHint="@color/tabLight"/>
 
     </LinearLayout>
 

@@ -38,7 +38,7 @@
             android:textStyle="bold"
             android:hint="@string/perfil_name_hint"
             android:textColor="@color/edit"
-            android:textColorHint="@color/edit"
+            android:textColorHint="@color/tabLight"
             android:textAlignment="center" />
 
 

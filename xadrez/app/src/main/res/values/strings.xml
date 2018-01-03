@@ -6,7 +6,7 @@
     <string name="botao4MP">Juntar Jogo Online</string>
 
     <string name="perfil_name">Nome Jogador:</string>
-    <string name="perfil_name_hint">Campeão do Xadrez</string>
+    <string name="perfil_name_hint">[nome jogador]</string>
 
     /**Shared Preferences**/
     <string name="saved_name">saved_name</string>
@@ -75,7 +75,10 @@
     <string name="Jogador1_JOGvsJOG">Jogador 1 (brancas)</string>
     <string name="Jogador2_JOGvsJOG">Jogador 2 (pretas)</string>
     <string name="iniciarJogo_JOGvsJOG">Iniciar jogo</string>
-    <string name="nomeJogador2_JOGvsJOG">Nome jogador2</string>
+    <string name="nomeJogador2_JOGvsJOG">[nome jogador2]</string>
     <string name="alterarJogo">Alterar jogo</string>
+    <string name="jogador1">Jogador 1</string>
+    <string name="dois_segundos">2s</string>
+    <string name="dois_minutos">2m</string>
 
 </resources>

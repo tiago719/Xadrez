@@ -1,7 +1,6 @@
 package pt.isec.tiagodaniel.xadrez.Activities;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -207,7 +206,7 @@ public class Configurar2Jogadores extends Activity implements OnCompleteListener
                 String segundos = String.valueOf(progress) + SEGUNDOS;
 
                 if (progress < TEMPO_GANHO_MIN) {
-                    progress = TEMPO_GANHO_MIN
+                    progress = TEMPO_GANHO_MIN;
                 } else {
                     mTxtTempoGanho.setText(segundos);
                 }
