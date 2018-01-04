@@ -34,10 +34,11 @@ public class QuestionDialog extends DialogFragment {
      * @param message
      * @param tag
      */
-    public QuestionDialog(String title, String message, String tag) {
+    public QuestionDialog(OnCompleteListener listener, String title, String message, String tag) {
         this.mTitle = title;
         this.mMessage = message;
         this.mTag = tag;
+        this.mListener = listener;
     }
 
     @Override
@@ -60,15 +61,5 @@ public class QuestionDialog extends DialogFragment {
                 });
         // Create the AlertDialog object and return it
         return builder.create();
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            this.mListener = (OnCompleteListener) context;
-        } catch (final ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement OnCompleteListener");
-        }
     }
 }
