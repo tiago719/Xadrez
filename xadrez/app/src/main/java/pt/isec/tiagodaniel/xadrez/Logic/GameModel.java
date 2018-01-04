@@ -4,17 +4,10 @@ import android.widget.Chronometer;
 import android.widget.LinearLayout;
 
 import pt.isec.tiagodaniel.xadrez.Activities.JogarContraPCActivity;
-import pt.isec.tiagodaniel.xadrez.Logic.Historico.Historico;
 import pt.isec.tiagodaniel.xadrez.States.EstadoEscolhePeca;
 import pt.isec.tiagodaniel.xadrez.States.IState;
 
-import static pt.isec.tiagodaniel.xadrez.Logic.Constantes.*;
-
-/**
- * Created by drmoreira on 10-12-2017.
- */
-
-public class GameModel {
+public class GameModel implements Constantes {
     private Tabuleiro tabuleiro;
     private IState state;
     private JogarContraPCActivity activity;
@@ -27,6 +20,15 @@ public class GameModel {
 
         this.modoJogo = modoJogo;
         tabuleiro = new Tabuleiro(ll, chronometer1, chronometer2, this.modoJogo);
+
+        if (this.modoJogo == CRIAR_JOGO_REDE) {
+            GameThread gameThread = new GameThread(this.activity, SocketHandler.getClientSocket(), Constantes.SERVIDOR);
+            gameThread.start();
+        } else if (this.modoJogo == JUNTAR_JOGO_REDE) {
+            GameThread gameThread = new GameThread(this.activity, SocketHandler.getClientSocket(), Constantes.CLIENTE);
+            gameThread.start();
+        }
+
         this.setState(new EstadoEscolhePeca(this));
     }
 

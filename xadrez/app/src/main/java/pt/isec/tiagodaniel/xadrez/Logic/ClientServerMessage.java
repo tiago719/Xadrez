@@ -2,23 +2,14 @@ package pt.isec.tiagodaniel.xadrez.Logic;
 
 import java.io.Serializable;
 
-/**
- * Created by drmoreira on 04-01-2018.
- */
-
 public class ClientServerMessage implements Serializable {
     static final long serialVersionUID = 1L;
     private String nomeJogador;
     private PosicaoRede posicaoOriginal, posicaoDestino;
 
-    public ClientServerMessage(String nomeJogador) {
-        this.setNomeJogador(nomeJogador);
+    public ClientServerMessage() {
         this.posicaoOriginal = new PosicaoRede();
         this.posicaoDestino = new PosicaoRede();
-    }
-
-    public ClientServerMessage() {
-
     }
 
     public String getNomeJogador() {

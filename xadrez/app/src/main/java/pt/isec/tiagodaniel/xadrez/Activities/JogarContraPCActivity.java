@@ -28,12 +28,9 @@ import pt.isec.tiagodaniel.xadrez.Dialogs.WinDialog;
 import pt.isec.tiagodaniel.xadrez.Logic.Constantes;
 import pt.isec.tiagodaniel.xadrez.Logic.Ferramentas;
 import pt.isec.tiagodaniel.xadrez.Logic.GameModel;
-import pt.isec.tiagodaniel.xadrez.Logic.GameThread;
 import pt.isec.tiagodaniel.xadrez.Logic.Jogador;
 import pt.isec.tiagodaniel.xadrez.Logic.JogadorLight;
-import pt.isec.tiagodaniel.xadrez.Logic.Peca;
 import pt.isec.tiagodaniel.xadrez.Logic.Posicao;
-import pt.isec.tiagodaniel.xadrez.Logic.SocketHandler;
 import pt.isec.tiagodaniel.xadrez.Logic.XadrezApplication;
 import pt.isec.tiagodaniel.xadrez.R;
 
@@ -83,11 +80,7 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
     }
 
     public void onClickQuadrado(View v) {
-        ArrayList<Posicao> posicoesDisponiveis = new ArrayList<>();
         String res = getResources().getResourceEntryName(v.getId());
-        ImageView iv;
-        Peca pecaClick;
-        Posicao posicaoDestino;
 
         int linha = Character.getNumericValue(res.charAt(1));
         char coluna = res.charAt(0);
@@ -207,23 +200,11 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
 
         } else if (intent.getAction().equals(ACTION_CRIAR_JOGO_REDE)) {
             modoJogo = CRIAR_JOGO_REDE;
-
-            int deviceType = intent.getIntExtra(DEVICE_TYPE, SERVIDOR);
-
-            GameThread gameThread = new GameThread(this, SocketHandler.getClientSocket(), deviceType);
-            gameThread.start();
-
         } else if (intent.getAction().equals(ACTION_JUNTAR_JOGO_REDE)) {
             modoJogo = JUNTAR_JOGO_REDE;
-
-            int deviceType = intent.getIntExtra(DEVICE_TYPE, CLIENTE);
-
-            GameThread gameThread = new GameThread(this, SocketHandler.getClientSocket(), deviceType);
-            gameThread.start();
         }
 
         this.configuraJogador1();
-
     }
 
     private void configuraJogador1() {

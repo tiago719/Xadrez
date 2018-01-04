@@ -1,6 +1,5 @@
 package pt.isec.tiagodaniel.xadrez.Logic;
 
-import android.app.Activity;
 import android.os.Bundle;
 
 import java.io.IOException;
@@ -10,10 +9,6 @@ import java.net.Socket;
 
 import pt.isec.tiagodaniel.xadrez.Activities.JogarContraPCActivity;
 import pt.isec.tiagodaniel.xadrez.Exceptions.NullSharedPreferencesException;
-
-/**
- * Created by drmoreira on 04-01-2018.
- */
 
 public class GameThread extends Thread implements Constantes {
     private ObjectInputStream in = null;
@@ -89,7 +84,8 @@ public class GameThread extends Thread implements Constantes {
         if (this.deviceType == CLIENTE) {
             in = new ObjectInputStream(gameSocket.getInputStream());
             out = new ObjectOutputStream(gameSocket.getOutputStream());
-            requestMessage = new ClientServerMessage(this.ferramentas.getSavedName());
+            requestMessage = new ClientServerMessage();
+            requestMessage.setNomeJogador(this.ferramentas.getSavedName());
             // TODO falta enviar foto
 
             out.writeUnshared(requestMessage);
