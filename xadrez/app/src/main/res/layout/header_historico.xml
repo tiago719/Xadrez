@@ -8,7 +8,7 @@
     android:id="@+id/headerLinha">
 
     <TextView
-        android:textSize="24sp"
+        android:textSize="11pt"
         android:text="@string/headerHistoricoData"
         android:gravity="center"
         android:id="@+id/headerHistoricoData"
@@ -20,7 +20,7 @@
         android:textColor="@color/title"/>
 
     <TextView
-        android:textSize="24sp"
+        android:textSize="11pt"
         android:text="@string/headerHistoricoModoJogo"
         android:gravity="center"
         android:id="@+id/headerHistoricoModoJogo"
@@ -32,7 +32,7 @@
         android:textColor="@color/title"/>
 
     <TextView
-        android:textSize="24sp"
+        android:textSize="11pt"
         android:text="@string/headerHistoricoVencedor"
         android:gravity="center"
         android:id="@+id/headerHistoricoVencedor"

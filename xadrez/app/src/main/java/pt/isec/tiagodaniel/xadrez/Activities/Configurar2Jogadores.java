@@ -112,7 +112,7 @@ public class Configurar2Jogadores extends Activity implements OnCompleteListener
             intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(image));
             startActivityForResult(intent, PHOTO_REQUEST);
         } catch (Exception e) {
-            ErrorDialog mErrorDialog = new ErrorDialog(getString(R.string.take_photo));
+            ErrorDialog mErrorDialog = new ErrorDialog(this, getString(R.string.take_photo));
             mErrorDialog.show(getFragmentManager(), Constantes.ERROR_DIALOG);
         }
     }
@@ -164,8 +164,8 @@ public class Configurar2Jogadores extends Activity implements OnCompleteListener
         this.mTxtTempoMaximo = findViewById(R.id.txtTempoMaximo);
         this.mSeekBarTempoMaximo = findViewById(R.id.seekBarTempoMaximo);
         this.mSeekBarTempoMaximo.setEnabled(jogarComTempo);
-        this.mSeekBarTempoMaximo.setMax(TEMPO_MAXIMO_MAX + TEMPO_MAXIMO_MIN);
-        this.mSeekBarTempoMaximo.setProgress((TEMPO_MAXIMO_MAX + TEMPO_MAXIMO_MIN) / 2);
+        this.mSeekBarTempoMaximo.setMax(TEMPO_MAXIMO_MAX);
+        this.mSeekBarTempoMaximo.setProgress(TEMPO_MAXIMO_MAX/2);
         String minutos = String.valueOf(this.mSeekBarTempoMaximo.getProgress()) + MINUTOS;
         this.mTxtTempoMaximo.setText(minutos);
         this.mSeekBarTempoMaximo.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -175,9 +175,9 @@ public class Configurar2Jogadores extends Activity implements OnCompleteListener
 
                 if (progress < TEMPO_MAXIMO_MIN) {
                     progress = TEMPO_MAXIMO_MIN;
-                } else {
-                    mTxtTempoMaximo.setText(minutos);
+                    minutos = String.valueOf(progress) + MINUTOS;
                 }
+                mTxtTempoMaximo.setText(minutos);
             }
 
             @Override

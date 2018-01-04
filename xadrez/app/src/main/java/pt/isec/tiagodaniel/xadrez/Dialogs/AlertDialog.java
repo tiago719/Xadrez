@@ -22,7 +22,8 @@ public class AlertDialog extends DialogFragment {
     private String mTag = Constantes.TAG_EMPTY;
 
 
-    public AlertDialog(String title) {
+    public AlertDialog(OnCompleteListener listener, String title) {
+        this.mListener = listener;
         this.mTitle = title;
     }
 
@@ -30,16 +31,19 @@ public class AlertDialog extends DialogFragment {
     public Dialog onCreateDialog(final Bundle savedInstanceState) {
         // Use the Builder class for convenient dialog construction
         final EditText edtIP = new EditText(getActivity());
-        edtIP.setText("10.0.2.2"); // emulator's default ip
+
+        edtIP.setText("192.168.1.83");
+        // TODO meter aqui o IP
+        //edtIP.setText("10.0.2.2"); // emulator's default ip
 
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
         builder.setTitle(this.mTitle)
                 .setIcon(R.mipmap.ic_help_black_24dp)
-                //.setMessage(this.mMessage)
                 .setView(edtIP)
                 .setPositiveButton(getString(R.string.alert_positive_button), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        mListener.onComplete(Constantes.ALERT_OK, edtIP.getText().toString());
+                        String serverIP = edtIP.getText().toString();
+                        mListener.onComplete(Constantes.ALERT_OK, serverIP);
                     }
                 })
                 .setNegativeButton(getString(R.string.alert_negative_button), new DialogInterface.OnClickListener() {
@@ -49,15 +53,5 @@ public class AlertDialog extends DialogFragment {
                 });
         // Create the AlertDialog object and return it
         return builder.create();
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            this.mListener = (OnCompleteListener) context;
-        } catch (final ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement OnCompleteListener");
-        }
     }
 }

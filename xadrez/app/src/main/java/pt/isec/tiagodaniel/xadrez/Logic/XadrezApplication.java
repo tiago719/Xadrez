@@ -69,17 +69,15 @@ public class XadrezApplication extends Application {
         this.historicList.add(historico);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public boolean removeHistoric() throws IOException {
+    public void removeHistoric() throws IOException {
         String directory = getFilesDir().getAbsolutePath();
         File file = new File(directory, Constantes.HISTORIC_FILE_NAME);
         boolean result = file.delete();
 
-        if(result) {
+        if (result) {
             this.historicList.clear();
-            return true;
         } else {
-            return false;
+            throw new IOException();
         }
     }
 

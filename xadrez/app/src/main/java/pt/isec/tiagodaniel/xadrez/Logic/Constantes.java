@@ -50,8 +50,8 @@ public interface Constantes {
     String TORRE = "TORRE";
 
     /**Jogadores**/
-    String PECAS_BRANCAS = "Peças Brancas";
-    String PECAS_PRETAS = "Peças Pretas";
+    String PECAS_BRANCAS = "Brancas";
+    String PECAS_PRETAS = "Pretas";
     String PC = "Computador";
     String EMPATE = "Empate";
     String DESISTIU = "Desistiu";
@@ -71,9 +71,12 @@ public interface Constantes {
     String TEMPO_MAX_JOGO_JOGvsJOG = "TEMPOMAXIMO";
     String TEMPO_GANHO_JOGO_JOGvsJOG = "TEMPOGANHO";
     String NOME_JOGADOR2_VAZIO = "Jogador 2";
+
     /**Actions**/
     String ACTION_JOGvsPC = "JOGADORVSBOT";
     String ACTION_JOGvsJOG = "JOGADORVSJOGADOR";
+    String ACTION_CRIAR_JOGO_REDE = "CRIARJOGOREDE";
+    String ACTION_JUNTAR_JOGO_REDE = "JUNTARJOGOREDE";
 
     /**Jogador VS Jogador**/
     int TEMPO_MAXIMO_MIN = 2;
@@ -91,4 +94,10 @@ public interface Constantes {
     int BISPO_ESCOLHIDA=2;
     int TORRE_ESCOLHIDA=3;
     int CAVALO_ESCOLHIDA=4;
+
+    /**Sockets**/
+    int SERVER_PORT = 6000;
+    String DEVICE_TYPE = "DEVICETYPE";
+    int CLIENTE = 1;
+    int SERVIDOR = 2;
 }

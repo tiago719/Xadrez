@@ -21,7 +21,8 @@ public class DrawDialog extends DialogFragment {
     private OnCompleteListener mListener;
     private String mTag = Constantes.TAG_EMPTY;
 
-    public DrawDialog() {
+    public DrawDialog(OnCompleteListener listener) {
+        this.mListener = listener;
         title = Constantes.EMPATE;
     }
 
@@ -38,16 +39,6 @@ public class DrawDialog extends DialogFragment {
                 });
         // Create the AlertDialog object and return it
         return builder.create();
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            this.mListener = (OnCompleteListener) context;
-        } catch (final ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement OnCompleteListener");
-        }
     }
 }
 

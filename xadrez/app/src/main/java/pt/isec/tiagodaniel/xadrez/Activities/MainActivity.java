@@ -1,74 +1,67 @@
 package pt.isec.tiagodaniel.xadrez.Activities;
 
+import android.Manifest;
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-import java.io.IOException;
-import java.net.Inet4Address;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.util.Enumeration;
+import java.net.Socket;
 
 import pt.isec.tiagodaniel.xadrez.Dialogs.AlertDialog;
 import pt.isec.tiagodaniel.xadrez.Dialogs.OnCompleteListener;
 import pt.isec.tiagodaniel.xadrez.Logic.Constantes;
+import pt.isec.tiagodaniel.xadrez.Logic.SocketHandler;
 import pt.isec.tiagodaniel.xadrez.R;
 
-public class MainActivity extends Activity implements OnCompleteListener{
+public class MainActivity extends Activity implements OnCompleteListener, Constantes {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.INTERNET}, 1234);
+            }
+
+            if (checkSelfPermission(Manifest.permission.ACCESS_NETWORK_STATE) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_NETWORK_STATE}, 4321);
+            }
+
+            if (checkSelfPermission(Manifest.permission.ACCESS_WIFI_STATE) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_WIFI_STATE}, 1324);
+            }
+        }
     }
 
     public void onJogarContraPC(View v) {
         Intent intent = new Intent(this, JogarContraPCActivity.class);
-        intent.setAction(Constantes.ACTION_JOGvsPC);
+        intent.setAction(ACTION_JOGvsPC);
         startActivity(intent);
     }
 
     public void onModo2Jogadores(View v) {
         Intent intent = new Intent(this, Configurar2Jogadores.class);
-        intent.setAction(Constantes.ACTION_JOGvsJOG);
+        intent.setAction(ACTION_JOGvsJOG);
         startActivity(intent);
     }
 
     public void onCriarJogoOnline(View v) {
-        String ip = this.getLocalIpAddress();
-        ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage(getString(R.string.progress_message) + "\n(IP: " + ip
-                + ")");
-        progressDialog.setTitle(R.string.progress_title);
-        progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                finish();
-                /*
-                if (serverSocket!=null) {
-                    try {
-                        serverSocket.close();
-                    } catch (IOException e) {
-                    }
-                    serverSocket=null;
-                }
-                */
-            }
-        });
-        progressDialog.show();
+        Intent intent = new Intent(this, ConfigurarJogoRedeActivity.class);
+        startActivity(intent);
     }
 
     public void onJuntarJogoOnline(View v) {
-        AlertDialog alertDialog = new AlertDialog(getString(R.string.alert_title));
-        alertDialog.show(getFragmentManager(), Constantes.ALERT_DIALOG);
+        AlertDialog alertDialog = new AlertDialog(this, getString(R.string.alert_title));
+        alertDialog.show(getFragmentManager(), ALERT_DIALOG);
     }
 
     @Override
@@ -89,32 +82,43 @@ public class MainActivity extends Activity implements OnCompleteListener{
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onComplete(int code, String tag) {
-        switch (code){
-            case Constantes.ALERT_OK: {
+    private void connectClient(final String serverIP) {
+        Thread t = new Thread(new Runnable() {
+            Socket socketGame = null;
+            Handler procMsg = new Handler();
 
+            @Override
+            public void run() {
+                try {
+                    socketGame = new Socket(serverIP, SERVER_PORT);
+                    SocketHandler.setClientSocket(socketGame);
+                } catch (Exception e) {
+                    socketGame = null;
+                }
+                if (socketGame == null) {
+                    procMsg.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            finish();
+                        }
+                    });
+                }
+                Intent intent = new Intent(getApplicationContext(), JogarContraPCActivity.class);
+                intent.setAction(Constantes.ACTION_CRIAR_JOGO_REDE);
+                intent.putExtra(DEVICE_TYPE, CLIENTE);
+                startActivity(intent);
             }
-        }
+        });
+        t.start();
     }
 
-    private String getLocalIpAddress() {
-        try {
-            for (Enumeration<NetworkInterface> en = NetworkInterface
-                    .getNetworkInterfaces(); en.hasMoreElements();) {
-                NetworkInterface intf = en.nextElement();
-                for (Enumeration<InetAddress> enumIpAddr = intf
-                        .getInetAddresses(); enumIpAddr.hasMoreElements();) {
-                    InetAddress inetAddress = enumIpAddr.nextElement();
-                    if (!inetAddress.isLoopbackAddress()
-                            && inetAddress instanceof Inet4Address) {
-                        return inetAddress.getHostAddress();
-                    }
-                }
+    @Override
+    public void onComplete(int code, String tag) {
+        switch (code) {
+            case ALERT_OK: {
+                this.connectClient(tag);
+                break;
             }
-        } catch (SocketException ex) {
-            ex.printStackTrace();
         }
-        return null;
     }
 }

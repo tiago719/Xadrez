@@ -45,6 +45,7 @@
     <string name="question_title_alterar_jogo">Alterar jogo</string>
     <string name="question_message_alterar_jogo_para_contra_bot">Pretendes alterar o modo de jogo?\nIrás jogar contra o bot!</string>
     <string name="question_message_alterar_jogo_para_contra_humano">Pretendes alterar o modo de jogo para 2 Jogadores - 1 Dispositivo?</string>
+    <string name="error_socket_message">Problema nos sockets de rede</string>
 
     /**Menus**/
     <string name="perfil">Perfil</string>
@@ -85,5 +86,8 @@
     <string name="jogador1">Jogador 1</string>
     <string name="dois_segundos">2s</string>
     <string name="dois_minutos">2m</string>
+
+    /**Criar jogo rede**/
+    <string name="button_criar_jogo">Criar jogo</string>
 
 </resources>
