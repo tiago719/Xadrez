@@ -52,6 +52,7 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
     XadrezApplication xadrezApplication;
     private Jogador atual;
     Chronometer CronometroJogBrancas, CronometroJogPretas;
+    private int modoJogo;
 
     public ImageView getCheck() {
         return Check;
@@ -71,7 +72,11 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
 
         CronometroJogBrancas = findViewById(R.id.tempoJogBrancas);
         CronometroJogPretas = findViewById(R.id.tempoJogPretas);
-        this.gameModel = new GameModel(this.ll, this, CronometroJogBrancas, CronometroJogPretas);
+        this.gameModel = new GameModel(this.ll, this, CronometroJogBrancas, CronometroJogPretas, this.modoJogo);
+
+        // TODO Melhorar isto, porque está em 2 lugares?
+        this.gameModel.getTabuleiro().getHistorico().setModoJogo(modoJogo);
+        this.xadrezApplication.setModoJogo(modoJogo);
 
         this.posicoesDisponiveisAnteriores = new ArrayList<>();
         resources = getResources();
@@ -185,7 +190,6 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
     }
 
     private void configuracoesIniciais() {
-        int modoJogo = JOGADOR_VS_COMPUTADOR;
         this.xadrezApplication = ((XadrezApplication) this.getApplication());
         Intent intent = getIntent();
 
@@ -218,8 +222,6 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
             gameThread.start();
         }
 
-        this.gameModel.getTabuleiro().getHistorico().setModoJogo(modoJogo);
-        this.xadrezApplication.setModoJogo(modoJogo);
         this.configuraJogador1();
 
     }

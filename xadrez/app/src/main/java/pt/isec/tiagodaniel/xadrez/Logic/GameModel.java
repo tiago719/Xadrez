@@ -19,47 +19,53 @@ public class GameModel {
     private IState state;
     private JogarContraPCActivity activity;
     private XadrezApplication xadrezApplication;
+    private int modoJogo;
 
-    public GameModel(LinearLayout ll, JogarContraPCActivity activity, Chronometer chronometer1, Chronometer chronometer2)
-    {
-        this.activity=activity;
+    public GameModel(LinearLayout ll, JogarContraPCActivity activity, Chronometer chronometer1, Chronometer chronometer2, int modoJogo) {
+        this.activity = activity;
         this.xadrezApplication = ((XadrezApplication) this.activity.getApplication());
 
-        tabuleiro = new Tabuleiro(ll, chronometer1, chronometer2);
+        this.modoJogo = modoJogo;
+        tabuleiro = new Tabuleiro(ll, chronometer1, chronometer2, this.modoJogo);
         this.setState(new EstadoEscolhePeca(this));
     }
 
-    public JogarContraPCActivity getActivity()
-    {
+    public JogarContraPCActivity getActivity() {
         return activity;
     }
 
-    public Tabuleiro getTabuleiro() { return this.tabuleiro;}
-    public IState getState() { return this.state; }
-    public void setState(IState state) { this.state = state; }
+    public Tabuleiro getTabuleiro() {
+        return this.tabuleiro;
+    }
+
+    public IState getState() {
+        return this.state;
+    }
+
+    public void setState(IState state) {
+        this.state = state;
+    }
 
     public void seguinte(int linha, char coluna) {
         this.setState(this.state.seguinte(linha, coluna));
     }
 
-    public void substituiPeao(int resultado, Posicao posicao, Jogador atual)
-    {
-        JogaPC jogaPC=new JogaPC(this);
+    public void substituiPeao(int resultado, Posicao posicao, Jogador atual) {
+        JogaPC jogaPC = new JogaPC(this);
         atual.addPecaMorta(posicao.getPeca());
         posicao.apagaPeca();
-        switch (resultado)
-        {
+        switch (resultado) {
             case Constantes.RAINHA_ESCOLHIDA:
-                posicao.setPeca(new Rainha(tabuleiro,atual));
+                posicao.setPeca(new Rainha(tabuleiro, atual));
                 break;
             case Constantes.TORRE_ESCOLHIDA:
-                posicao.setPeca(new Torre(tabuleiro,atual));
+                posicao.setPeca(new Torre(tabuleiro, atual));
                 break;
             case Constantes.BISPO_ESCOLHIDA:
-                posicao.setPeca(new Bispo(tabuleiro,atual));
+                posicao.setPeca(new Bispo(tabuleiro, atual));
                 break;
             case Constantes.CAVALO_ESCOLHIDA:
-                posicao.setPeca(new Cavalo(tabuleiro,atual));
+                posicao.setPeca(new Cavalo(tabuleiro, atual));
                 break;
         }
         atual.addPeca(posicao.getPeca());
@@ -67,13 +73,11 @@ public class GameModel {
 
         verificaCheck(atual);
 
-        if(getXadrezApplication().getModoJogo() == JOGADOR_VS_COMPUTADOR)
-        {
+        if (this.getModoJogo() == JOGADOR_VS_COMPUTADOR) {
             getTabuleiro().trocaJogadorActual();
             jogaPC.start();
-        } else if (getXadrezApplication().getModoJogo() == JOGADOR_VS_JOGADOR)
-        {
-            if(getActivity().isJogoComTempo())
+        } else if (this.getModoJogo() == JOGADOR_VS_JOGADOR) {
+            if (getActivity().isJogoComTempo())
                 getActivity().paraTempo(getTabuleiro().getJogadorAtual());
 
             getTabuleiro().trocaJogadorActual();
@@ -82,29 +86,22 @@ public class GameModel {
 
     //true - acabou o jogo
     //false - jogo continua
-    public boolean verificaCheck(Jogador atual)
-    {
-        Jogador adversario=getTabuleiro().getOutroJogador(atual);
+    public boolean verificaCheck(Jogador atual) {
+        Jogador adversario = getTabuleiro().getOutroJogador(atual);
         adversario.verificaCheck();
-        if(adversario.isCheck())
-        {
+        if (adversario.isCheck()) {
             getActivity().setReiCheck(getTabuleiro().getPosicaoRei(adversario));
-        }
-        else
-        {
+        } else {
             getActivity().resetCheck();
         }
 
-        if(adversario.isCheck())
-        {
+        if (adversario.isCheck()) {
             if (!adversario.hasMovimentos(adversario)) {
                 this.getTabuleiro().getHistorico().setVencedorJogo(this.getActivity(), atual, false);
                 getActivity().mostrarVencedor(atual);
                 return true;
             }
-        }
-        else
-        {
+        } else {
             if (!adversario.hasMovimentos(adversario)) {
                 this.getTabuleiro().getHistorico().setVencedorJogo(this.getActivity(), atual, true);
                 getActivity().mostrarEmpate();
@@ -115,7 +112,7 @@ public class GameModel {
     }
     //endregion
 
-    public XadrezApplication getXadrezApplication() {
-        return this.xadrezApplication;
+    public int getModoJogo() {
+        return this.modoJogo;
     }
 }

@@ -104,7 +104,7 @@ public class MainActivity extends Activity implements OnCompleteListener, Consta
                     });
                 }
                 Intent intent = new Intent(getApplicationContext(), JogarContraPCActivity.class);
-                intent.setAction(Constantes.ACTION_CRIAR_JOGO_REDE);
+                intent.setAction(Constantes.ACTION_JUNTAR_JOGO_REDE);
                 intent.putExtra(DEVICE_TYPE, CLIENTE);
                 startActivity(intent);
             }
