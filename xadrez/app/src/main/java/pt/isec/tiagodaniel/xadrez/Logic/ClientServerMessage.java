@@ -5,11 +5,10 @@ import java.io.Serializable;
 public class ClientServerMessage implements Serializable {
     static final long serialVersionUID = 1L;
     private String nomeJogador;
-    private PosicaoRede posicaoOriginal, posicaoDestino;
+    private int linhaOrigem, linhaDestino;
+    private char colunaOrigem,colunaDestino;
 
     public ClientServerMessage() {
-        this.posicaoOriginal = new PosicaoRede();
-        this.posicaoDestino = new PosicaoRede();
     }
 
     public String getNomeJogador() {
@@ -24,27 +23,35 @@ public class ClientServerMessage implements Serializable {
         this.nomeJogador = nomeJogador;
     }
 
-    public PosicaoRede getPosicaoOriginal() {
-        return posicaoOriginal;
+    public int getLinhaOrigem() {
+        return linhaOrigem;
     }
 
-    public void setPosicaoOriginal(int linha, char coluna) {
-        this.posicaoOriginal.setLinha(linha);
-        this.posicaoOriginal.setColuna(coluna);
+    public void setLinhaOrigem(int linhaOrigem) {
+        this.linhaOrigem = linhaOrigem;
     }
 
-    public PosicaoRede getPosicaoDestino() {
-        return posicaoDestino;
+    public int getLinhaDestino() {
+        return linhaDestino;
     }
 
-    public void setPosicaoDestino(int linha, char coluna) {
-        this.posicaoDestino.setLinha(linha);
-        this.posicaoDestino.setColuna(coluna);
+    public void setLinhaDestino(int linhaDestino) {
+        this.linhaDestino = linhaDestino;
     }
 
-    public void resetDados() {
-        this.setNomeJogador("");
-        this.setPosicaoOriginal(1, 'a');
-        this.setPosicaoDestino(1, 'a');
+    public char getColunaOrigem() {
+        return colunaOrigem;
+    }
+
+    public void setColunaOrigem(char colunaOrigem) {
+        this.colunaOrigem = colunaOrigem;
+    }
+
+    public char getColunaDestino() {
+        return colunaDestino;
+    }
+
+    public void setColunaDestino(char colunaDestino) {
+        this.colunaDestino = colunaDestino;
     }
 }

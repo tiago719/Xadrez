@@ -24,7 +24,7 @@ public class GameThread extends Thread implements Constantes {
     /**
      * Construtor da GameThread
      *
-     * @param activity   actividade que chama a thread (JogarContraPCActivity)
+     * @param activity  actividade que chama a thread (JogarContraPCActivity)
      * @param gameSocket socket que irá ser utilizado para comunicação entre dispositivos
      */
     public GameThread(JogarContraPCActivity activity, Socket gameSocket, int deviceType) {
@@ -49,20 +49,18 @@ public class GameThread extends Thread implements Constantes {
 
                 if (isFirstTime) {
                     this.configuraJogadores();
+                } else {
+                    in = new ObjectInputStream(SocketHandler.getClientSocket().getInputStream());
+                    requestMessage = (ClientServerMessage) in.readObject();
+
+                    // TODO faz o que tem a fazer com a resposta
+
+                    int linhaDestino = requestMessage.getLinhaDestino();
+                    char colunaDestino = requestMessage.getColunaDestino();
+
+                    int linhaOrigem = requestMessage.getLinhaOrigem();
+                    char colunaOrigem = requestMessage.getColunaOrigem();
                 }
-
-                out = new ObjectOutputStream(gameSocket.getOutputStream());
-                in = new ObjectInputStream(gameSocket.getInputStream());
-                requestMessage = (ClientServerMessage) in.readObject();
-
-                // TODO faz o que tem a fazer com a resposta
-
-                int linha = requestMessage.getPosicaoDestino().getLinha();
-                char coluna = requestMessage.getPosicaoDestino().getColuna();
-
-                // Envia resposta
-                out.writeUnshared(requestMessage);
-                out.flush();
             }
 
         } catch (IOException | ClassNotFoundException e) {
@@ -120,7 +118,6 @@ public class GameThread extends Thread implements Constantes {
                 }
             });
 
-            requestMessage.resetDados();
             requestMessage.setNomeJogador(this.ferramentas.getSavedName());
 
             out.writeUnshared(requestMessage);

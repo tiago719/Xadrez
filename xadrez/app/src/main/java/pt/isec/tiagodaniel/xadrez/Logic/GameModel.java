@@ -1,7 +1,12 @@
 package pt.isec.tiagodaniel.xadrez.Logic;
 
+import android.os.StrictMode;
 import android.widget.Chronometer;
 import android.widget.LinearLayout;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import pt.isec.tiagodaniel.xadrez.Activities.JogarContraPCActivity;
 import pt.isec.tiagodaniel.xadrez.States.EstadoEscolhePeca;

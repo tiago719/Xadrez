@@ -1,18 +1,26 @@
 package pt.isec.tiagodaniel.xadrez.States;
 
+import android.os.Handler;
+import android.os.StrictMode;
+
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+import pt.isec.tiagodaniel.xadrez.Logic.ClientServerMessage;
 import pt.isec.tiagodaniel.xadrez.Logic.Constantes;
 import pt.isec.tiagodaniel.xadrez.Logic.GameModel;
 import pt.isec.tiagodaniel.xadrez.Logic.JogaPC;
 import pt.isec.tiagodaniel.xadrez.Logic.Peca;
 import pt.isec.tiagodaniel.xadrez.Logic.Posicao;
+import pt.isec.tiagodaniel.xadrez.Logic.SocketHandler;
 
 public class EstadoEscolheDestino extends StateAdapter implements Constantes {
+    ClientServerMessage messageToSend;
 
     public EstadoEscolheDestino(GameModel game, Posicao posicaoOriginal) {
         super(game);
         setPosicaoOrigem(posicaoOriginal);
+        messageToSend = new ClientServerMessage();
     }
 
     @Override
@@ -55,6 +63,32 @@ public class EstadoEscolheDestino extends StateAdapter implements Constantes {
                     getGame().getActivity().paraTempo(getGame().getTabuleiro().getJogadorAtual());
                 }
                 this.getGame().getTabuleiro().trocaJogadorActual();
+            } else if (flag1 && this.getGame().getModoJogo() == CRIAR_JOGO_REDE || this.getGame().getModoJogo() == JUNTAR_JOGO_REDE) {
+                messageToSend = new ClientServerMessage();
+                messageToSend.setLinhaDestino(posicaoDestino.getLinha());
+                messageToSend.setColunaDestino(posicaoDestino.getColuna());
+                messageToSend.setLinhaOrigem(getPosicaoOrigem().getLinha());
+                messageToSend.setColunaOrigem(getPosicaoOrigem().getColuna());
+                Handler handler = new Handler();
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                                    .permitAll().build();
+                            StrictMode.setThreadPolicy(policy);
+
+                            ObjectOutputStream out = new ObjectOutputStream(SocketHandler.getClientSocket().getOutputStream());
+
+                            out.writeUnshared(messageToSend);
+                            out.flush();
+
+                            getGame().getTabuleiro().trocaJogadorActual();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
             return new EstadoEscolhePeca(this.getGame());
         }
