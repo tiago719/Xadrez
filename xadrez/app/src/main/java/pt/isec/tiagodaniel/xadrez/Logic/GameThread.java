@@ -50,42 +50,26 @@ public class GameThread extends Thread implements Constantes {
     public void run() {
 
         try {
-            if (this.deviceType == CLIENTE) {
-                in = new ObjectInputStream(gameSocket.getInputStream());
-                out = new ObjectOutputStream(gameSocket.getOutputStream());
-                requestMessage = new ClientServerMessage(this.ferramentas.getSavedName());
-                // TODO falta enviar foto
-
-                out.writeUnshared(requestMessage);
-                out.flush();
-            }
-
             while (!Thread.currentThread().isInterrupted()) {
+
+                if (isFirstTime) {
+                    this.configuraJogadores();
+                }
+
                 out = new ObjectOutputStream(gameSocket.getOutputStream());
                 in = new ObjectInputStream(gameSocket.getInputStream());
                 requestMessage = (ClientServerMessage) in.readObject();
 
-                if (this.isFirstTime) {
-                    bundle = new Bundle();
-                    bundle.putString(NOME_JOGADOR2, requestMessage.getNomeJogador());
-                    bundle.putString(FOTO_JOGADOR2, "");
+                // TODO faz o que tem a fazer com a resposta
 
-                    gameActivity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            gameActivity.configuraJogador2(false, bundle);
-                        }
-                    });
-
-                    requestMessage.resetDados();
-                    requestMessage.setNomeJogador(this.ferramentas.getSavedName());
-                    this.isFirstTime = false;
-                }
+                int linha = requestMessage.getPosicaoDestino().getLinha();
+                char coluna = requestMessage.getPosicaoDestino().getColuna();
 
                 // Envia resposta
                 out.writeUnshared(requestMessage);
                 out.flush();
             }
+
         } catch (IOException | ClassNotFoundException e) {
             // TODO errorDialog
             e.printStackTrace();
@@ -99,5 +83,54 @@ public class GameThread extends Thread implements Constantes {
                 }
             }
         }
+    }
+
+    private void configuraJogadores() throws IOException, ClassNotFoundException {
+        if (this.deviceType == CLIENTE) {
+            in = new ObjectInputStream(gameSocket.getInputStream());
+            out = new ObjectOutputStream(gameSocket.getOutputStream());
+            requestMessage = new ClientServerMessage(this.ferramentas.getSavedName());
+            // TODO falta enviar foto
+
+            out.writeUnshared(requestMessage);
+            out.flush();
+
+            requestMessage = (ClientServerMessage) in.readObject();
+
+            bundle = new Bundle();
+            bundle.putString(NOME_JOGADOR2, requestMessage.getNomeJogador());
+            bundle.putString(FOTO_JOGADOR2, "");
+
+            gameActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    gameActivity.configuraJogador2(false, bundle);
+                }
+            });
+
+        } else if (this.deviceType == SERVIDOR) {
+            out = new ObjectOutputStream(gameSocket.getOutputStream());
+            in = new ObjectInputStream(gameSocket.getInputStream());
+            requestMessage = (ClientServerMessage) in.readObject();
+
+            bundle = new Bundle();
+            bundle.putString(NOME_JOGADOR2, requestMessage.getNomeJogador());
+            bundle.putString(FOTO_JOGADOR2, "");
+
+            gameActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    gameActivity.configuraJogador2(false, bundle);
+                }
+            });
+
+            requestMessage.resetDados();
+            requestMessage.setNomeJogador(this.ferramentas.getSavedName());
+
+            out.writeUnshared(requestMessage);
+            out.flush();
+        }
+
+        this.isFirstTime = false;
     }
 }

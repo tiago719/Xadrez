@@ -67,12 +67,12 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
         setContentView(R.layout.activity_jogar_contra_pc);
 
         ll = findViewById(R.id.tabuleiro);
+        this.configuracoesIniciais();
 
         CronometroJogBrancas = findViewById(R.id.tempoJogBrancas);
         CronometroJogPretas = findViewById(R.id.tempoJogPretas);
         this.gameModel = new GameModel(this.ll, this, CronometroJogBrancas, CronometroJogPretas);
 
-        this.configuracoesIniciais();
         this.posicoesDisponiveisAnteriores = new ArrayList<>();
         resources = getResources();
     }
@@ -185,44 +185,42 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
     }
 
     private void configuracoesIniciais() {
+        int modoJogo = JOGADOR_VS_COMPUTADOR;
         this.xadrezApplication = ((XadrezApplication) this.getApplication());
         Intent intent = getIntent();
+
         if (intent.getAction().equals("")) {
             finish();
         } else if (intent.getAction().equals(ACTION_JOGvsPC)) {
-            this.configuraJogador1();
+            modoJogo = JOGADOR_VS_COMPUTADOR;
             this.configuraJogador2(true, null);
-            this.gameModel.getTabuleiro().getHistorico().setModoJogo(JOGADOR_VS_COMPUTADOR);
-            this.xadrezApplication.setModoJogo(JOGADOR_VS_COMPUTADOR);
             this.configuraTempo(intent.getExtras());
 
         } else if (intent.getAction().equals(ACTION_JOGvsJOG)) {
-            this.configuraJogador1();
+            modoJogo = JOGADOR_VS_JOGADOR;
             this.configuraJogador2(false, intent.getExtras());
-            this.gameModel.getTabuleiro().getHistorico().setModoJogo(JOGADOR_VS_JOGADOR);
-            this.xadrezApplication.setModoJogo(JOGADOR_VS_JOGADOR);
             this.configuraTempo(intent.getExtras());
 
         } else if (intent.getAction().equals(ACTION_CRIAR_JOGO_REDE)) {
-            this.configuraJogador1();
+            modoJogo = CRIAR_JOGO_REDE;
 
             int deviceType = intent.getIntExtra(DEVICE_TYPE, SERVIDOR);
 
-            this.gameModel.getTabuleiro().getHistorico().setModoJogo(CRIAR_JOGO_REDE);
-            this.xadrezApplication.setModoJogo(CRIAR_JOGO_REDE);
             GameThread gameThread = new GameThread(this, SocketHandler.getClientSocket(), deviceType);
             gameThread.start();
 
         } else if (intent.getAction().equals(ACTION_JUNTAR_JOGO_REDE)) {
-            this.configuraJogador1();
+            modoJogo = JUNTAR_JOGO_REDE;
 
             int deviceType = intent.getIntExtra(DEVICE_TYPE, CLIENTE);
 
-            this.gameModel.getTabuleiro().getHistorico().setModoJogo(JUNTAR_JOGO_REDE);
-            this.xadrezApplication.setModoJogo(JUNTAR_JOGO_REDE);
             GameThread gameThread = new GameThread(this, SocketHandler.getClientSocket(), deviceType);
             gameThread.start();
         }
+
+        this.gameModel.getTabuleiro().getHistorico().setModoJogo(modoJogo);
+        this.xadrezApplication.setModoJogo(modoJogo);
+        this.configuraJogador1();
 
     }
 
@@ -247,6 +245,8 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
 
         this.mTxtNomeJogador2 = findViewById(R.id.txtNomeJogador2);
         this.mImvFotoJogador2 = findViewById(R.id.imvFotoJogador2);
+
+        String nome = bundle.getString(NOME_JOGADOR2);
 
         this.mTxtNomeJogador2.setText(bundle.getString(NOME_JOGADOR2));
         if (bundle.getString(FOTO_JOGADOR2).equals("")) {
