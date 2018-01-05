@@ -97,7 +97,7 @@
                 android:background="@color/tabLightTransparent"
                 android:fontFamily="@font/fonty"
                 android:gravity="center"
-                android:text="@string/android"
+                android:text="@string/perfil_name_hint"
                 android:textColor="@color/title" />
 
             <ImageView
