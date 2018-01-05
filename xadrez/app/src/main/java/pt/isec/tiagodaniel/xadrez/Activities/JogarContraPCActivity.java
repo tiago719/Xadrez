@@ -216,7 +216,6 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
             this.configuraJogador2(true, null);
             this.gameModel.getTabuleiro().getHistorico().setModoJogo(JOGADOR_VS_COMPUTADOR);
             this.xadrezApplication.setModoJogo(JOGADOR_VS_COMPUTADOR);
-            this.configuraTempo(intent.getExtras());
         }
         else if (intent.getAction().equals(ACTION_JOGvsJOG))
         {
