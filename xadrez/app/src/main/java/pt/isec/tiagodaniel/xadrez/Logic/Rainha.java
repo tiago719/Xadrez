@@ -24,11 +24,11 @@ public class Rainha extends Peca implements Constantes
     }
     
     @Override
-    public ArrayList<Posicao> getDisponiveis(Jogador atual)
+    public ArrayList<Posicao> getDisponiveis(Jogador atual, boolean pc)
     {
-        ArrayList<Posicao> disponiveis=tabuleiro.horizontalVertival(this);
+        ArrayList<Posicao> disponiveis=tabuleiro.horizontalVertival(this, pc);
 
-        if(!disponiveis.addAll(tabuleiro.diagonal(this)))
+        if(!disponiveis.addAll(tabuleiro.diagonal(this, pc)))
             System.out.println("ERRO A SOMAR OS DIAGONAIS COM OS VERTICAIS/HORIZONTAIS NA RAINHA");
 
         for (Iterator<Posicao> iterator = disponiveis.iterator(); iterator.hasNext();) {
@@ -44,11 +44,11 @@ public class Rainha extends Peca implements Constantes
     @Override
     public ArrayList<Posicao> verificaDisponiveisCheck()
     {
-        ArrayList<Posicao> disponiveis=tabuleiro.horizontalVertival(this);
+        ArrayList<Posicao> disponiveis=tabuleiro.horizontalVertival(this, false);
 
         try
         {
-            disponiveis.addAll(tabuleiro.diagonal(this));
+            disponiveis.addAll(tabuleiro.diagonal(this, false));
         }
         catch (Exception e)
         {

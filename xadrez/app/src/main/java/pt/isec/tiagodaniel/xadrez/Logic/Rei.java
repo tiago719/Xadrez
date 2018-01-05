@@ -26,9 +26,9 @@ public class Rei extends Peca implements Constantes
     }
 
     @Override
-    public ArrayList<Posicao> getDisponiveis(Jogador atual)
+    public ArrayList<Posicao> getDisponiveis(Jogador atual, boolean pc)
     {
-        ArrayList<Posicao> disponiveis= tabuleiro.rei(this);
+        ArrayList<Posicao> disponiveis= tabuleiro.rei(this, pc);
 
         for (Iterator<Posicao> iterator = disponiveis.iterator(); iterator.hasNext();) {
             Posicao posicao = iterator.next();
@@ -43,7 +43,7 @@ public class Rei extends Peca implements Constantes
     @Override
     public ArrayList<Posicao> verificaDisponiveisCheck()
     {
-        return tabuleiro.rei(this);
+        return tabuleiro.rei(this, false);
     }
 
     @Override

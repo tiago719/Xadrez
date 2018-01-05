@@ -26,13 +26,13 @@ public class Cavalo extends Peca implements Constantes
     @Override
     public ArrayList<Posicao> verificaDisponiveisCheck()
     {
-        return tabuleiro.cavalo(this);
+        return tabuleiro.cavalo(this, false);
     }
 
     @Override
-    public ArrayList<Posicao> getDisponiveis(Jogador atual)
+    public ArrayList<Posicao> getDisponiveis(Jogador atual, boolean pc)
     {
-        ArrayList<Posicao> disponiveis= tabuleiro.cavalo(this);
+        ArrayList<Posicao> disponiveis= tabuleiro.cavalo(this, pc);
 
         for (Iterator<Posicao> iterator = disponiveis.iterator(); iterator.hasNext();) {
             Posicao posicao = iterator.next();

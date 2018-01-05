@@ -84,7 +84,7 @@ public class Jogador
         PriorityQueue<Jogada> queue = new PriorityQueue<Jogada>(16, comparator);
 
         for(Peca peca : pecasTabuleiro)
-            for(Posicao posicao : peca.getDisponiveis(this))
+            for(Posicao posicao : peca.getDisponiveis(this, false))
                 queue.add(new Jogada(tabuleiro.encontraPeca(peca), posicao, tabuleiro.getJogadorAtual(), tabuleiro));
 
         Jogada jogada=queue.remove();
@@ -119,7 +119,7 @@ public class Jogador
     {
         for(Peca peca : pecasTabuleiro)
         {
-            if(peca.getDisponiveis(atual).size()>0)
+            if(peca.getDisponiveis(atual, false).size()>0)
                 return true;
         }
         return false;

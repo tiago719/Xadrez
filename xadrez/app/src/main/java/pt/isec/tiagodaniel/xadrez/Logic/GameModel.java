@@ -118,4 +118,14 @@ public class GameModel {
     public XadrezApplication getXadrezApplication() {
         return this.xadrezApplication;
     }
+
+    public void desenhaPecas()
+    {
+        tabuleiro.desenhaPecas();
+    }
+
+    public void setView(LinearLayout ll)
+    {
+        tabuleiro.setView(ll);
+    }
 }

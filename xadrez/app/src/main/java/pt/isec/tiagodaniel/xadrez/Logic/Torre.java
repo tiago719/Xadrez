@@ -27,9 +27,9 @@ public class Torre extends Peca implements Constantes
     }
 
     @Override
-    public ArrayList<Posicao> getDisponiveis(Jogador adversario)
+    public ArrayList<Posicao> getDisponiveis(Jogador adversario, boolean pc)
     {
-        ArrayList<Posicao> disponiveis= tabuleiro.horizontalVertival(this);
+        ArrayList<Posicao> disponiveis= tabuleiro.horizontalVertival(this, pc);
 
         for (Iterator<Posicao> iterator = disponiveis.iterator(); iterator.hasNext();) {
             Posicao posicao = iterator.next();
@@ -44,7 +44,7 @@ public class Torre extends Peca implements Constantes
     @Override
     public ArrayList<Posicao> verificaDisponiveisCheck()
     {
-        return tabuleiro.horizontalVertival(this);
+        return tabuleiro.horizontalVertival(this, false);
     }
 
     @Override
