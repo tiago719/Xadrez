@@ -69,7 +69,12 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
 
         CronometroJogBrancas = findViewById(R.id.tempoJogBrancas);
         CronometroJogPretas = findViewById(R.id.tempoJogPretas);
-        this.gameModel = new GameModel(this.ll, this, CronometroJogBrancas, CronometroJogPretas, this.modoJogo);
+        try {
+            this.gameModel = new GameModel(this.ll, this, CronometroJogBrancas, CronometroJogPretas, this.modoJogo);
+        } catch (NullSharedPreferencesException e) {
+            ErrorDialog mErrorDialog = new ErrorDialog(this, e.toString());
+            mErrorDialog.show(getFragmentManager(), Constantes.ERROR_DIALOG);
+        }
 
         // TODO Melhorar isto, porque está em 2 lugares?
         this.gameModel.getTabuleiro().getHistorico().setModoJogo(modoJogo);
@@ -216,8 +221,8 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
             ferramentas.setPic(this.mImvFotoJogador1, ferramentas.getSavedPhotoPath());
 
         } catch (NullSharedPreferencesException e) {
-            // TODO errorDialog
-            e.printStackTrace();
+            ErrorDialog mErrorDialog = new ErrorDialog(this, e.toString());
+            mErrorDialog.show(getFragmentManager(), Constantes.ERROR_DIALOG);
         }
     }
 
@@ -229,8 +234,11 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
         this.mImvFotoJogador2 = findViewById(R.id.imvFotoJogador2);
 
         String nome = bundle.getString(NOME_JOGADOR2);
+        if(nome.equals("")){
+            nome = getString(R.string.perfil_name_hint);
+        }
+        this.mTxtNomeJogador2.setText(nome);
 
-        this.mTxtNomeJogador2.setText(bundle.getString(NOME_JOGADOR2));
         if (bundle.getString(FOTO_JOGADOR2).equals("")) {
             this.mImvFotoJogador2.setImageResource(R.drawable.computador);
         } else {

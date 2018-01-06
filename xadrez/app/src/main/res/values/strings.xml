@@ -6,7 +6,7 @@
     <string name="botao4MP">Juntar Jogo Online</string>
 
     <string name="perfil_name">Nome Jogador:</string>
-    <string name="perfil_name_hint">[nome jogador]</string>
+    <string name="perfil_name_hint">[jogador]</string>
 
     /**Shared Preferences**/
     <string name="saved_name">saved_name</string>

@@ -16,10 +16,6 @@ public class ClientServerMessage implements Serializable {
     }
 
     public void setNomeJogador(String nomeJogador) {
-        if (nomeJogador.equals("")) {
-            // TODO meter aqui o nome da constante, ver se dá por causa do Serializable
-            nomeJogador = "JOGADOR";
-        }
         this.nomeJogador = nomeJogador;
     }
 

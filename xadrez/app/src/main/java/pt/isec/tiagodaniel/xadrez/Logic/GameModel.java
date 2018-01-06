@@ -1,14 +1,10 @@
 package pt.isec.tiagodaniel.xadrez.Logic;
 
-import android.os.StrictMode;
 import android.widget.Chronometer;
 import android.widget.LinearLayout;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
 import pt.isec.tiagodaniel.xadrez.Activities.JogarContraPCActivity;
+import pt.isec.tiagodaniel.xadrez.Exceptions.NullSharedPreferencesException;
 import pt.isec.tiagodaniel.xadrez.States.EstadoEscolhePeca;
 import pt.isec.tiagodaniel.xadrez.States.IState;
 
@@ -19,7 +15,7 @@ public class GameModel implements Constantes {
     private XadrezApplication xadrezApplication;
     private int modoJogo;
 
-    public GameModel(LinearLayout ll, JogarContraPCActivity activity, Chronometer chronometer1, Chronometer chronometer2, int modoJogo) {
+    public GameModel(LinearLayout ll, JogarContraPCActivity activity, Chronometer chronometer1, Chronometer chronometer2, int modoJogo) throws NullSharedPreferencesException {
         this.activity = activity;
         this.xadrezApplication = ((XadrezApplication) this.activity.getApplication());
 
