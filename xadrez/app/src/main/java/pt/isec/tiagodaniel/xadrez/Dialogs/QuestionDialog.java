@@ -22,11 +22,6 @@ public class QuestionDialog extends DialogFragment {
     private OnCompleteListener mListener;
     private String mTag = Constantes.TAG_EMPTY;
 
-    public QuestionDialog(String title, String message) {
-        this.mTitle = title;
-        this.mMessage = message;
-    }
-
     /**
      * Construtor usado quando este dialog é chamado várias vezes para saber o resultado
      * e a tag de quem o invocou

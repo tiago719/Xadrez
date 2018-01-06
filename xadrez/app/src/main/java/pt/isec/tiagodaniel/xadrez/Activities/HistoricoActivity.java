@@ -66,7 +66,7 @@ public class HistoricoActivity extends Activity implements Constantes, OnComplet
     }
 
     private void mapearHistoricoParaDados() {
-        Date data = null;
+        Date data;
         ArrayList<Integer> modoJogoDrawableIDs;
         String vencedor;
 
@@ -175,8 +175,10 @@ public class HistoricoActivity extends Activity implements Constantes, OnComplet
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.apagarHistorico) {
             QuestionDialog questionDialog = new QuestionDialog(
+                    this,
                     getString(R.string.question_delete_historic_title),
-                    getString(R.string.question_delete_historic_message));
+                    getString(R.string.question_delete_historic_message),
+                    QUESTION_DIALOG);
             questionDialog.show(getFragmentManager(), QUESTION_DIALOG);
         }
         return super.onOptionsItemSelected(item);
@@ -187,9 +189,11 @@ public class HistoricoActivity extends Activity implements Constantes, OnComplet
         switch (code) {
             case QUESTION_OK: {
                 try {
-                    this.xadrezApplication.limpaHistorico();
-                    this.dados.clear();
-                    this.myAdapter.notifyDataSetChanged();
+                    if(!dados.isEmpty()) {
+                        this.xadrezApplication.limpaHistorico();
+                        this.dados.clear();
+                        this.myAdapter.notifyDataSetChanged();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

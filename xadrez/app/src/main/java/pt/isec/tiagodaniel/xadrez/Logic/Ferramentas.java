@@ -7,6 +7,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.widget.ImageView;
 
+import java.io.ByteArrayOutputStream;
+
 import pt.isec.tiagodaniel.xadrez.Exceptions.NullSharedPreferencesException;
 import pt.isec.tiagodaniel.xadrez.R;
 
@@ -55,7 +57,10 @@ public class Ferramentas implements Constantes {
             bmOptions.inSampleSize = scaleFactor;
             bmOptions.inPurgeable = true;
             Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+            bitmap = Bitmap.createScaledBitmap(bitmap, targetW, targetH, true);
             mImageView.setImageBitmap(bitmap); //em alternativa retornar apenas o Bitmap
+            //TODO ver isto da rotação
+            //mImageView.setRotation(90);
         }
     }
 
@@ -80,5 +85,14 @@ public class Ferramentas implements Constantes {
 
     public String getSavedPhotoPath() {
         return this.mSharedPreferences.getString(this.mActivity.getString(R.string.saved_photo), PHOTO_NOT_FOUND);
+    }
+
+    public byte[] getSavedPhoto() {
+        Bitmap bitmap = BitmapFactory.decodeFile(this.getSavedPhotoPath());
+        //TODO meter aqui valores constantes
+        bitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
+        ByteArrayOutputStream blob = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0 /* Ignored for PNGs */, blob);
+        return blob.toByteArray();
     }
 }

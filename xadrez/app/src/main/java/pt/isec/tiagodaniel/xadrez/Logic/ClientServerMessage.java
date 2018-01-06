@@ -7,6 +7,7 @@ public class ClientServerMessage implements Serializable {
     private String nomeJogador;
     private int linhaOrigem, linhaDestino;
     private char colunaOrigem,colunaDestino;
+    private byte[] fotoJogador;
 
     public ClientServerMessage() {
     }
@@ -49,5 +50,18 @@ public class ClientServerMessage implements Serializable {
 
     public void setColunaDestino(char colunaDestino) {
         this.colunaDestino = colunaDestino;
+    }
+
+    public void setFotoJogador(byte[] fotoJogador) {
+        this.fotoJogador = fotoJogador;
+    }
+
+    public byte[] getFotoJogador() {
+        return this.fotoJogador;
+    }
+
+    public void resetDados() {
+        this.fotoJogador = null;
+        this.nomeJogador = "";
     }
 }
