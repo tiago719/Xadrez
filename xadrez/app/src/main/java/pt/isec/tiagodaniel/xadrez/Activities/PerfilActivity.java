@@ -25,12 +25,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import pt.isec.tiagodaniel.xadrez.Dialogs.ErrorDialog;
+import pt.isec.tiagodaniel.xadrez.Dialogs.OnCompleteListener;
 import pt.isec.tiagodaniel.xadrez.Exceptions.NullSharedPreferencesException;
 import pt.isec.tiagodaniel.xadrez.Logic.Constantes;
 import pt.isec.tiagodaniel.xadrez.Logic.Ferramentas;
 import pt.isec.tiagodaniel.xadrez.R;
 
-public class PerfilActivity extends Activity {
+public class PerfilActivity extends Activity implements OnCompleteListener, Constantes {
     private EditText mTxtNome;
     private Ferramentas mFerramentas;
     private String mPhotoPath;
@@ -59,8 +60,8 @@ public class PerfilActivity extends Activity {
             this.mPhotoPath = this.mFerramentas.getSavedPhotoPath();
             this.mFerramentas.setPic(this.mImvPhoto, this.mPhotoPath);
         } catch (NullSharedPreferencesException e) {
-            ErrorDialog mErrorDialog = new ErrorDialog(e.toString());
-            mErrorDialog.show(getFragmentManager(), Constantes.ERROR_DIALOG);
+            ErrorDialog mErrorDialog = new ErrorDialog(this, e.toString());
+            mErrorDialog.show(getFragmentManager(), ERROR_DIALOG);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -86,15 +87,15 @@ public class PerfilActivity extends Activity {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             String name = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
             File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-            File image = File.createTempFile(name, Constantes.PHOTO_FORMAT, storageDir);
+            File image = File.createTempFile(name, PHOTO_FORMAT, storageDir);
 
             this.mPhotoPath = image.getAbsolutePath();
 
             intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(image));
             startActivityForResult(intent, 20);
         } catch (Exception e) {
-            ErrorDialog mErrorDialog = new ErrorDialog(getString(R.string.take_photo));
-            mErrorDialog.show(getFragmentManager(), Constantes.ERROR_DIALOG);
+            ErrorDialog mErrorDialog = new ErrorDialog(this, getString(R.string.take_photo));
+            mErrorDialog.show(getFragmentManager(), ERROR_DIALOG);
         }
     }
 
@@ -142,5 +143,15 @@ public class PerfilActivity extends Activity {
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onComplete(int code, String tag) {
+        switch (code) {
+            case ERROR_OK: {
+                this.finish();
+                break;
+            }
+        }
     }
 }

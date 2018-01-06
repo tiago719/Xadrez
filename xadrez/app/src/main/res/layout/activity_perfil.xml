@@ -38,7 +38,7 @@
             android:textStyle="bold"
             android:hint="@string/perfil_name_hint"
             android:textColor="@color/edit"
-            android:textColorHint="@color/edit"
+            android:textColorHint="@color/tabLight"
             android:textAlignment="center" />
 
 
@@ -52,8 +52,8 @@
 
         <ImageView
             android:id="@+id/imvPhoto"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
+            android:layout_width="135pt"
+            android:layout_height="135pt"
             android:contentDescription="@string/perfil_photo"
             android:src="@drawable/b_peao" />
     </LinearLayout>

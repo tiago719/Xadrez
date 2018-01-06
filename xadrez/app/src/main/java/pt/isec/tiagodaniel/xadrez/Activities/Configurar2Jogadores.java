@@ -1,7 +1,6 @@
 package pt.isec.tiagodaniel.xadrez.Activities;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -113,7 +112,7 @@ public class Configurar2Jogadores extends Activity implements OnCompleteListener
             intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(image));
             startActivityForResult(intent, PHOTO_REQUEST);
         } catch (Exception e) {
-            ErrorDialog mErrorDialog = new ErrorDialog(getString(R.string.take_photo));
+            ErrorDialog mErrorDialog = new ErrorDialog(this, getString(R.string.take_photo));
             mErrorDialog.show(getFragmentManager(), Constantes.ERROR_DIALOG);
         }
     }
@@ -161,19 +160,24 @@ public class Configurar2Jogadores extends Activity implements OnCompleteListener
         });
     }
 
-    @SuppressLint("NewApi")
     private void configurarTempoMaximo() {
         this.mTxtTempoMaximo = findViewById(R.id.txtTempoMaximo);
         this.mSeekBarTempoMaximo = findViewById(R.id.seekBarTempoMaximo);
         this.mSeekBarTempoMaximo.setEnabled(jogarComTempo);
-        this.mSeekBarTempoMaximo.setMin(TEMPO_MAXIMO_MIN);
-        this.mSeekBarTempoMaximo.setMax(TEMPO_MAXIMO_MAX + TEMPO_MAXIMO_MIN);
-        this.mSeekBarTempoMaximo.setProgress((TEMPO_MAXIMO_MAX + TEMPO_MAXIMO_MIN) / 2);
-        this.mTxtTempoMaximo.setText(String.valueOf(this.mSeekBarTempoMaximo.getProgress()) + MINUTOS);
+        this.mSeekBarTempoMaximo.setMax(TEMPO_MAXIMO_MAX);
+        this.mSeekBarTempoMaximo.setProgress(TEMPO_MAXIMO_MAX/2);
+        String minutos = String.valueOf(this.mSeekBarTempoMaximo.getProgress()) + MINUTOS;
+        this.mTxtTempoMaximo.setText(minutos);
         this.mSeekBarTempoMaximo.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                mTxtTempoMaximo.setText(String.valueOf(progress) + MINUTOS);
+                String minutos = String.valueOf(progress) + MINUTOS;
+
+                if (progress < TEMPO_MAXIMO_MIN) {
+                    progress = TEMPO_MAXIMO_MIN;
+                    minutos = String.valueOf(progress) + MINUTOS;
+                }
+                mTxtTempoMaximo.setText(minutos);
             }
 
             @Override
@@ -188,19 +192,24 @@ public class Configurar2Jogadores extends Activity implements OnCompleteListener
         });
     }
 
-    @SuppressLint("NewApi")
     private void configurarTempoGanho() {
         this.mTxtTempoGanho = findViewById(R.id.txtTempoGanho);
         this.mSeekBarTempoGanho = findViewById(R.id.seekBarTempoGanho);
         this.mSeekBarTempoGanho.setEnabled(jogarComTempo);
-        this.mSeekBarTempoGanho.setMin(TEMPO_GANHO_MIN);
         this.mSeekBarTempoGanho.setMax(TEMPO_GANHO_MAX + TEMPO_GANHO_MIN);
         this.mSeekBarTempoGanho.setProgress((TEMPO_GANHO_MAX + TEMPO_GANHO_MIN) / 2);
-        this.mTxtTempoGanho.setText(String.valueOf(this.mSeekBarTempoGanho.getProgress()) + SEGUNDOS);
+        String segundos = String.valueOf(this.mSeekBarTempoGanho.getProgress()) + SEGUNDOS;
+        this.mTxtTempoGanho.setText(segundos);
         this.mSeekBarTempoGanho.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                mTxtTempoGanho.setText(String.valueOf(progress) + SEGUNDOS);
+                String segundos = String.valueOf(progress) + SEGUNDOS;
+
+                if (progress < TEMPO_GANHO_MIN) {
+                    progress = TEMPO_GANHO_MIN;
+                } else {
+                    mTxtTempoGanho.setText(segundos);
+                }
             }
 
             @Override

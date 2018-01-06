@@ -1,11 +1,5 @@
 package pt.isec.tiagodaniel.xadrez.Logic;
 
-import android.bluetooth.BluetoothClass;
-
-/**
- * Created by Tiago Coutinho on 31/12/2017.
- */
-
 public class JogaPC extends Thread
 {
     private GameModel gameModel;

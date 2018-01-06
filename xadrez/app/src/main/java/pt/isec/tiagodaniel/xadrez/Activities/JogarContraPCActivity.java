@@ -32,8 +32,8 @@ import pt.isec.tiagodaniel.xadrez.Logic.Ferramentas;
 import pt.isec.tiagodaniel.xadrez.Logic.GameModel;
 import pt.isec.tiagodaniel.xadrez.Logic.Jogador;
 import pt.isec.tiagodaniel.xadrez.Logic.JogadorLight;
-import pt.isec.tiagodaniel.xadrez.Logic.Peca;
 import pt.isec.tiagodaniel.xadrez.Logic.Posicao;
+import pt.isec.tiagodaniel.xadrez.Logic.SocketHandler;
 import pt.isec.tiagodaniel.xadrez.Logic.XadrezApplication;
 import pt.isec.tiagodaniel.xadrez.R;
 
@@ -53,6 +53,7 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
     XadrezApplication xadrezApplication;
     private Jogador atual;
     Chronometer CronometroJogBrancas, CronometroJogPretas;
+    private int modoJogo;
 
     public ImageView getCheck()
     {
@@ -70,24 +71,31 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jogar_contra_pc);
 
-        ll = findViewById(R.id.tabuleiro);
+        try {
+            ll = findViewById(R.id.tabuleiro);
 
-        CronometroJogBrancas = findViewById(R.id.tempoJogBrancas);
-        CronometroJogPretas = findViewById(R.id.tempoJogPretas);
-        this.gameModel = new GameModel(this.ll, this, CronometroJogBrancas, CronometroJogPretas);
+            CronometroJogBrancas = findViewById(R.id.tempoJogBrancas);
+            CronometroJogPretas = findViewById(R.id.tempoJogPretas);
 
-        this.configuracoesIniciais();
-        this.posicoesDisponiveisAnteriores = new ArrayList<>();
-        resources = getResources();
+            this.setModoJogo();
+
+            this.gameModel = new GameModel(this.ll, this, CronometroJogBrancas, CronometroJogPretas, this.modoJogo);
+
+            this.configuracoesIniciais();
+
+            this.posicoesDisponiveisAnteriores = new ArrayList<>();
+            resources = getResources();
+
+        } catch (NullSharedPreferencesException e) {
+            ErrorDialog mErrorDialog = new ErrorDialog(this, e.toString());
+            mErrorDialog.show(getFragmentManager(), Constantes.ERROR_DIALOG);
+        }
     }
 
     public void onClickQuadrado(View v)
     {
         ArrayList<Posicao> posicoesDisponiveis = new ArrayList<>();
         String res = getResources().getResourceEntryName(v.getId());
-        ImageView iv;
-        Peca pecaClick;
-        Posicao posicaoDestino;
 
         int linha = Character.getNumericValue(res.charAt(1));
         char coluna = res.charAt(0);
@@ -166,66 +174,68 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
         startActivityForResult(new Intent(JogarContraPCActivity.this, ActivityPromocaoPeao.class), 1);
     }
 
-    public void mostrarVencedor(Jogador vencedor)
-    {
+    public void mostrarVencedor(Jogador vencedor) {
         String titulo;
 
         if (vencedor instanceof JogadorLight)
             titulo = PECAS_BRANCAS + " " + getString(R.string.win_title);
         else titulo = PECAS_PRETAS + " " + getString(R.string.win_title);
 
-        WinDialog winDialog = new WinDialog(titulo);
+        WinDialog winDialog = new WinDialog(this, titulo);
         winDialog.show(getFragmentManager(), WIN_DIALOG);
     }
 
-    public void mostrarEmpate()
-    {
-        DrawDialog drawDialog = new DrawDialog();
+    public void mostrarEmpate() {
+        DrawDialog drawDialog = new DrawDialog(this);
         drawDialog.show(getFragmentManager(), DRAW_DIALOG);
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         gameModel.substituiPeao(resultCode, peaoSubstituir, atual);
     }
 
-    public void updateView()
-    {
-        ll.invalidate();
-    }
-
     @Override
-    public void onBackPressed()
-    {
-        QuestionDialog questionDialog = new QuestionDialog(getString(R.string.question_title_leave_game), getString(R.string.question_message_leave_game), TAG_SAIR_JOGO);
-        questionDialog.show(getFragmentManager(), QUESTION_DIALOG);
+    public void onBackPressed() {
+        if(this.gameModel.getModoJogo() == JUNTAR_JOGO_REDE || this.gameModel.getModoJogo() == CRIAR_JOGO_REDE) {
+            QuestionDialog questionDialog = new QuestionDialog(
+                    this,
+                    getString(R.string.question_title_leave_game_TCP),
+                    getString(R.string.question_message_leave_game_TCP),
+                    TAG_SAIR_JOGO_REDE);
+            questionDialog.show(getFragmentManager(), QUESTION_DIALOG);
+        } else {
+            QuestionDialog questionDialog = new QuestionDialog(
+                    this,
+                    getString(R.string.question_title_leave_game),
+                    getString(R.string.question_message_leave_game),
+                    TAG_SAIR_JOGO);
+            questionDialog.show(getFragmentManager(), QUESTION_DIALOG);
+        }
     }
 
-    private void configuracoesIniciais()
-    {
-        this.xadrezApplication = ((XadrezApplication) this.getApplication());
+    private void configuracoesIniciais() {
+        this.xadrezApplication = (XadrezApplication)getApplication();
         Intent intent = getIntent();
-        if (intent.getAction().equals(""))
-        {
+
+        if (intent.getAction().equals("")) {
             finish();
-        }
-        else if (intent.getAction().equals(ACTION_JOGvsPC))
-        {
-            this.configuraJogador1();
+        } else if (intent.getAction().equals(ACTION_JOGvsPC)) {
+            this.modoJogo = JOGADOR_VS_COMPUTADOR;
             this.configuraJogador2(true, null);
-            this.gameModel.getTabuleiro().getHistorico().setModoJogo(JOGADOR_VS_COMPUTADOR);
-            this.xadrezApplication.setModoJogo(JOGADOR_VS_COMPUTADOR);
-        }
-        else if (intent.getAction().equals(ACTION_JOGvsJOG))
-        {
-            this.configuraJogador1();
+
+        } else if (intent.getAction().equals(ACTION_JOGvsJOG)) {
+            this.modoJogo = JOGADOR_VS_JOGADOR;
             this.configuraJogador2(false, intent.getExtras());
-            this.gameModel.getTabuleiro().getHistorico().setModoJogo(JOGADOR_VS_JOGADOR);
-            this.xadrezApplication.setModoJogo(JOGADOR_VS_JOGADOR);
             this.configuraTempo(intent.getExtras());
+
+        } else if (intent.getAction().equals(ACTION_CRIAR_JOGO_REDE)) {
+            this.modoJogo = CRIAR_JOGO_REDE;
+        } else if (intent.getAction().equals(ACTION_JUNTAR_JOGO_REDE)) {
+            this.modoJogo = JUNTAR_JOGO_REDE;
         }
 
+        this.configuraJogador1();
     }
 
     private void configuraJogador1()
@@ -238,25 +248,28 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
             this.ferramentas = new Ferramentas(this);
             this.mTxtNomeJogador1.setText(ferramentas.getSavedName());
             ferramentas.setPic(this.mImvFotoJogador1, ferramentas.getSavedPhotoPath());
-
-        }
-        catch (NullSharedPreferencesException e)
+            
+        } catch (NullSharedPreferencesException e) 
         {
-            e.printStackTrace();
+            ErrorDialog mErrorDialog = new ErrorDialog(this, e.toString());
+            mErrorDialog.show(getFragmentManager(), Constantes.ERROR_DIALOG);
         }
     }
 
-    private void configuraJogador2(boolean bot, Bundle bundle)
-    {
+    public void configuraJogador2(boolean bot, Bundle bundle) {
         if (bot) return;
         if (bundle == null) finish();
 
         this.mTxtNomeJogador2 = findViewById(R.id.txtNomeJogador2);
         this.mImvFotoJogador2 = findViewById(R.id.imvFotoJogador2);
 
-        this.mTxtNomeJogador2.setText(bundle.getString(NOME_JOGADOR2));
-        if (bundle.getString(FOTO_JOGADOR2).equals(""))
-        {
+        String nome = bundle.getString(NOME_JOGADOR2);
+        if (nome.equals("")) {
+            nome = getString(R.string.perfil_name_hint);
+        }
+        this.mTxtNomeJogador2.setText(nome);
+
+        if (bundle.getString(FOTO_JOGADOR2).equals("")) {
             this.mImvFotoJogador2.setImageResource(R.drawable.computador);
         }
         else
@@ -264,29 +277,22 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
             this.ferramentas.setPic(this.mImvFotoJogador2, bundle.getString(FOTO_JOGADOR2));
         }
     }
-
-    private void configuraTempo(Bundle bundle)
-    {
-        if (xadrezApplication.getModoJogo() != JOGADOR_VS_COMPUTADOR && bundle.getBoolean(TEMPO_JOGO_JOGvsJOG))
-        {
+    private void configuraTempo(Bundle bundle) {
+        if (this.getGameModel().getModoJogo() != JOGADOR_VS_COMPUTADOR && bundle.getBoolean(TEMPO_JOGO_JOGvsJOG)) {
             this.jogoComTempo = true;
             this.tempoMaximo = bundle.getLong(TEMPO_MAX_JOGO_JOGvsJOG);
             this.tempoGanho = bundle.getLong(TEMPO_GANHO_JOGO_JOGvsJOG);
-            inicializaTempos(0,0);
-        }
-        else
-        {
+            inicializaTempos();
+        } else {
             LinearLayout cronometros= findViewById(R.id.cronometros);
             cronometros.setVisibility(View.GONE);
         }
     }
 
-    public void inicializaTempos(long tempoPassadoPretas, long tempoPassadoBrancas)
-    {
-        CronometroJogPretas.setBase(SystemClock.elapsedRealtime()+tempoPassadoPretas);
+    public void inicializaTempos() {
+        CronometroJogPretas.setBase(SystemClock.elapsedRealtime());
         CronometroJogPretas.stop();
-        CronometroJogPretas.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener()
-        {
+        CronometroJogPretas.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override
             public void onChronometerTick(Chronometer chronometer)
             {
@@ -299,8 +305,7 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
 
         CronometroJogBrancas.setBase(SystemClock.elapsedRealtime()+tempoPassadoBrancas);
         CronometroJogBrancas.start();
-        CronometroJogPretas.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener()
-        {
+        CronometroJogPretas.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override
             public void onChronometerTick(Chronometer chronometer)
             {
@@ -325,9 +330,7 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
             else
                 res=cronometroJogBrancasTempoStop-tempoGanho;
             CronometroJogBrancas.setBase(res);*/
-        }
-        else
-        {
+        } else {
             cronometroJogPretasTempoStop = CronometroJogPretas.getBase() - SystemClock.elapsedRealtime();
             CronometroJogPretas.stop();
             /*
@@ -338,7 +341,6 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
             CronometroJogPretas.setBase(res);*/
         }
     }
-
     public void comecaTempo(Jogador jogador)
     {
         if (jogador instanceof JogadorLight)
@@ -354,88 +356,92 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        if (this.xadrezApplication.getModoJogo() == JOGADOR_VS_JOGADOR || this.xadrezApplication.getModoJogo() == JOGADOR_VS_COMPUTADOR)
-        {
-            MenuInflater mi = new MenuInflater(this);
-            mi.inflate(R.menu.menu_jogo, menu);
-        }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater mi = new MenuInflater(this);
+        mi.inflate(R.menu.menu_jogo, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        String message = "";
-        if (item.getItemId() == R.id.alterarJogo)
-        {
-            if (this.xadrezApplication.getModoJogo() == JOGADOR_VS_COMPUTADOR)
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.alterarJogo) {
+            String message;
+
+            if (this.gameModel.getModoJogo() == JOGADOR_VS_COMPUTADOR)
                 message = getString(R.string.question_message_alterar_jogo_para_contra_humano);
-            else
-            {
+            else {
                 message = getString(R.string.question_message_alterar_jogo_para_contra_bot);
             }
-            QuestionDialog questionDialog = new QuestionDialog(getString(R.string.question_title_alterar_jogo), message, TAG_ALTERAR_JOGO);
+
+            QuestionDialog questionDialog = new QuestionDialog(
+                    this,
+                    getString(R.string.question_title_alterar_jogo),
+                    message,
+                    TAG_ALTERAR_JOGO);
             questionDialog.show(getFragmentManager(), QUESTION_DIALOG);
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
-    public void onComplete(int code, String tag)
-    {
-        switch (code)
-        {
-            case QUESTION_OK:
-            {
-                if (tag.equals(TAG_SAIR_JOGO))
-                {
-                    try
-                    {
-                        this.xadrezApplication.saveHistoricList(this.gameModel.getTabuleiro().getHistorico());
-                        super.onBackPressed();
-                    }
-                    catch (IOException e)
-                    {
-                        ErrorDialog errorDialog = new ErrorDialog(getString(R.string.error_save_historic));
-                        errorDialog.show(getFragmentManager(), ERROR_DIALOG);
-                    }
-                }
-                else if (tag.equals(TAG_ALTERAR_JOGO))
+    public void onComplete(int code, String tag) {
+        switch (code) {
+            case QUESTION_OK: {
+                if (tag.equals(TAG_SAIR_JOGO)) {
+                    this.guardarHistorico();
+                } else if (tag.equals(TAG_ALTERAR_JOGO)) 
                 {
                     LinearLayout cronometros= findViewById(R.id.cronometros);
                     cronometros.setVisibility(View.GONE);
+                    this.alterarModoJogo();
+                } else if(tag.equals(TAG_SAIR_JOGO_REDE)) {
+                    if (SocketHandler.getClientSocket() != null) {
+                        try {
+                            SocketHandler.getClientSocket().close();
+                        } catch (IOException ex1) {
+                            // TODO errorDialog
+                            System.err.println("[AttendTCPClientsThread]" + ex1);
+                        }
 
-                    if (this.xadrezApplication.getModoJogo() == JOGADOR_VS_JOGADOR)
-                    {
-                        this.xadrezApplication.setModoJogo(JOGADOR_VS_COMPUTADOR);
-                        this.gameModel.getTabuleiro().getHistorico().setModoJogo(JOGADOR_VS_COMPUTADOR);
                     }
-                    else if (this.xadrezApplication.getModoJogo() == JOGADOR_VS_COMPUTADOR)
-                    {
-                        this.xadrezApplication.setModoJogo(JOGADOR_VS_JOGADOR);
-                        this.gameModel.getTabuleiro().getHistorico().setModoJogo(JOGADOR_VS_JOGADOR);
-                    }
+                    this.gameModel.setModoJogo(JOGADOR_VS_COMPUTADOR);
                 }
                 break;
             }
-            case QUESTION_CANCELAR:
-            {
+            case ALERT_OK:
+            case QUESTION_CANCELAR: {
                 break;
             }
-            case ERROR_OK:
-            case DRAW_OK:
-            case WIN_OK:
-            {
+            case ERROR_OK: {
                 this.finish();
+                break;
+            }
+            case DRAW_OK:
+            case WIN_OK: {
+                this.guardarHistorico();
                 break;
             }
         }
     }
 
-    public boolean isJogoComTempo()
-    {
+    private void alterarModoJogo() {
+        switch (this.gameModel.getModoJogo()) {
+            case CRIAR_JOGO_REDE:
+            case JUNTAR_JOGO_REDE:
+            case JOGADOR_VS_JOGADOR: {
+                CronometroJogBrancas.setVisibility(View.GONE);
+                CronometroJogPretas.setVisibility(View.GONE);
+                this.gameModel.setModoJogo(JOGADOR_VS_COMPUTADOR);
+                break;
+            }
+            case JOGADOR_VS_COMPUTADOR: {
+                this.gameModel.setModoJogo(JOGADOR_VS_JOGADOR);
+                break;
+            }
+        }
+    }
+
+    public boolean isJogoComTempo() {
         return jogoComTempo;
 
     }
@@ -472,4 +478,46 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
 
 
     }
+
+    private void guardarHistorico() {
+        try {
+            this.xadrezApplication.guardarHistorico(this.gameModel.getHistorico());
+            super.onBackPressed();
+        } catch (IOException e) {
+            ErrorDialog errorDialog = new ErrorDialog(this, getString(R.string.error_save_historic));
+            errorDialog.show(getFragmentManager(), ERROR_DIALOG);
+        }
+    }
+
+    public GameModel getGameModel() {
+        return this.gameModel;
+    }
+
+    //region Funções privadas
+    private void setModoJogo(){
+        Intent intent = getIntent();
+
+        if (intent.getAction().equals("")) {
+            finish();
+        } else if (intent.getAction().equals(ACTION_JOGvsPC)) {
+            this.modoJogo = JOGADOR_VS_COMPUTADOR;
+        } else if (intent.getAction().equals(ACTION_JOGvsJOG)) {
+            this.modoJogo = JOGADOR_VS_JOGADOR;
+        } else if (intent.getAction().equals(ACTION_CRIAR_JOGO_REDE)) {
+            this.modoJogo = CRIAR_JOGO_REDE;
+        } else if (intent.getAction().equals(ACTION_JUNTAR_JOGO_REDE)) {
+            this.modoJogo = JUNTAR_JOGO_REDE;
+        }
+    }
+    //endregion
+
+    //region Funções usadas pelo Game Model
+    public String getNomeJogador1() {
+        return ((TextView)findViewById(R.id.nomeJogador1)).getText().toString();
+    }
+
+    public String getNomeJogador2() {
+        return ((TextView)findViewById(R.id.nomeJogador2)).getText().toString();
+    }
+    //endregion
 }

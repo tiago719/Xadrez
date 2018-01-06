@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/fonty"
                 android:textSize="20sp"
-                android:text="2m"
+                android:text="@string/dois_minutos"
                 android:textStyle="bold"
                 android:textColor="@color/title"
                 android:layout_gravity="center"/>
@@ -85,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/fonty"
                 android:textSize="20sp"
-                android:text="2s"
+                android:text="@string/dois_segundos"
                 android:textStyle="bold"
                 android:textColor="@color/title"
                 android:layout_gravity="center"/>
@@ -117,13 +117,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginRight="20sp" >
+            android:layout_marginEnd="20sp" >
 
             <TextView
                 android:id="@+id/nomeJogador1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Jogador 1"
+                android:text="@string/jogador1"
                 android:layout_weight="1"
                 android:fontFamily="@font/fonty"
                 android:textSize="30sp"
@@ -166,7 +166,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginRight="20sp">
+            android:layout_marginEnd="20sp">
 
             <EditText
                 android:id="@+id/nomeJogador2"
@@ -180,7 +180,7 @@
                 android:gravity="center_horizontal"
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:hint="@string/nomeJogador2_JOGvsJOG"
-                android:textColorHint="@color/edit"/>
+                android:textColorHint="@color/tabLight"/>
 
             <ImageView
                 android:id="@+id/fotoJogador2"

@@ -2,6 +2,7 @@ package pt.isec.tiagodaniel.xadrez.States;
 
 import java.util.ArrayList;
 
+import pt.isec.tiagodaniel.xadrez.Logic.Constantes;
 import pt.isec.tiagodaniel.xadrez.Logic.GameModel;
 import pt.isec.tiagodaniel.xadrez.Logic.Peca;
 import pt.isec.tiagodaniel.xadrez.Logic.Posicao;
@@ -25,6 +26,10 @@ public class EstadoEscolhePeca extends StateAdapter {
         Posicao posicaoPeca=getGame().getTabuleiro().getPosicao(linha, coluna);
 
         pecaAtual = posicaoPeca.getPeca();
+
+        if(this.getGame().getTabuleiro().getJogadorAtual() == null) {
+            return this;
+        }
 
         if (pecaAtual == null)
             return this;

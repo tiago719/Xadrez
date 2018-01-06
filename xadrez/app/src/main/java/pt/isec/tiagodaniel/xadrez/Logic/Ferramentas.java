@@ -60,6 +60,9 @@ public class Ferramentas implements Constantes {
     }
 
     public void saveName(String mName) {
+        if(mName.equals("")) {
+            mName = this.mActivity.getString(R.string.perfil_name_hint);
+        }
         this.mEditor = this.mSharedPreferences.edit();
         this.mEditor.putString(this.mActivity.getString(R.string.saved_name), mName);
         this.mEditor.commit();
