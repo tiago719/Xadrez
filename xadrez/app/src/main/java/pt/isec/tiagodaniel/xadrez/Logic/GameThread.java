@@ -20,6 +20,8 @@ public class GameThread extends Thread implements Constantes {
     private Ferramentas ferramentas;
     private int deviceType;
     private Bundle bundle;
+    private int linhaOrigem, linhaDestino;
+    private char colunaOrigem, colunaDestino;
 
     /**
      * Construtor da GameThread
@@ -55,11 +57,28 @@ public class GameThread extends Thread implements Constantes {
 
                     // TODO faz o que tem a fazer com a resposta
 
-                    int linhaDestino = requestMessage.getLinhaDestino();
-                    char colunaDestino = requestMessage.getColunaDestino();
+                    this.linhaDestino = requestMessage.getLinhaDestino();
+                    this.colunaDestino = requestMessage.getColunaDestino();
 
-                    int linhaOrigem = requestMessage.getLinhaOrigem();
-                    char colunaOrigem = requestMessage.getColunaOrigem();
+                    this.linhaOrigem = requestMessage.getLinhaOrigem();
+                    this.colunaOrigem = requestMessage.getColunaOrigem();
+
+                    gameActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            gameActivity.getGameModel().getTabuleiro().movePara(
+                                    gameActivity.getGameModel().getTabuleiro().getPosicao(linhaOrigem, colunaOrigem),
+                                    gameActivity.getGameModel().getTabuleiro().getPosicao(linhaDestino, colunaDestino),
+                                    gameActivity.getGameModel().getTabuleiro().getJogadorAtual(),
+                                    gameActivity.getGameModel().getTabuleiro().getJogadorAdversario());
+                        }
+                    });
+
+                    if(this.gameActivity.getGameModel().getModoJogo() == Constantes.CRIAR_JOGO_REDE) {
+                        this.gameActivity.getGameModel().getTabuleiro().setJogadorAtual(this.gameActivity.getGameModel().getTabuleiro().getJogador(1));
+                    } else if(this.gameActivity.getGameModel().getModoJogo() == Constantes.JUNTAR_JOGO_REDE) {
+                        this.gameActivity.getGameModel().getTabuleiro().setJogadorAtual(this.gameActivity.getGameModel().getTabuleiro().getJogador(0));
+                    }
                 }
             }
 

@@ -82,13 +82,12 @@ public class EstadoEscolheDestino extends StateAdapter implements Constantes {
 
                             out.writeUnshared(messageToSend);
                             out.flush();
-
-                            getGame().getTabuleiro().trocaJogadorActual();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
                 });
+                getGame().getTabuleiro().setJogadorAtual(null);
             }
             return new EstadoEscolhePeca(this.getGame());
         }
