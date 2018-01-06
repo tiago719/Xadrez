@@ -127,4 +127,14 @@ public class GameModel implements Constantes {
         this.modoJogo = modoJogo;
         this.tabuleiro.setModoJogo(modoJogo);
     }
+
+    public void desenhaPecas()
+    {
+        tabuleiro.desenhaPecas();
+    }
+
+    public void setView(LinearLayout ll)
+    {
+        tabuleiro.setView(ll);
+    }
 }

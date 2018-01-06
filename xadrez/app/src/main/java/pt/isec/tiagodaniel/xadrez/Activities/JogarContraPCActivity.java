@@ -2,9 +2,11 @@ package pt.isec.tiagodaniel.xadrez.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.VolumeShaper;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.Menu;
@@ -35,7 +37,8 @@ import pt.isec.tiagodaniel.xadrez.Logic.SocketHandler;
 import pt.isec.tiagodaniel.xadrez.Logic.XadrezApplication;
 import pt.isec.tiagodaniel.xadrez.R;
 
-public class JogarContraPCActivity extends Activity implements OnCompleteListener, Constantes {
+public class JogarContraPCActivity extends Activity implements OnCompleteListener, Constantes
+{
     private LinearLayout ll;
     private GameModel gameModel;
     private ArrayList<Posicao> posicoesDisponiveisAnteriores = null;
@@ -43,7 +46,7 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
     private ImageView Check = null;
     private Posicao reiCheck = null, peaoSubstituir;
     private Ferramentas ferramentas;
-    private boolean jogoComTempo = false;
+    private boolean jogoComTempo = false, orientacaoMudou=false;
     private long tempoMaximo, tempoGanho, cronometroJogBrancasTempoStop, cronometroJogPretasTempoStop;
     private TextView mTxtNomeJogador1, mTxtNomeJogador2;
     private ImageView mImvFotoJogador1, mImvFotoJogador2;
@@ -52,16 +55,19 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
     Chronometer CronometroJogBrancas, CronometroJogPretas;
     private int modoJogo;
 
-    public ImageView getCheck() {
+    public ImageView getCheck()
+    {
         return Check;
     }
 
-    public void setCheck(ImageView check) {
+    public void setCheck(ImageView check)
+    {
         Check = check;
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jogar_contra_pc);
 
@@ -86,7 +92,9 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
         }
     }
 
-    public void onClickQuadrado(View v) {
+    public void onClickQuadrado(View v)
+    {
+        ArrayList<Posicao> posicoesDisponiveis = new ArrayList<>();
         String res = getResources().getResourceEntryName(v.getId());
 
         int linha = Character.getNumericValue(res.charAt(1));
@@ -95,59 +103,72 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
         gameModel.seguinte(linha, coluna);
     }
 
-    public void setPosicoesJogaveis(ArrayList<Posicao> posicoesDisponiveis) {
+    public void setPosicoesJogaveis(ArrayList<Posicao> posicoesDisponiveis)
+    {
         ImageView iv;
-        for (Posicao p : posicoesDisponiveis) {
+        for (Posicao p : posicoesDisponiveis)
+        {
             iv = findViewById(resources.getIdentifier("" + p.getColuna() + p.getLinha(), "id", getBaseContext().getPackageName()));
             iv.setBackgroundColor(Color.GREEN);
             this.posicoesDisponiveisAnteriores.add(p);
         }
     }
 
-    public void resetPosicoesDisponiveisAnteriores() {
+    public void resetPosicoesDisponiveisAnteriores()
+    {
         ImageView pecaImageView;
         ColorDrawable drawable;
-        for (Posicao posicao : this.posicoesDisponiveisAnteriores) {
-            pecaImageView = findViewById(getResources().getIdentifier("" + posicao.getColuna()
-                    + posicao.getLinha(), "id", getBaseContext().getPackageName()));
+        for (Posicao posicao : this.posicoesDisponiveisAnteriores)
+        {
+            pecaImageView = findViewById(getResources().getIdentifier("" + posicao.getColuna() + posicao.getLinha(), "id", getBaseContext().getPackageName()));
             drawable = (ColorDrawable) pecaImageView.getBackground();
-            if (drawable.getColor() == Color.GREEN)
-                resetCor(posicao, pecaImageView);
+            if (drawable.getColor() == Color.GREEN) resetCor(posicao, pecaImageView);
         }
     }
 
-    public void resetCor(Posicao posicao, ImageView pecaImageView) {
-        if ((int) posicao.getColuna() % 2 != 0) {
-            if (posicao.getLinha() % 2 != 0) {
+    public void resetCor(Posicao posicao, ImageView pecaImageView)
+    {
+        if ((int) posicao.getColuna() % 2 != 0)
+        {
+            if (posicao.getLinha() % 2 != 0)
+            {
                 pecaImageView.setBackgroundColor(getResources().getColor(R.color.tabLight));
-            } else {
+            }
+            else
+            {
                 pecaImageView.setBackgroundColor(getResources().getColor(R.color.tabDark));
             }
-        } else {
-            if (posicao.getLinha() % 2 != 0) {
+        }
+        else
+        {
+            if (posicao.getLinha() % 2 != 0)
+            {
                 pecaImageView.setBackgroundColor(getResources().getColor(R.color.tabDark));
-            } else {
+            }
+            else
+            {
                 pecaImageView.setBackgroundColor(getResources().getColor(R.color.tabLight));
             }
         }
     }
 
-    public void setReiCheck(Posicao PosicaoRei) {
-        if (Check != null)
-            resetCheck();
+    public void setReiCheck(Posicao PosicaoRei)
+    {
+        if (Check != null) resetCheck();
         reiCheck = PosicaoRei;
         Check = findViewById(resources.getIdentifier("" + PosicaoRei.getColuna() + PosicaoRei.getLinha(), "id", getBaseContext().getPackageName()));
         Check.setBackgroundColor(Color.RED);
     }
 
-    public void resetCheck() {
-        if (Check != null && reiCheck != null)
-            resetCor(reiCheck, Check);
+    public void resetCheck()
+    {
+        if (Check != null && reiCheck != null) resetCor(reiCheck, Check);
         Check = null;
         reiCheck = null;
     }
 
-    public void peaoUltimaLinha(Posicao posicao, Jogador atual) {
+    public void peaoUltimaLinha(Posicao posicao, Jogador atual)
+    {
         peaoSubstituir = posicao;
         this.atual = atual;
         startActivityForResult(new Intent(JogarContraPCActivity.this, ActivityPromocaoPeao.class), 1);
@@ -158,8 +179,7 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
 
         if (vencedor instanceof JogadorLight)
             titulo = PECAS_BRANCAS + " " + getString(R.string.win_title);
-        else
-            titulo = PECAS_PRETAS + " " + getString(R.string.win_title);
+        else titulo = PECAS_PRETAS + " " + getString(R.string.win_title);
 
         WinDialog winDialog = new WinDialog(this, titulo);
         winDialog.show(getFragmentManager(), WIN_DIALOG);
@@ -218,16 +238,19 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
         this.configuraJogador1();
     }
 
-    private void configuraJogador1() {
+    private void configuraJogador1()
+    {
         this.mTxtNomeJogador1 = findViewById(R.id.txtNomeJogador1);
         this.mImvFotoJogador1 = findViewById(R.id.imvFotoJogador1);
 
-        try {
+        try
+        {
             this.ferramentas = new Ferramentas(this);
             this.mTxtNomeJogador1.setText(ferramentas.getSavedName());
             ferramentas.setPic(this.mImvFotoJogador1, ferramentas.getSavedPhotoPath());
-
-        } catch (NullSharedPreferencesException e) {
+            
+        } catch (NullSharedPreferencesException e) 
+        {
             ErrorDialog mErrorDialog = new ErrorDialog(this, e.toString());
             mErrorDialog.show(getFragmentManager(), Constantes.ERROR_DIALOG);
         }
@@ -248,11 +271,12 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
 
         if (bundle.getString(FOTO_JOGADOR2).equals("")) {
             this.mImvFotoJogador2.setImageResource(R.drawable.computador);
-        } else {
+        }
+        else
+        {
             this.ferramentas.setPic(this.mImvFotoJogador2, bundle.getString(FOTO_JOGADOR2));
         }
     }
-
     private void configuraTempo(Bundle bundle) {
         if (this.getGameModel().getModoJogo() != JOGADOR_VS_COMPUTADOR && bundle.getBoolean(TEMPO_JOGO_JOGvsJOG)) {
             this.jogoComTempo = true;
@@ -260,8 +284,8 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
             this.tempoGanho = bundle.getLong(TEMPO_GANHO_JOGO_JOGvsJOG);
             inicializaTempos();
         } else {
-            CronometroJogBrancas.setVisibility(View.GONE);
-            CronometroJogPretas.setVisibility(View.GONE);
+            LinearLayout cronometros= findViewById(R.id.cronometros);
+            cronometros.setVisibility(View.GONE);
         }
     }
 
@@ -270,28 +294,34 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
         CronometroJogPretas.stop();
         CronometroJogPretas.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override
-            public void onChronometerTick(Chronometer chronometer) {
-                if (SystemClock.elapsedRealtime() == tempoMaximo) {
+            public void onChronometerTick(Chronometer chronometer)
+            {
+                if (SystemClock.elapsedRealtime() == tempoMaximo)
+                {
                     mostrarVencedor(gameModel.getTabuleiro().getJogadorAdversario());
                 }
             }
         });
 
-        CronometroJogBrancas.setBase(SystemClock.elapsedRealtime());
+        CronometroJogBrancas.setBase(SystemClock.elapsedRealtime()+tempoPassadoBrancas);
         CronometroJogBrancas.start();
         CronometroJogPretas.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override
-            public void onChronometerTick(Chronometer chronometer) {
-                if (SystemClock.elapsedRealtime() == tempoMaximo) {
+            public void onChronometerTick(Chronometer chronometer)
+            {
+                if (SystemClock.elapsedRealtime() == tempoMaximo)
+                {
                     mostrarVencedor(gameModel.getTabuleiro().getJogadorAdversario());
                 }
             }
         });
     }
 
-    public void paraTempo(Jogador jogador) {
+    public void paraTempo(Jogador jogador)
+    {
         long res = 0;
-        if (jogador instanceof JogadorLight) {
+        if (jogador instanceof JogadorLight)
+        {
             cronometroJogBrancasTempoStop = CronometroJogBrancas.getBase() - SystemClock.elapsedRealtime();
             CronometroJogBrancas.stop();
             /*
@@ -311,12 +341,15 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
             CronometroJogPretas.setBase(res);*/
         }
     }
-
-    public void comecaTempo(Jogador jogador) {
-        if (jogador instanceof JogadorLight) {
+    public void comecaTempo(Jogador jogador)
+    {
+        if (jogador instanceof JogadorLight)
+        {
             CronometroJogBrancas.setBase(SystemClock.elapsedRealtime() + cronometroJogBrancasTempoStop);
             CronometroJogBrancas.start();
-        } else {
+        }
+        else
+        {
             CronometroJogPretas.setBase(SystemClock.elapsedRealtime() + cronometroJogPretasTempoStop);
             CronometroJogPretas.start();
         }
@@ -326,7 +359,6 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater mi = new MenuInflater(this);
         mi.inflate(R.menu.menu_jogo, menu);
-
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -357,7 +389,10 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
             case QUESTION_OK: {
                 if (tag.equals(TAG_SAIR_JOGO)) {
                     this.guardarHistorico();
-                } else if (tag.equals(TAG_ALTERAR_JOGO)) {
+                } else if (tag.equals(TAG_ALTERAR_JOGO)) 
+                {
+                    LinearLayout cronometros= findViewById(R.id.cronometros);
+                    cronometros.setVisibility(View.GONE);
                     this.alterarModoJogo();
                 } else if(tag.equals(TAG_SAIR_JOGO_REDE)) {
                     if (SocketHandler.getClientSocket() != null) {
@@ -367,6 +402,7 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
                             // TODO errorDialog
                             System.err.println("[AttendTCPClientsThread]" + ex1);
                         }
+
                     }
                     this.gameModel.setModoJogo(JOGADOR_VS_COMPUTADOR);
                 }
@@ -407,6 +443,40 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
 
     public boolean isJogoComTempo() {
         return jogoComTempo;
+
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig)
+    {
+        super.onConfigurationChanged(newConfig);
+
+        // Checks the orientation of the screen
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            setContentView(R.layout.activity_jogar_contra_pc);
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            setContentView(R.layout.activity_jogar_contra_pc);
+        }
+
+        ll = findViewById(R.id.tabuleiro);
+
+        if(jogoComTempo)
+        {
+            CronometroJogBrancas = findViewById(R.id.tempoJogBrancas);
+            CronometroJogPretas = findViewById(R.id.tempoJogPretas);
+
+            inicializaTempos(cronometroJogBrancasTempoStop,cronometroJogPretasTempoStop);
+        }
+        else
+        {
+            LinearLayout cronometros= findViewById(R.id.cronometros);
+            cronometros.setVisibility(View.GONE);
+        }
+
+        gameModel.setView(ll);
+        gameModel.desenhaPecas();
+
+
     }
 
     private void guardarHistorico() {

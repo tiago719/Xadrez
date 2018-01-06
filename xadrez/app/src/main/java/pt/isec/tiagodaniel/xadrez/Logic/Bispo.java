@@ -26,13 +26,13 @@ public class Bispo extends Peca implements Constantes
     @Override
     public ArrayList<Posicao> verificaDisponiveisCheck()
     {
-        return tabuleiro.diagonal(this);
+        return tabuleiro.diagonal(this, false);
     }
 
     @Override
-    public ArrayList<Posicao> getDisponiveis(Jogador atual)
+    public ArrayList<Posicao> getDisponiveis(Jogador atual, boolean pc)
     {
-        ArrayList<Posicao> disponiveis= tabuleiro.diagonal(this);
+        ArrayList<Posicao> disponiveis= tabuleiro.diagonal(this, pc);
 
         for (Iterator<Posicao> iterator = disponiveis.iterator(); iterator.hasNext();) {
             Posicao posicao = iterator.next();

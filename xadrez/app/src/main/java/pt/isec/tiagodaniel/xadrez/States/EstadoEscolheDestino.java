@@ -40,12 +40,12 @@ public class EstadoEscolheDestino extends StateAdapter implements Constantes, On
         if (pecaClick != null && pecaClick.getJogador() == getGame().getTabuleiro().getJogadorAtual()) // se clicou numa nova peca da sua equipa
         {
             getGame().getActivity().resetPosicoesDisponiveisAnteriores();
-            posicoesDisponiveis = pecaClick.getDisponiveis(pecaClick.getJogador());
+            posicoesDisponiveis = pecaClick.getDisponiveis(pecaClick.getJogador(), false);
             getGame().getActivity().setPosicoesJogaveis(posicoesDisponiveis);
             setPosicaoOrigem(posicaoDestino);
             return this;
         }
-        if (getPosicaoOrigem().getPeca().getDisponiveis(getGame().getTabuleiro().getJogadorAtual()).contains(posicaoDestino))// se clicou numa posicao disponivel
+        if(getPosicaoOrigem().getPeca().getDisponiveis(getGame().getTabuleiro().getJogadorAtual(), false).contains(posicaoDestino))// se clicou numa posicao disponivel
         {
             getGame().getTabuleiro().movePara(getPosicaoOrigem(), posicaoDestino, getGame().getTabuleiro().getJogadorAtual(), getGame().getTabuleiro().getJogadorAdversario());
             getGame().getActivity().resetPosicoesDisponiveisAnteriores();
