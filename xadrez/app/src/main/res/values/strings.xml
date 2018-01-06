@@ -40,6 +40,8 @@
     <string name="ip_title">IP do servidor</string>
     <string name="progress_title">Criar jogo online</string>
     <string name="progress_message">À espera do cliente</string>
+    <string name="progress_title_espera">Jogo online</string>
+    <string name="progress_message_espera">A preparar o campo de batalha…</string>
     <string name="error_save_historic">Problema ao gravar o histórico do jogo.</string>
     <string name="question_delete_historic_title">Apagar histórico</string>
     <string name="question_delete_historic_message">De certeza que pretendes apagar o histórico?</string>

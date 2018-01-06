@@ -1,5 +1,6 @@
 package pt.isec.tiagodaniel.xadrez.Logic;
 
+import android.os.Handler;
 import android.widget.Chronometer;
 import android.widget.LinearLayout;
 
@@ -24,10 +25,10 @@ public class GameModel implements Constantes {
         tabuleiro = new Tabuleiro(ll, chronometer1, chronometer2, this.modoJogo);
 
         if (this.modoJogo == CRIAR_JOGO_REDE) {
-            GameThread gameThread = new GameThread(this.activity, SocketHandler.getClientSocket(), Constantes.SERVIDOR);
+            GameThread gameThread = new GameThread(this.activity, SocketHandler.getClientSocket(), Constantes.SERVIDOR, new Handler());
             gameThread.start();
         } else if (this.modoJogo == JUNTAR_JOGO_REDE) {
-            GameThread gameThread = new GameThread(this.activity, SocketHandler.getClientSocket(), Constantes.CLIENTE);
+            GameThread gameThread = new GameThread(this.activity, SocketHandler.getClientSocket(), Constantes.CLIENTE, new Handler());
             gameThread.start();
         }
 

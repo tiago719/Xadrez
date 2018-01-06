@@ -7,6 +7,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.widget.ImageView;
 
+import java.io.ByteArrayOutputStream;
+
 import pt.isec.tiagodaniel.xadrez.Exceptions.NullSharedPreferencesException;
 import pt.isec.tiagodaniel.xadrez.R;
 
@@ -80,5 +82,12 @@ public class Ferramentas implements Constantes {
 
     public String getSavedPhotoPath() {
         return this.mSharedPreferences.getString(this.mActivity.getString(R.string.saved_photo), PHOTO_NOT_FOUND);
+    }
+
+    public byte[] getSavedPhoto() {
+        Bitmap bitmap = BitmapFactory.decodeFile(this.getSavedPhotoPath());
+        ByteArrayOutputStream blob = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0 /* Ignored for PNGs */, blob);
+        return blob.toByteArray();
     }
 }

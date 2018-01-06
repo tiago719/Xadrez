@@ -1,6 +1,9 @@
 package pt.isec.tiagodaniel.xadrez.Logic;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -9,8 +12,10 @@ import java.net.Socket;
 
 import pt.isec.tiagodaniel.xadrez.Activities.JogarContraPCActivity;
 import pt.isec.tiagodaniel.xadrez.Dialogs.AlertDialog;
+import pt.isec.tiagodaniel.xadrez.Dialogs.ErrorDialog;
 import pt.isec.tiagodaniel.xadrez.Dialogs.OnCompleteListener;
 import pt.isec.tiagodaniel.xadrez.Exceptions.NullSharedPreferencesException;
+import pt.isec.tiagodaniel.xadrez.R;
 
 public class GameThread extends Thread implements Constantes, OnCompleteListener {
     private ObjectInputStream in = null;
@@ -24,6 +29,8 @@ public class GameThread extends Thread implements Constantes, OnCompleteListener
     private Bundle bundle;
     private int linhaOrigem, linhaDestino;
     private char colunaOrigem, colunaDestino;
+    private ProgressDialog progressDialog;
+    private Handler procMsg;
 
     /**
      * Construtor da GameThread
@@ -31,18 +38,20 @@ public class GameThread extends Thread implements Constantes, OnCompleteListener
      * @param activity   actividade que chama a thread (JogarContraPCActivity)
      * @param gameSocket socket que irá ser utilizado para comunicação entre dispositivos
      */
-    public GameThread(JogarContraPCActivity activity, Socket gameSocket, int deviceType) throws NullSharedPreferencesException {
+    public GameThread(JogarContraPCActivity activity, Socket gameSocket, int deviceType, Handler handler) throws NullSharedPreferencesException {
         this.gameActivity = activity;
         this.gameSocket = gameSocket;
         this.deviceType = deviceType;
         this.isFirstTime = true;
+        this.procMsg = handler;
 
         this.ferramentas = new Ferramentas(this.gameActivity);
+
+        this.mostraProgressDialog();
     }
 
     @Override
     public void run() {
-
         try {
             while (!Thread.currentThread().isInterrupted()) {
 
@@ -98,7 +107,7 @@ public class GameThread extends Thread implements Constantes, OnCompleteListener
             out = new ObjectOutputStream(gameSocket.getOutputStream());
             requestMessage = new ClientServerMessage();
             requestMessage.setNomeJogador(this.ferramentas.getSavedName());
-            // TODO falta enviar foto
+            requestMessage.setFotoJogador(this.ferramentas.getSavedPhoto());
 
             out.writeUnshared(requestMessage);
             out.flush();
@@ -107,12 +116,13 @@ public class GameThread extends Thread implements Constantes, OnCompleteListener
 
             bundle = new Bundle();
             bundle.putString(NOME_JOGADOR2, requestMessage.getNomeJogador());
-            bundle.putString(FOTO_JOGADOR2, "");
+            bundle.putByteArray(FOTO_JOGADOR2, requestMessage.getFotoJogador());
 
             gameActivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    gameActivity.configuraJogador2(false, bundle);
+                    gameActivity.configuraJogador2(false, bundle, true);
+                    escondeProgressDialog();
                 }
             });
 
@@ -123,19 +133,22 @@ public class GameThread extends Thread implements Constantes, OnCompleteListener
 
             bundle = new Bundle();
             bundle.putString(NOME_JOGADOR2, requestMessage.getNomeJogador());
-            bundle.putString(FOTO_JOGADOR2, "");
+            bundle.putByteArray(FOTO_JOGADOR2, requestMessage.getFotoJogador());
 
             gameActivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    gameActivity.configuraJogador2(false, bundle);
+                    gameActivity.configuraJogador2(false, bundle, true);
                 }
             });
 
+            requestMessage.resetDados();
             requestMessage.setNomeJogador(this.ferramentas.getSavedName());
+            requestMessage.setFotoJogador(this.ferramentas.getSavedPhoto());
 
             out.writeUnshared(requestMessage);
             out.flush();
+            escondeProgressDialog();
         }
 
         this.isFirstTime = false;
@@ -143,5 +156,22 @@ public class GameThread extends Thread implements Constantes, OnCompleteListener
 
     @Override
     public void onComplete(int code, String tag) {
+    }
+
+    private void mostraProgressDialog() {
+        this.progressDialog = new ProgressDialog(gameActivity);
+        this.progressDialog.setMessage(gameActivity.getString(R.string.progress_message_espera));
+        this.progressDialog.setTitle(R.string.progress_title_espera);
+        this.progressDialog.setCanceledOnTouchOutside(false);
+        this.progressDialog.show();
+    }
+
+    private void escondeProgressDialog() {
+        procMsg.post(new Runnable() {
+            @Override
+            public void run() {
+                progressDialog.dismiss();
+            }
+        });
     }
 }
