@@ -57,7 +57,9 @@ public class Ferramentas implements Constantes {
             bmOptions.inSampleSize = scaleFactor;
             bmOptions.inPurgeable = true;
             Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+            bitmap = Bitmap.createScaledBitmap(bitmap, targetW, targetH, true);
             mImageView.setImageBitmap(bitmap); //em alternativa retornar apenas o Bitmap
+            //mImageView.setRotation(90);
         }
     }
 
@@ -86,6 +88,8 @@ public class Ferramentas implements Constantes {
 
     public byte[] getSavedPhoto() {
         Bitmap bitmap = BitmapFactory.decodeFile(this.getSavedPhotoPath());
+        //TODO meter aqui valores constantes
+        bitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
         ByteArrayOutputStream blob = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 0 /* Ignored for PNGs */, blob);
         return blob.toByteArray();
