@@ -102,13 +102,7 @@ public class EstadoEscolheDestino extends StateAdapter implements Constantes, On
     public void onComplete(int code, String tag) {
         switch (code) {
             case ERROR_OK: {
-                if (SocketHandler.getClientSocket() != null) {
-                    try {
-                        SocketHandler.getClientSocket().close();
-                    } catch (IOException ex1) {
-                        System.err.println("Erro ao fechar o socket. Neste caso não interessa para o utilizador");
-                    }
-                }
+                SocketHandler.closeSocket();
                 getGame().setModoJogo(JOGADOR_VS_COMPUTADOR);
                 break;
             }

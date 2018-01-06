@@ -34,11 +34,10 @@ public class GameThread extends Thread implements Constantes, OnCompleteListener
      * Construtor da GameThread
      *
      * @param activity   actividade que chama a thread (JogarContraPCActivity)
-     * @param gameSocket socket que irá ser utilizado para comunicação entre dispositivos
      */
-    public GameThread(JogarContraPCActivity activity, Socket gameSocket, int deviceType, Handler handler) throws NullSharedPreferencesException {
+    public GameThread(JogarContraPCActivity activity, int deviceType, Handler handler) throws NullSharedPreferencesException {
         this.gameActivity = activity;
-        this.gameSocket = gameSocket;
+        this.gameSocket = SocketHandler.getClientSocket();
         this.deviceType = deviceType;
         this.isFirstTime = true;
         this.procMsg = handler;
@@ -89,13 +88,7 @@ public class GameThread extends Thread implements Constantes, OnCompleteListener
             AlertDialog alertDialog = new AlertDialog(this.gameActivity);
             alertDialog.show(this.gameActivity.getFragmentManager(), ALERT_DIALOG);
         } finally {
-            if (this.gameSocket != null) {
-                try {
-                    this.gameSocket.close();
-                } catch (IOException ex1) {
-                    System.err.println("Erro ao fechar o socket. Neste caso não interessa para o utilizador");
-                }
-            }
+            SocketHandler.closeSocket();
             this.gameActivity.getGameModel().setModoJogo(JOGADOR_VS_COMPUTADOR);
         }
     }

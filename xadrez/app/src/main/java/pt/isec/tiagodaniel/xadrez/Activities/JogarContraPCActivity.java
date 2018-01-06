@@ -367,16 +367,10 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
                 } else if (tag.equals(TAG_ALTERAR_JOGO)) {
                     LinearLayout cronometros = findViewById(R.id.cronometros);
                     cronometros.setVisibility(View.GONE);
+                    SocketHandler.closeSocket();
                     this.alterarModoJogo();
                 } else if (tag.equals(TAG_SAIR_JOGO_REDE)) {
-                    if (SocketHandler.getClientSocket() != null) {
-                        try {
-                            SocketHandler.getClientSocket().close();
-                        } catch (IOException ex1) {
-                            System.err.println("Erro ao fechar o socket. Neste caso não interessa para o utilizador");
-                        }
-
-                    }
+                    SocketHandler.closeSocket();
                     this.gameModel.setModoJogo(JOGADOR_VS_COMPUTADOR);
                 }
                 break;
