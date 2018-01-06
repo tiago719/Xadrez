@@ -84,9 +84,4 @@ public class Historico implements Serializable, Constantes {
     public ArrayList<Jogada> getListaJogadas() {
         return this.jogadasJogo;
     }
-
-    @Override
-    public String toString() {
-        return jogadasJogo.get(0).toString();
-    }
 }

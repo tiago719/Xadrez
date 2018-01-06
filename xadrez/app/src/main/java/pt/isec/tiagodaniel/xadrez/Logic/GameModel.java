@@ -17,7 +17,7 @@ public class GameModel implements Constantes {
 
     public GameModel(LinearLayout ll, JogarContraPCActivity activity, Chronometer chronometer1, Chronometer chronometer2, int modoJogo) throws NullSharedPreferencesException {
         this.activity = activity;
-        this.xadrezApplication = ((XadrezApplication) this.activity.getApplication());
+        this.xadrezApplication = XadrezApplication.getInstance();
 
         this.modoJogo = modoJogo;
         tabuleiro = new Tabuleiro(ll, chronometer1, chronometer2, this.modoJogo);

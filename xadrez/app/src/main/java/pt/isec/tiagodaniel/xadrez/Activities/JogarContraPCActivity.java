@@ -65,7 +65,6 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
         setContentView(R.layout.activity_jogar_contra_pc);
 
         ll = findViewById(R.id.tabuleiro);
-        this.configuracoesIniciais();
 
         CronometroJogBrancas = findViewById(R.id.tempoJogBrancas);
         CronometroJogPretas = findViewById(R.id.tempoJogPretas);
@@ -76,9 +75,10 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
             mErrorDialog.show(getFragmentManager(), Constantes.ERROR_DIALOG);
         }
 
+        this.configuracoesIniciais();
+
         // TODO Melhorar isto, porque está em 2 lugares?
         this.gameModel.getTabuleiro().getHistorico().setModoJogo(modoJogo);
-        this.xadrezApplication.setModoJogo(modoJogo);
 
         this.posicoesDisponiveisAnteriores = new ArrayList<>();
         resources = getResources();
@@ -188,7 +188,7 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
     }
 
     private void configuracoesIniciais() {
-        this.xadrezApplication = ((XadrezApplication) this.getApplication());
+        this.xadrezApplication = XadrezApplication.getInstance();
         Intent intent = getIntent();
 
         if (intent.getAction().equals("")) {
@@ -234,7 +234,7 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
         this.mImvFotoJogador2 = findViewById(R.id.imvFotoJogador2);
 
         String nome = bundle.getString(NOME_JOGADOR2);
-        if(nome.equals("")){
+        if (nome.equals("")) {
             nome = getString(R.string.perfil_name_hint);
         }
         this.mTxtNomeJogador2.setText(nome);
@@ -247,7 +247,7 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
     }
 
     private void configuraTempo(Bundle bundle) {
-        if (xadrezApplication.getModoJogo() != JOGADOR_VS_COMPUTADOR && bundle.getBoolean(TEMPO_JOGO_JOGvsJOG)) {
+        if (this.getGameModel().getModoJogo() != JOGADOR_VS_COMPUTADOR && bundle.getBoolean(TEMPO_JOGO_JOGvsJOG)) {
             this.jogoComTempo = true;
             this.tempoMaximo = bundle.getLong(TEMPO_MAX_JOGO_JOGvsJOG);
             this.tempoGanho = bundle.getLong(TEMPO_GANHO_JOGO_JOGvsJOG);
@@ -317,22 +317,23 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (this.xadrezApplication.getModoJogo() == JOGADOR_VS_JOGADOR || this.xadrezApplication.getModoJogo() == JOGADOR_VS_COMPUTADOR) {
-            MenuInflater mi = new MenuInflater(this);
-            mi.inflate(R.menu.menu_jogo, menu);
-        }
+        MenuInflater mi = new MenuInflater(this);
+        mi.inflate(R.menu.menu_jogo, menu);
+
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        String message = "";
         if (item.getItemId() == R.id.alterarJogo) {
-            if (this.xadrezApplication.getModoJogo() == JOGADOR_VS_COMPUTADOR)
+            String message;
+
+            if (this.gameModel.getModoJogo() == JOGADOR_VS_COMPUTADOR)
                 message = getString(R.string.question_message_alterar_jogo_para_contra_humano);
             else {
                 message = getString(R.string.question_message_alterar_jogo_para_contra_bot);
             }
+
             QuestionDialog questionDialog = new QuestionDialog(
                     this,
                     getString(R.string.question_title_alterar_jogo),
@@ -348,17 +349,9 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
         switch (code) {
             case QUESTION_OK: {
                 if (tag.equals(TAG_SAIR_JOGO)) {
-                    this.saveHistoric();
+                    this.guardarHistorico();
                 } else if (tag.equals(TAG_ALTERAR_JOGO)) {
-                    if (this.xadrezApplication.getModoJogo() == JOGADOR_VS_JOGADOR) {
-                        CronometroJogBrancas.setVisibility(View.GONE);
-                        CronometroJogPretas.setVisibility(View.GONE);
-                        this.xadrezApplication.setModoJogo(JOGADOR_VS_COMPUTADOR);
-                        this.gameModel.getTabuleiro().getHistorico().setModoJogo(JOGADOR_VS_COMPUTADOR);
-                    } else if (this.xadrezApplication.getModoJogo() == JOGADOR_VS_COMPUTADOR) {
-                        this.xadrezApplication.setModoJogo(JOGADOR_VS_JOGADOR);
-                        this.gameModel.getTabuleiro().getHistorico().setModoJogo(JOGADOR_VS_JOGADOR);
-                    }
+                    this.alterarModoJogo();
                 }
                 break;
             }
@@ -371,7 +364,24 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
             }
             case DRAW_OK:
             case WIN_OK: {
-                this.saveHistoric();
+                this.guardarHistorico();
+                break;
+            }
+        }
+    }
+
+    private void alterarModoJogo() {
+        switch (this.gameModel.getModoJogo()) {
+            case CRIAR_JOGO_REDE:
+            case JUNTAR_JOGO_REDE:
+            case JOGADOR_VS_JOGADOR: {
+                CronometroJogBrancas.setVisibility(View.GONE);
+                CronometroJogPretas.setVisibility(View.GONE);
+                this.gameModel.getTabuleiro().getHistorico().setModoJogo(JOGADOR_VS_COMPUTADOR);
+                break;
+            }
+            case JOGADOR_VS_COMPUTADOR: {
+                this.gameModel.getTabuleiro().getHistorico().setModoJogo(JOGADOR_VS_JOGADOR);
                 break;
             }
         }
@@ -381,9 +391,9 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
         return jogoComTempo;
     }
 
-    private void saveHistoric() {
+    private void guardarHistorico() {
         try {
-            this.xadrezApplication.saveHistoricList(this.gameModel.getTabuleiro().getHistorico());
+            this.xadrezApplication.guardarHistorico(this.gameModel.getTabuleiro().getHistorico());
             super.onBackPressed();
         } catch (IOException e) {
             ErrorDialog errorDialog = new ErrorDialog(this, getString(R.string.error_save_historic));
