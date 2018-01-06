@@ -27,7 +27,7 @@ public class AlertDialog extends DialogFragment {
                 .setMessage(getString(R.string.alert_message))
                 .setPositiveButton(getString(R.string.error_positive_button), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        mListener.onComplete(Constantes.ERROR_OK, mTag);
+                        mListener.onComplete(Constantes.ALERT_OK, mTag);
                     }
                 });
         // Create the IpDialog object and return it

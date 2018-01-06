@@ -31,6 +31,7 @@ import pt.isec.tiagodaniel.xadrez.Logic.GameModel;
 import pt.isec.tiagodaniel.xadrez.Logic.Jogador;
 import pt.isec.tiagodaniel.xadrez.Logic.JogadorLight;
 import pt.isec.tiagodaniel.xadrez.Logic.Posicao;
+import pt.isec.tiagodaniel.xadrez.Logic.SocketHandler;
 import pt.isec.tiagodaniel.xadrez.Logic.XadrezApplication;
 import pt.isec.tiagodaniel.xadrez.R;
 
@@ -176,12 +177,21 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
 
     @Override
     public void onBackPressed() {
-        QuestionDialog questionDialog = new QuestionDialog(
-                this,
-                getString(R.string.question_title_leave_game),
-                getString(R.string.question_message_leave_game),
-                TAG_SAIR_JOGO);
-        questionDialog.show(getFragmentManager(), QUESTION_DIALOG);
+        if(this.gameModel.getModoJogo() == JUNTAR_JOGO_REDE || this.gameModel.getModoJogo() == CRIAR_JOGO_REDE) {
+            QuestionDialog questionDialog = new QuestionDialog(
+                    this,
+                    getString(R.string.question_title_leave_game_TCP),
+                    getString(R.string.question_message_leave_game_TCP),
+                    TAG_SAIR_JOGO_REDE);
+            questionDialog.show(getFragmentManager(), QUESTION_DIALOG);
+        } else {
+            QuestionDialog questionDialog = new QuestionDialog(
+                    this,
+                    getString(R.string.question_title_leave_game),
+                    getString(R.string.question_message_leave_game),
+                    TAG_SAIR_JOGO);
+            questionDialog.show(getFragmentManager(), QUESTION_DIALOG);
+        }
     }
 
     private void configuracoesIniciais() {
@@ -349,9 +359,20 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
                     this.guardarHistorico();
                 } else if (tag.equals(TAG_ALTERAR_JOGO)) {
                     this.alterarModoJogo();
+                } else if(tag.equals(TAG_SAIR_JOGO_REDE)) {
+                    if (SocketHandler.getClientSocket() != null) {
+                        try {
+                            SocketHandler.getClientSocket().close();
+                        } catch (IOException ex1) {
+                            // TODO errorDialog
+                            System.err.println("[AttendTCPClientsThread]" + ex1);
+                        }
+                    }
+                    this.gameModel.setModoJogo(JOGADOR_VS_COMPUTADOR);
                 }
                 break;
             }
+            case ALERT_OK:
             case QUESTION_CANCELAR: {
                 break;
             }

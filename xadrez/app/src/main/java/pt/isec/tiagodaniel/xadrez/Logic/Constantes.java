@@ -32,9 +32,11 @@ public interface Constantes {
     int DRAW_OK = 4;
     int WIN_OK = 5;
     int IP_OK = 6;
+    int ALERT_OK = 7;
     String TAG_EMPTY = "EMPTY_TAG";
     String TAG_ALTERAR_JOGO = "ALTERARJOGO";
     String TAG_SAIR_JOGO = "SAIRJOGO";
+    String TAG_SAIR_JOGO_REDE = "SAIRJOGOREDE";
 
     /**Modos de jogo**/
     int JOGADOR_VS_JOGADOR = 0;

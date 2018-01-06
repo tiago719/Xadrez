@@ -31,6 +31,8 @@
     <string name="error_positive_button">Ok</string>
     <string name="question_title_leave_game">Sair do jogo</string>
     <string name="question_message_leave_game">Pretende terminar o jogo?</string>
+    <string name="question_title_leave_game_TCP">Terminar ligação</string>
+    <string name="question_message_leave_game_TCP">Pretende terminar a ligação? Se sim irás continuar contra o bot!</string>
     <string name="question_positive_button">Ok</string>
     <string name="question_negative_button">Cancelar</string>
     <string name="ip_positive_button">Ok</string>

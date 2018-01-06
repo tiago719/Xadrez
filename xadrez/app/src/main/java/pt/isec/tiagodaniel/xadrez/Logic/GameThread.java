@@ -84,12 +84,12 @@ public class GameThread extends Thread implements Constantes, OnCompleteListener
             if (this.gameSocket != null) {
                 try {
                     this.gameSocket.close();
-                    this.gameActivity.getGameModel().setModoJogo(JOGADOR_VS_COMPUTADOR);
                 } catch (IOException ex1) {
                     // TODO errorDialog
                     System.err.println("[AttendTCPClientsThread]" + ex1);
                 }
             }
+            this.gameActivity.getGameModel().setModoJogo(JOGADOR_VS_COMPUTADOR);
         }
     }
 
