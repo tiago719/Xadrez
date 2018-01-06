@@ -6,7 +6,7 @@
     <string name="botao4MP">Juntar Jogo Online</string>
 
     <string name="perfil_name">Nome Jogador:</string>
-    <string name="perfil_name_hint">[nome jogador]</string>
+    <string name="perfil_name_hint">[jogador]</string>
 
     /**Shared Preferences**/
     <string name="saved_name">saved_name</string>
@@ -31,11 +31,13 @@
     <string name="error_positive_button">Ok</string>
     <string name="question_title_leave_game">Sair do jogo</string>
     <string name="question_message_leave_game">Pretende terminar o jogo?</string>
+    <string name="question_title_leave_game_TCP">Terminar ligação</string>
+    <string name="question_message_leave_game_TCP">Pretende terminar a ligação? Se sim irás continuar contra o bot!</string>
     <string name="question_positive_button">Ok</string>
     <string name="question_negative_button">Cancelar</string>
-    <string name="alert_positive_button">Ok</string>
-    <string name="alert_negative_button">Cancelar</string>
-    <string name="alert_title">IP do servidor</string>
+    <string name="ip_positive_button">Ok</string>
+    <string name="ip_negative_button">Cancelar</string>
+    <string name="ip_title">IP do servidor</string>
     <string name="progress_title">Criar jogo online</string>
     <string name="progress_message">À espera do cliente</string>
     <string name="error_save_historic">Problema ao gravar o histórico do jogo.</string>
@@ -46,6 +48,8 @@
     <string name="question_message_alterar_jogo_para_contra_bot">Pretendes alterar o modo de jogo?\nIrás jogar contra o bot!</string>
     <string name="question_message_alterar_jogo_para_contra_humano">Pretendes alterar o modo de jogo para 2 Jogadores - 1 Dispositivo?</string>
     <string name="error_socket_message">Problema nos sockets de rede</string>
+    <string name="alert_title">Conexão interrompida!</string>
+    <string name="alert_message">Irás jogar contra o bot!</string>
 
     /**Menus**/
     <string name="perfil">Perfil</string>

@@ -34,10 +34,10 @@ public class XadrezApplication extends Application {
         super.onCreate();
         singleton = this;
         this.historicList = new ArrayList<>();
-        this.getHistoricList();
+        this.getHistorico();
     }
 
-    public ArrayList<Historico> getHistoricList() {
+    public ArrayList<Historico> getHistorico() {
 
         FileInputStream fileInputStream = null;
         try {
@@ -52,7 +52,7 @@ public class XadrezApplication extends Application {
         return new ArrayList<>();
     }
 
-    public void saveHistoricList(Historico historico) throws IOException {
+    public void guardarHistorico(Historico historico) throws IOException {
         this.addHistoric(historico);
 
         FileOutputStream fileOutputStream = this.openFileOutput(Constantes.HISTORIC_FILE_NAME, Context.MODE_PRIVATE);
@@ -69,7 +69,7 @@ public class XadrezApplication extends Application {
         this.historicList.add(historico);
     }
 
-    public void removeHistoric() throws IOException {
+    public void limpaHistorico() throws IOException {
         String directory = getFilesDir().getAbsolutePath();
         File file = new File(directory, Constantes.HISTORIC_FILE_NAME);
         boolean result = file.delete();

@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import pt.isec.tiagodaniel.xadrez.Dialogs.ErrorDialog;
 import pt.isec.tiagodaniel.xadrez.Dialogs.OnCompleteListener;
 import pt.isec.tiagodaniel.xadrez.Dialogs.QuestionDialog;
 import pt.isec.tiagodaniel.xadrez.Logic.Constantes;
@@ -40,8 +41,8 @@ public class HistoricoActivity extends Activity implements Constantes, OnComplet
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_historico);
 
-        xadrezApplication = ((XadrezApplication) this.getApplication());
-        this.listaHistorico = this.xadrezApplication.getHistoricList();
+        this.xadrezApplication = (XadrezApplication) this.getApplication();
+        this.listaHistorico = this.xadrezApplication.getHistorico();
 
         dados = new ArrayList<>();
         this.mapearHistoricoParaDados();
@@ -181,13 +182,12 @@ public class HistoricoActivity extends Activity implements Constantes, OnComplet
         return super.onOptionsItemSelected(item);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onComplete(int code, String tag) {
         switch (code) {
             case QUESTION_OK: {
                 try {
-                    this.xadrezApplication.removeHistoric();
+                    this.xadrezApplication.limpaHistorico();
                     this.dados.clear();
                     this.myAdapter.notifyDataSetChanged();
                 } catch (IOException e) {
@@ -197,6 +197,10 @@ public class HistoricoActivity extends Activity implements Constantes, OnComplet
             }
             case QUESTION_CANCELAR: {
                 return;
+            }
+            case ERROR_OK: {
+                this.finish();
+                break;
             }
         }
     }

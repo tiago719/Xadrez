@@ -8,9 +8,11 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import pt.isec.tiagodaniel.xadrez.Activities.JogarContraPCActivity;
+import pt.isec.tiagodaniel.xadrez.Dialogs.AlertDialog;
+import pt.isec.tiagodaniel.xadrez.Dialogs.OnCompleteListener;
 import pt.isec.tiagodaniel.xadrez.Exceptions.NullSharedPreferencesException;
 
-public class GameThread extends Thread implements Constantes {
+public class GameThread extends Thread implements Constantes, OnCompleteListener {
     private ObjectInputStream in = null;
     private ObjectOutputStream out = null;
     private ClientServerMessage requestMessage = null;
@@ -26,21 +28,16 @@ public class GameThread extends Thread implements Constantes {
     /**
      * Construtor da GameThread
      *
-     * @param activity  actividade que chama a thread (JogarContraPCActivity)
+     * @param activity   actividade que chama a thread (JogarContraPCActivity)
      * @param gameSocket socket que irá ser utilizado para comunicação entre dispositivos
      */
-    public GameThread(JogarContraPCActivity activity, Socket gameSocket, int deviceType) {
+    public GameThread(JogarContraPCActivity activity, Socket gameSocket, int deviceType) throws NullSharedPreferencesException {
         this.gameActivity = activity;
         this.gameSocket = gameSocket;
         this.deviceType = deviceType;
         this.isFirstTime = true;
 
-        try {
-            this.ferramentas = new Ferramentas(this.gameActivity);
-        } catch (NullSharedPreferencesException e) {
-            // TODO errorDialog
-            e.printStackTrace();
-        }
+        this.ferramentas = new Ferramentas(this.gameActivity);
     }
 
     @Override
@@ -54,8 +51,6 @@ public class GameThread extends Thread implements Constantes {
                 } else {
                     in = new ObjectInputStream(SocketHandler.getClientSocket().getInputStream());
                     requestMessage = (ClientServerMessage) in.readObject();
-
-                    // TODO faz o que tem a fazer com a resposta
 
                     this.linhaDestino = requestMessage.getLinhaDestino();
                     this.colunaDestino = requestMessage.getColunaDestino();
@@ -74,17 +69,17 @@ public class GameThread extends Thread implements Constantes {
                         }
                     });
 
-                    if(this.gameActivity.getGameModel().getModoJogo() == Constantes.CRIAR_JOGO_REDE) {
+                    if (this.gameActivity.getGameModel().getModoJogo() == Constantes.CRIAR_JOGO_REDE) {
                         this.gameActivity.getGameModel().getTabuleiro().setJogadorAtual(this.gameActivity.getGameModel().getTabuleiro().getJogador(1));
-                    } else if(this.gameActivity.getGameModel().getModoJogo() == Constantes.JUNTAR_JOGO_REDE) {
+                    } else if (this.gameActivity.getGameModel().getModoJogo() == Constantes.JUNTAR_JOGO_REDE) {
                         this.gameActivity.getGameModel().getTabuleiro().setJogadorAtual(this.gameActivity.getGameModel().getTabuleiro().getJogador(0));
                     }
                 }
             }
 
         } catch (IOException | ClassNotFoundException e) {
-            // TODO errorDialog
-            e.printStackTrace();
+            AlertDialog alertDialog = new AlertDialog(this.gameActivity);
+            alertDialog.show(this.gameActivity.getFragmentManager(), ALERT_DIALOG);
         } finally {
             if (this.gameSocket != null) {
                 try {
@@ -94,6 +89,7 @@ public class GameThread extends Thread implements Constantes {
                     System.err.println("[AttendTCPClientsThread]" + ex1);
                 }
             }
+            this.gameActivity.getGameModel().setModoJogo(JOGADOR_VS_COMPUTADOR);
         }
     }
 
@@ -144,5 +140,9 @@ public class GameThread extends Thread implements Constantes {
         }
 
         this.isFirstTime = false;
+    }
+
+    @Override
+    public void onComplete(int code, String tag) {
     }
 }

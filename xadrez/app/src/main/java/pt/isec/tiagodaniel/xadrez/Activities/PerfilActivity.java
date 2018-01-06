@@ -31,7 +31,7 @@ import pt.isec.tiagodaniel.xadrez.Logic.Constantes;
 import pt.isec.tiagodaniel.xadrez.Logic.Ferramentas;
 import pt.isec.tiagodaniel.xadrez.R;
 
-public class PerfilActivity extends Activity implements OnCompleteListener {
+public class PerfilActivity extends Activity implements OnCompleteListener, Constantes {
     private EditText mTxtNome;
     private Ferramentas mFerramentas;
     private String mPhotoPath;
@@ -61,7 +61,7 @@ public class PerfilActivity extends Activity implements OnCompleteListener {
             this.mFerramentas.setPic(this.mImvPhoto, this.mPhotoPath);
         } catch (NullSharedPreferencesException e) {
             ErrorDialog mErrorDialog = new ErrorDialog(this, e.toString());
-            mErrorDialog.show(getFragmentManager(), Constantes.ERROR_DIALOG);
+            mErrorDialog.show(getFragmentManager(), ERROR_DIALOG);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -87,7 +87,7 @@ public class PerfilActivity extends Activity implements OnCompleteListener {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             String name = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
             File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-            File image = File.createTempFile(name, Constantes.PHOTO_FORMAT, storageDir);
+            File image = File.createTempFile(name, PHOTO_FORMAT, storageDir);
 
             this.mPhotoPath = image.getAbsolutePath();
 
@@ -95,7 +95,7 @@ public class PerfilActivity extends Activity implements OnCompleteListener {
             startActivityForResult(intent, 20);
         } catch (Exception e) {
             ErrorDialog mErrorDialog = new ErrorDialog(this, getString(R.string.take_photo));
-            mErrorDialog.show(getFragmentManager(), Constantes.ERROR_DIALOG);
+            mErrorDialog.show(getFragmentManager(), ERROR_DIALOG);
         }
     }
 
@@ -147,6 +147,11 @@ public class PerfilActivity extends Activity implements OnCompleteListener {
 
     @Override
     public void onComplete(int code, String tag) {
-
+        switch (code) {
+            case ERROR_OK: {
+                this.finish();
+                break;
+            }
+        }
     }
 }

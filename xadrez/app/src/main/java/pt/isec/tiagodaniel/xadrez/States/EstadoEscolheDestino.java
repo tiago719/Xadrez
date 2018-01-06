@@ -3,9 +3,12 @@ package pt.isec.tiagodaniel.xadrez.States;
 import android.os.Handler;
 import android.os.StrictMode;
 
+import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+import pt.isec.tiagodaniel.xadrez.Dialogs.AlertDialog;
+import pt.isec.tiagodaniel.xadrez.Dialogs.OnCompleteListener;
 import pt.isec.tiagodaniel.xadrez.Logic.ClientServerMessage;
 import pt.isec.tiagodaniel.xadrez.Logic.Constantes;
 import pt.isec.tiagodaniel.xadrez.Logic.GameModel;
@@ -14,7 +17,7 @@ import pt.isec.tiagodaniel.xadrez.Logic.Peca;
 import pt.isec.tiagodaniel.xadrez.Logic.Posicao;
 import pt.isec.tiagodaniel.xadrez.Logic.SocketHandler;
 
-public class EstadoEscolheDestino extends StateAdapter implements Constantes {
+public class EstadoEscolheDestino extends StateAdapter implements Constantes, OnCompleteListener {
     ClientServerMessage messageToSend;
 
     public EstadoEscolheDestino(GameModel game, Posicao posicaoOriginal) {
@@ -82,8 +85,9 @@ public class EstadoEscolheDestino extends StateAdapter implements Constantes {
 
                             out.writeUnshared(messageToSend);
                             out.flush();
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                        } catch (IOException e) {
+                            AlertDialog alertDialog = new AlertDialog(getGame().getActivity());
+                            alertDialog.show(getGame().getActivity().getFragmentManager(), ALERT_DIALOG);
                         }
                     }
                 });
@@ -92,5 +96,23 @@ public class EstadoEscolheDestino extends StateAdapter implements Constantes {
             return new EstadoEscolhePeca(this.getGame());
         }
         return this; // não muda de estado
+    }
+
+    @Override
+    public void onComplete(int code, String tag) {
+        switch (code) {
+            case ERROR_OK: {
+                if (SocketHandler.getClientSocket() != null) {
+                    try {
+                        SocketHandler.getClientSocket().close();
+                    } catch (IOException ex1) {
+                        // TODO errorDialog
+                        System.err.println("[AttendTCPClientsThread]" + ex1);
+                    }
+                }
+                getGame().setModoJogo(JOGADOR_VS_COMPUTADOR);
+                break;
+            }
+        }
     }
 }

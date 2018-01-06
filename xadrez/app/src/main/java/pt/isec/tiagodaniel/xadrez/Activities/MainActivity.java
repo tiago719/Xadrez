@@ -14,7 +14,7 @@ import android.view.View;
 
 import java.net.Socket;
 
-import pt.isec.tiagodaniel.xadrez.Dialogs.AlertDialog;
+import pt.isec.tiagodaniel.xadrez.Dialogs.IpDialog;
 import pt.isec.tiagodaniel.xadrez.Dialogs.OnCompleteListener;
 import pt.isec.tiagodaniel.xadrez.Logic.Constantes;
 import pt.isec.tiagodaniel.xadrez.Logic.SocketHandler;
@@ -60,8 +60,8 @@ public class MainActivity extends Activity implements OnCompleteListener, Consta
     }
 
     public void onJuntarJogoOnline(View v) {
-        AlertDialog alertDialog = new AlertDialog(this, getString(R.string.alert_title));
-        alertDialog.show(getFragmentManager(), ALERT_DIALOG);
+        IpDialog ipDialog = new IpDialog(this, getString(R.string.ip_title));
+        ipDialog.show(getFragmentManager(), IP_DIALOG);
     }
 
     @Override
@@ -114,7 +114,7 @@ public class MainActivity extends Activity implements OnCompleteListener, Consta
     @Override
     public void onComplete(int code, String tag) {
         switch (code) {
-            case ALERT_OK: {
+            case IP_OK: {
                 this.connectClient(tag);
                 break;
             }

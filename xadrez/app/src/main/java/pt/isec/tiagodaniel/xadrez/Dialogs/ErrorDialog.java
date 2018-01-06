@@ -38,7 +38,7 @@ public class ErrorDialog extends DialogFragment {
                         mListener.onComplete(Constantes.ERROR_OK, mTag);
                     }
                 });
-        // Create the AlertDialog object and return it
+        // Create the IpDialog object and return it
         return builder.create();
     }
 }

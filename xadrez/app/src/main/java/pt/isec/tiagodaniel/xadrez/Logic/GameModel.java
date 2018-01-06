@@ -1,14 +1,11 @@
 package pt.isec.tiagodaniel.xadrez.Logic;
 
-import android.os.StrictMode;
 import android.widget.Chronometer;
 import android.widget.LinearLayout;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
 import pt.isec.tiagodaniel.xadrez.Activities.JogarContraPCActivity;
+import pt.isec.tiagodaniel.xadrez.Exceptions.NullSharedPreferencesException;
+import pt.isec.tiagodaniel.xadrez.Logic.Historico.Historico;
 import pt.isec.tiagodaniel.xadrez.States.EstadoEscolhePeca;
 import pt.isec.tiagodaniel.xadrez.States.IState;
 
@@ -19,9 +16,9 @@ public class GameModel implements Constantes {
     private XadrezApplication xadrezApplication;
     private int modoJogo;
 
-    public GameModel(LinearLayout ll, JogarContraPCActivity activity, Chronometer chronometer1, Chronometer chronometer2, int modoJogo) {
+    public GameModel(LinearLayout ll, JogarContraPCActivity activity, Chronometer chronometer1, Chronometer chronometer2, int modoJogo) throws NullSharedPreferencesException {
         this.activity = activity;
-        this.xadrezApplication = ((XadrezApplication) this.activity.getApplication());
+        this.xadrezApplication = (XadrezApplication)getActivity().getApplication();
 
         this.modoJogo = modoJogo;
         tabuleiro = new Tabuleiro(ll, chronometer1, chronometer2, this.modoJogo);
@@ -43,10 +40,6 @@ public class GameModel implements Constantes {
 
     public Tabuleiro getTabuleiro() {
         return this.tabuleiro;
-    }
-
-    public IState getState() {
-        return this.state;
     }
 
     public void setState(IState state) {
@@ -104,13 +97,13 @@ public class GameModel implements Constantes {
 
         if (adversario.isCheck()) {
             if (!adversario.hasMovimentos(adversario)) {
-                this.getTabuleiro().getHistorico().setVencedorJogo(this.getActivity(), atual, false);
+                this.tabuleiro.setVencedorJogo(this.activity.getNomeJogador1(), atual, false);
                 getActivity().mostrarVencedor(atual);
                 return true;
             }
         } else {
             if (!adversario.hasMovimentos(adversario)) {
-                this.getTabuleiro().getHistorico().setVencedorJogo(this.getActivity(), atual, true);
+                this.tabuleiro.setVencedorJogo(this.activity.getNomeJogador1(), atual, true);
                 getActivity().mostrarEmpate();
                 return true;
             }
@@ -119,7 +112,19 @@ public class GameModel implements Constantes {
     }
     //endregion
 
+
+    //region Funções usadas pela Activity
+    public Historico getHistorico() {
+        return this.tabuleiro.getHistorico();
+    }
+    //endregion
+
     public int getModoJogo() {
         return this.modoJogo;
+    }
+
+    public void setModoJogo(int modoJogo) {
+        this.modoJogo = modoJogo;
+        this.tabuleiro.setModoJogo(modoJogo);
     }
 }

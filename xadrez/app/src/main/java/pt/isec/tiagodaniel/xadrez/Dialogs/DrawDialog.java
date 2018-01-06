@@ -37,7 +37,7 @@ public class DrawDialog extends DialogFragment {
                         mListener.onComplete(Constantes.DRAW_OK, mTag);
                     }
                 });
-        // Create the AlertDialog object and return it
+        // Create the IpDialog object and return it
         return builder.create();
     }
 }
