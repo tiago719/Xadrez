@@ -7,6 +7,7 @@ import java.io.Serializable;
  */
 
 public class Jogada implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String origem;
     private String destino;
     private String nomePeca;

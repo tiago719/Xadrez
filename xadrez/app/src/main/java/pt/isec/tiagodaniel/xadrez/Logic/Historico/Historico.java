@@ -8,7 +8,8 @@ import pt.isec.tiagodaniel.xadrez.Logic.Constantes;
 import pt.isec.tiagodaniel.xadrez.Logic.Jogador;
 import pt.isec.tiagodaniel.xadrez.Logic.JogadorLight;
 
-public class Historico implements Serializable, Constantes {
+public class Historico implements Serializable {
+    private static final long serialVersionUID = 1L;
     private Date dataJogo;
     private String vencedorJogo;
     private int modoJogo;
@@ -17,8 +18,8 @@ public class Historico implements Serializable, Constantes {
     public Historico(Date dataJogo) {
         this.dataJogo = dataJogo;
         this.jogadasJogo = new ArrayList<>();
-        this.vencedorJogo = DESISTIU;
-        this.modoJogo = JOGADOR_VS_COMPUTADOR;
+        this.vencedorJogo = Constantes.DESISTIU;
+        this.modoJogo = Constantes.JOGADOR_VS_COMPUTADOR;
     }
 
     public void addJogadasJogo(Jogada jogada) {
@@ -32,24 +33,24 @@ public class Historico implements Serializable, Constantes {
     public void setVencedorJogo(String nomeVencedor, Jogador jogadorActual, boolean empate) {
 
         if (empate) {
-            this.vencedorJogo = EMPATE;
+            this.vencedorJogo = Constantes.EMPATE;
             return;
         }
 
         switch (this.modoJogo) {
-            case JOGADOR_VS_JOGADOR: {
+            case Constantes.JOGADOR_VS_JOGADOR: {
                 if (jogadorActual instanceof JogadorLight) {
-                    this.vencedorJogo = PECAS_BRANCAS;
+                    this.vencedorJogo = Constantes.PECAS_BRANCAS;
                 } else {
-                    this.vencedorJogo = PECAS_PRETAS;
+                    this.vencedorJogo = Constantes.PECAS_PRETAS;
                 }
                 break;
             }
-            case JOGADOR_VS_COMPUTADOR: {
+            case Constantes.JOGADOR_VS_COMPUTADOR: {
                 if (jogadorActual instanceof JogadorLight) {
                     this.vencedorJogo = nomeVencedor;
                 } else {
-                    this.vencedorJogo = PC;
+                    this.vencedorJogo = Constantes.PC;
                 }
                 break;
             }
