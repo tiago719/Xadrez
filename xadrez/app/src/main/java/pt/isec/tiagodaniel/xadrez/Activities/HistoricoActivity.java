@@ -41,15 +41,8 @@ public class HistoricoActivity extends Activity implements Constantes, OnComplet
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_historico);
 
-        try {
-            xadrezApplication = XadrezApplication.getInstance();
-            this.listaHistorico = this.xadrezApplication.getHistorico();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            ErrorDialog mErrorDialog = new ErrorDialog(this, e.toString());
-            mErrorDialog.show(getFragmentManager(), ERROR_DIALOG);
-        }
+        this.xadrezApplication = (XadrezApplication) this.getApplication();
+        this.listaHistorico = this.xadrezApplication.getHistorico();
 
         dados = new ArrayList<>();
         this.mapearHistoricoParaDados();
@@ -204,6 +197,10 @@ public class HistoricoActivity extends Activity implements Constantes, OnComplet
             }
             case QUESTION_CANCELAR: {
                 return;
+            }
+            case ERROR_OK: {
+                this.finish();
+                break;
             }
         }
     }

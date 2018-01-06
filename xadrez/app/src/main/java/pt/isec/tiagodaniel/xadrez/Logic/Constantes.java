@@ -24,13 +24,14 @@ public interface Constantes {
     String QUESTION_DIALOG = "Question Dialog";
     String WIN_DIALOG = "Win Dialog";
     String DRAW_DIALOG = "Draw Dialog";
+    String IP_DIALOG = "IP Dialog";
     String ALERT_DIALOG = "Alert Dialog";
     int QUESTION_OK = 1;
     int QUESTION_CANCELAR = 2;
     int ERROR_OK = 3;
     int DRAW_OK = 4;
     int WIN_OK = 5;
-    int ALERT_OK = 6;
+    int IP_OK = 6;
     String TAG_EMPTY = "EMPTY_TAG";
     String TAG_ALTERAR_JOGO = "ALTERARJOGO";
     String TAG_SAIR_JOGO = "SAIRJOGO";

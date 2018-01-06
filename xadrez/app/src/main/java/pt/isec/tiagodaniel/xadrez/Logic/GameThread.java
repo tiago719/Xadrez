@@ -8,9 +8,11 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import pt.isec.tiagodaniel.xadrez.Activities.JogarContraPCActivity;
+import pt.isec.tiagodaniel.xadrez.Dialogs.AlertDialog;
+import pt.isec.tiagodaniel.xadrez.Dialogs.OnCompleteListener;
 import pt.isec.tiagodaniel.xadrez.Exceptions.NullSharedPreferencesException;
 
-public class GameThread extends Thread implements Constantes {
+public class GameThread extends Thread implements Constantes, OnCompleteListener {
     private ObjectInputStream in = null;
     private ObjectOutputStream out = null;
     private ClientServerMessage requestMessage = null;
@@ -76,12 +78,13 @@ public class GameThread extends Thread implements Constantes {
             }
 
         } catch (IOException | ClassNotFoundException e) {
-            // TODO errorDialog
-            e.printStackTrace();
+            AlertDialog alertDialog = new AlertDialog(this.gameActivity);
+            alertDialog.show(this.gameActivity.getFragmentManager(), ALERT_DIALOG);
         } finally {
             if (this.gameSocket != null) {
                 try {
                     this.gameSocket.close();
+                    this.gameActivity.getGameModel().setModoJogo(JOGADOR_VS_COMPUTADOR);
                 } catch (IOException ex1) {
                     // TODO errorDialog
                     System.err.println("[AttendTCPClientsThread]" + ex1);
@@ -137,5 +140,9 @@ public class GameThread extends Thread implements Constantes {
         }
 
         this.isFirstTime = false;
+    }
+
+    @Override
+    public void onComplete(int code, String tag) {
     }
 }

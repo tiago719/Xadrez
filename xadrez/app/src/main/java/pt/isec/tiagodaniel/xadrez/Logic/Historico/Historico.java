@@ -1,20 +1,12 @@
 package pt.isec.tiagodaniel.xadrez.Logic.Historico;
 
-import android.app.Activity;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-import pt.isec.tiagodaniel.xadrez.Exceptions.NullSharedPreferencesException;
 import pt.isec.tiagodaniel.xadrez.Logic.Constantes;
-import pt.isec.tiagodaniel.xadrez.Logic.Ferramentas;
 import pt.isec.tiagodaniel.xadrez.Logic.Jogador;
 import pt.isec.tiagodaniel.xadrez.Logic.JogadorLight;
-
-/**
- * Created by drmoreira on 29-12-2017.
- */
 
 public class Historico implements Serializable, Constantes {
     private Date dataJogo;
@@ -37,7 +29,7 @@ public class Historico implements Serializable, Constantes {
         this.modoJogo = modoJogo;
     }
 
-    public void setVencedorJogo(Activity activity, Jogador jogadorActual, boolean empate) {
+    public void setVencedorJogo(String nomeVencedor, Jogador jogadorActual, boolean empate) {
 
         if (empate) {
             this.vencedorJogo = EMPATE;
@@ -55,12 +47,7 @@ public class Historico implements Serializable, Constantes {
             }
             case JOGADOR_VS_COMPUTADOR: {
                 if (jogadorActual instanceof JogadorLight) {
-                    try {
-                        Ferramentas ferramentas = new Ferramentas(activity);
-                        this.vencedorJogo = ferramentas.getSavedName();
-                    } catch (NullSharedPreferencesException e) {
-                        this.vencedorJogo = PECAS_BRANCAS;
-                    }
+                    this.vencedorJogo = nomeVencedor;
                 } else {
                     this.vencedorJogo = PC;
                 }
@@ -73,15 +60,19 @@ public class Historico implements Serializable, Constantes {
         return this.dataJogo;
     }
 
-    public int getModoJogo() {
-        return this.modoJogo;
-    }
-
     public String getVencedorJogo() {
         return this.vencedorJogo;
     }
 
     public ArrayList<Jogada> getListaJogadas() {
         return this.jogadasJogo;
+    }
+
+    /**
+     * Função usada na HistoricoActivity para mostrar o drawable do vencedo
+     * @return int modo de jogo
+     */
+    public int getModoJogo() {
+        return this.modoJogo;
     }
 }

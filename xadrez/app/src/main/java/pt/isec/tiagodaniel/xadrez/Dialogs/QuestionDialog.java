@@ -59,7 +59,7 @@ public class QuestionDialog extends DialogFragment {
                         mListener.onComplete(Constantes.QUESTION_CANCELAR, mTag);
                     }
                 });
-        // Create the AlertDialog object and return it
+        // Create the IpDialog object and return it
         return builder.create();
     }
 }

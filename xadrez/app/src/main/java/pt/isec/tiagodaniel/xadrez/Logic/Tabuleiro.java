@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pt.isec.tiagodaniel.xadrez.Logic;
 
-import android.app.Activity;
 import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,21 +12,18 @@ import pt.isec.tiagodaniel.xadrez.Logic.Historico.Jogada;
 
 import static pt.isec.tiagodaniel.xadrez.Logic.Constantes.*;
 
-/**
- * @author Tiago Coutinho
- */
 public class Tabuleiro {
     private ArrayList<Posicao> tabuleiro;
     private ArrayList<Jogador> jogadores;
     private Jogador jogadorAtual;
     private Jogador jogadorAdversario;
-    private Historico mHistorico;
+    private Historico historico;
     private int modoJogo;
 
     public Tabuleiro(LinearLayout ll, Chronometer chronometer1, Chronometer chronometer2, int modoJogo) {
         this.modoJogo = modoJogo;
         tabuleiro = new ArrayList<Posicao>();
-        this.mHistorico = new Historico(new Date());
+        this.historico = new Historico(new Date());
 
         for (int i = 1; i <= TABULEIRO_LINHAS; i++) {
             for (int j = 0; j < TABULEIRO_COLUNAS; j++) {
@@ -104,7 +95,6 @@ public class Tabuleiro {
         posicao.setPeca(temp);
         return false;
     }
-
 
     public Posicao getPosicao(int linha, char coluna) {
         if (!dentroLimites(linha, coluna))
@@ -510,7 +500,7 @@ public class Tabuleiro {
             ((Torre) peca).setMovido(true);
         }
 
-        this.mHistorico.addJogadasJogo(
+        this.historico.addJogadasJogo(
                 new Jogada(
                         peca.getNomePeca(),
                         Character.toUpperCase(posicaoOrigem.getColuna()) + Integer.toString(posicaoOrigem.getLinha()),
@@ -571,7 +561,6 @@ public class Tabuleiro {
         jogadorAtual = adversario;
     }
 
-
     public Posicao getPosicaoRei(Jogador jogador) {
 
         for (Peca peca : jogador.getPecasTabuleiro())
@@ -612,10 +601,6 @@ public class Tabuleiro {
         return null;
     }
 
-    public Historico getHistorico() {
-        return this.mHistorico;
-    }
-
     public Jogador getOutroJogador(Jogador j) {
         if (j == jogadorAdversario)
             return jogadorAtual;
@@ -626,4 +611,19 @@ public class Tabuleiro {
     public Jogador getJogador(int index) {
         return this.jogadores.get(index);
     }
+
+    //region Funções usadas pelo GameModel
+    public void setVencedorJogo(String nomeVencedor, Jogador jogadorActual, boolean empate) {
+        this.historico.setVencedorJogo(nomeVencedor, jogadorActual, empate);
+    }
+
+    public void setModoJogo(int modoJogo) {
+        this.modoJogo = modoJogo;
+    }
+
+    public Historico getHistorico() {
+        this.historico.setModoJogo(this.modoJogo); //Serve para garantir que o modo de jogo no histórico está sempre actualizado
+        return this.historico;
+    }
+    //endregion
 }
