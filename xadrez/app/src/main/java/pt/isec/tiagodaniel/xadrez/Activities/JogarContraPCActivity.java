@@ -399,8 +399,7 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
                         try {
                             SocketHandler.getClientSocket().close();
                         } catch (IOException ex1) {
-                            // TODO errorDialog
-                            System.err.println("[AttendTCPClientsThread]" + ex1);
+                            System.err.println("Erro ao fechar o socket. Neste caso não interessa para o utilizador");
                         }
 
                     }

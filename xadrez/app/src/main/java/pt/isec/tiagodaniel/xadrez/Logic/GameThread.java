@@ -85,8 +85,7 @@ public class GameThread extends Thread implements Constantes, OnCompleteListener
                 try {
                     this.gameSocket.close();
                 } catch (IOException ex1) {
-                    // TODO errorDialog
-                    System.err.println("[AttendTCPClientsThread]" + ex1);
+                    System.err.println("Erro ao fechar o socket. Neste caso não interessa para o utilizador");
                 }
             }
             this.gameActivity.getGameModel().setModoJogo(JOGADOR_VS_COMPUTADOR);
