@@ -1,7 +1,6 @@
 package pt.isec.tiagodaniel.xadrez.Logic;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -12,7 +11,6 @@ import java.net.Socket;
 
 import pt.isec.tiagodaniel.xadrez.Activities.JogarContraPCActivity;
 import pt.isec.tiagodaniel.xadrez.Dialogs.AlertDialog;
-import pt.isec.tiagodaniel.xadrez.Dialogs.ErrorDialog;
 import pt.isec.tiagodaniel.xadrez.Dialogs.OnCompleteListener;
 import pt.isec.tiagodaniel.xadrez.Exceptions.NullSharedPreferencesException;
 import pt.isec.tiagodaniel.xadrez.R;
@@ -20,7 +18,7 @@ import pt.isec.tiagodaniel.xadrez.R;
 public class GameThread extends Thread implements Constantes, OnCompleteListener {
     private ObjectInputStream in = null;
     private ObjectOutputStream out = null;
-    private ClientServerMessage requestMessage = null;
+    private ClientServerMessage clientServerMessage = null;
     private Socket gameSocket = null;
     private JogarContraPCActivity gameActivity;
     private boolean isFirstTime = false;
@@ -44,6 +42,7 @@ public class GameThread extends Thread implements Constantes, OnCompleteListener
         this.deviceType = deviceType;
         this.isFirstTime = true;
         this.procMsg = handler;
+        this.clientServerMessage = new ClientServerMessage();
 
         this.ferramentas = new Ferramentas(this.gameActivity);
 
@@ -59,13 +58,13 @@ public class GameThread extends Thread implements Constantes, OnCompleteListener
                     this.configuraJogadores();
                 } else {
                     in = new ObjectInputStream(SocketHandler.getClientSocket().getInputStream());
-                    requestMessage = (ClientServerMessage) in.readObject();
+                    clientServerMessage = (ClientServerMessage) in.readObject();
 
-                    this.linhaDestino = requestMessage.getLinhaDestino();
-                    this.colunaDestino = requestMessage.getColunaDestino();
+                    this.linhaDestino = clientServerMessage.getLinhaDestino();
+                    this.colunaDestino = clientServerMessage.getColunaDestino();
 
-                    this.linhaOrigem = requestMessage.getLinhaOrigem();
-                    this.colunaOrigem = requestMessage.getColunaOrigem();
+                    this.linhaOrigem = clientServerMessage.getLinhaOrigem();
+                    this.colunaOrigem = clientServerMessage.getColunaOrigem();
 
                     gameActivity.runOnUiThread(new Runnable() {
                         @Override
@@ -105,49 +104,17 @@ public class GameThread extends Thread implements Constantes, OnCompleteListener
         if (this.deviceType == CLIENTE) {
             in = new ObjectInputStream(gameSocket.getInputStream());
             out = new ObjectOutputStream(gameSocket.getOutputStream());
-            requestMessage = new ClientServerMessage();
-            requestMessage.setNomeJogador(this.ferramentas.getSavedName());
-            requestMessage.setFotoJogador(this.ferramentas.getSavedPhoto());
 
-            out.writeUnshared(requestMessage);
-            out.flush();
-
-            requestMessage = (ClientServerMessage) in.readObject();
-
-            bundle = new Bundle();
-            bundle.putString(NOME_JOGADOR2, requestMessage.getNomeJogador());
-            bundle.putByteArray(FOTO_JOGADOR2, requestMessage.getFotoJogador());
-
-            gameActivity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    gameActivity.configuraJogador2(false, bundle, true);
-                    escondeProgressDialog();
-                }
-            });
+            this.enviaDadosIniciais();
+            this.recebeDadosIniciais();
 
         } else if (this.deviceType == SERVIDOR) {
             out = new ObjectOutputStream(gameSocket.getOutputStream());
             in = new ObjectInputStream(gameSocket.getInputStream());
-            requestMessage = (ClientServerMessage) in.readObject();
 
-            bundle = new Bundle();
-            bundle.putString(NOME_JOGADOR2, requestMessage.getNomeJogador());
-            bundle.putByteArray(FOTO_JOGADOR2, requestMessage.getFotoJogador());
+            this.recebeDadosIniciais();
+            this.enviaDadosIniciais();
 
-            gameActivity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    gameActivity.configuraJogador2(false, bundle, true);
-                }
-            });
-
-            requestMessage.resetDados();
-            requestMessage.setNomeJogador(this.ferramentas.getSavedName());
-            requestMessage.setFotoJogador(this.ferramentas.getSavedPhoto());
-
-            out.writeUnshared(requestMessage);
-            out.flush();
             escondeProgressDialog();
         }
 
@@ -173,5 +140,30 @@ public class GameThread extends Thread implements Constantes, OnCompleteListener
                 progressDialog.dismiss();
             }
         });
+    }
+
+    private void recebeDadosIniciais() throws IOException, ClassNotFoundException {
+        clientServerMessage = (ClientServerMessage) in.readObject();
+
+        bundle = new Bundle();
+        bundle.putString(NOME_JOGADOR2, clientServerMessage.getNomeJogador());
+        bundle.putByteArray(FOTO_JOGADOR2, clientServerMessage.getFotoJogador());
+
+        gameActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                gameActivity.configuraJogador2(false, bundle, true);
+                escondeProgressDialog();
+            }
+        });
+    }
+
+    private void enviaDadosIniciais() throws IOException {
+        clientServerMessage.resetDados();
+        clientServerMessage.setNomeJogador(this.ferramentas.getSavedName());
+        clientServerMessage.setFotoJogador(this.ferramentas.getSavedPhoto());
+
+        out.writeUnshared(clientServerMessage);
+        out.flush();
     }
 }

@@ -59,6 +59,7 @@ public class Ferramentas implements Constantes {
             Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
             bitmap = Bitmap.createScaledBitmap(bitmap, targetW, targetH, true);
             mImageView.setImageBitmap(bitmap); //em alternativa retornar apenas o Bitmap
+            //TODO ver isto da rotação
             //mImageView.setRotation(90);
         }
     }
