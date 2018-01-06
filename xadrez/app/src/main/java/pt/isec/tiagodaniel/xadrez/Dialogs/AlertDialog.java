@@ -32,7 +32,7 @@ public class AlertDialog extends DialogFragment {
         // Use the Builder class for convenient dialog construction
         final EditText edtIP = new EditText(getActivity());
 
-        edtIP.setText("192.168.1.83");
+        edtIP.setText("192.168.1.70");
         // TODO meter aqui o IP
         //edtIP.setText("10.0.2.2"); // emulator's default ip
 

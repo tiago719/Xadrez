@@ -170,6 +170,10 @@ public class Tabuleiro {
         ArrayList<Posicao> disponiveis = new ArrayList<Posicao>();
         Posicao nova;
 
+        if (posicao == null) {
+            return disponiveis;
+        }
+
         for (int i = 1; ; i++) {
             nova = this.getPosicao(posicao.getLinha(), (char) (posicao.getColuna() + i));
             if (nova == null)
@@ -556,9 +560,9 @@ public class Tabuleiro {
     }
 
     public void setJogadorAtual(Jogador jogador) {
-        if (jogador != null) {
-            this.jogadorAtual = jogador;
-        }
+        //if (jogador != null) {
+        this.jogadorAtual = jogador;
+        //}
     }
 
     public void trocaJogadorActual() {
@@ -577,12 +581,15 @@ public class Tabuleiro {
     }
 
     public Jogador getJogadorAdversarioPeca(Peca peca) {
-        for (Jogador j : jogadores)
-            if (j == peca.getJogador()) {
-                if (j == jogadorAdversario) return jogadorAtual;
-                else
-                    return jogadorAdversario;
+        for (Jogador j : jogadores) {
+            if (j != null) {
+                if (j == peca.getJogador()) {
+                    if (j == jogadorAdversario) return jogadorAtual;
+                    else
+                        return jogadorAdversario;
+                }
             }
+        }
         return null;
     }
 
@@ -596,8 +603,11 @@ public class Tabuleiro {
     public Posicao isPeaoUltimaLinha() {
         for (Peca peca : jogadorAtual.getPecasTabuleiro())
             if (peca instanceof Peao) {
-                if (encontraPeca(peca).getLinha() == getUltimaLinhaJogadorAtual())
-                    return encontraPeca(peca);
+                Posicao p = encontraPeca(peca);
+                if (p != null) {
+                    if (p.getLinha() == getUltimaLinhaJogadorAtual())
+                        return encontraPeca(peca);
+                }
             }
         return null;
     }
@@ -611,5 +621,9 @@ public class Tabuleiro {
             return jogadorAtual;
         else
             return jogadorAdversario;
+    }
+
+    public Jogador getJogador(int index) {
+        return this.jogadores.get(index);
     }
 }

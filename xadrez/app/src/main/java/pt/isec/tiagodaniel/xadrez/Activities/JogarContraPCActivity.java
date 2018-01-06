@@ -191,7 +191,6 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
         } else if (intent.getAction().equals(ACTION_JOGvsPC)) {
             modoJogo = JOGADOR_VS_COMPUTADOR;
             this.configuraJogador2(true, null);
-            this.configuraTempo(intent.getExtras());
 
         } else if (intent.getAction().equals(ACTION_JOGvsJOG)) {
             modoJogo = JOGADOR_VS_JOGADOR;
@@ -382,5 +381,9 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
             ErrorDialog errorDialog = new ErrorDialog(this, getString(R.string.error_save_historic));
             errorDialog.show(getFragmentManager(), ERROR_DIALOG);
         }
+    }
+
+    public GameModel getGameModel() {
+        return this.gameModel;
     }
 }
