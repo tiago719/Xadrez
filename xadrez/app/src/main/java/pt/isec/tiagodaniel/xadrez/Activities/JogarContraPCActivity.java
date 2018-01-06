@@ -303,7 +303,7 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
             }
         });
 
-        CronometroJogBrancas.setBase(SystemClock.elapsedRealtime()+tempoPassadoBrancas);
+        CronometroJogBrancas.setBase(SystemClock.elapsedRealtime());
         CronometroJogBrancas.start();
         CronometroJogPretas.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override
@@ -465,7 +465,7 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
             CronometroJogBrancas = findViewById(R.id.tempoJogBrancas);
             CronometroJogPretas = findViewById(R.id.tempoJogPretas);
 
-            inicializaTempos(cronometroJogBrancasTempoStop,cronometroJogPretasTempoStop);
+            inicializaTempos();
         }
         else
         {
