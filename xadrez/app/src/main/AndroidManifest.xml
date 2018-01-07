@@ -26,7 +26,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activities.JogarContraPCActivity"
-            android:configChanges="orientation"/>
+            android:configChanges="orientation|screenSize"/>
         <activity android:name=".Activities.PerfilActivity" />
         <activity
             android:name=".Activities.ActivityPromocaoPeao"

@@ -1,6 +1,8 @@
 package pt.isec.tiagodaniel.xadrez.Logic;
 
 import android.os.Handler;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.widget.Chronometer;
 import android.widget.LinearLayout;
 
@@ -138,4 +140,5 @@ public class GameModel implements Constantes {
     {
         tabuleiro.setView(ll);
     }
+
 }

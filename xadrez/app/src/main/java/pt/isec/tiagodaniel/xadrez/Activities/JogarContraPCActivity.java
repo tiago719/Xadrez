@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.VolumeShaper;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.os.SystemClock;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -246,17 +247,20 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
             nome = getString(R.string.perfil_name_hint);
         }
         this.mTxtNomeJogador2.setText(nome);
+        this.xadrezApplication.setNomeJogador2(nome);
 
         if (flagGameThread) {
             byte[] bitmapdata = bundle.getByteArray(FOTO_JOGADOR2);
             Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
             this.mImvFotoJogador2.setImageBitmap(bitmap);
+            this.xadrezApplication.setFotoJogador2(bitmap);
         } else {
             if (bundle.getString(FOTO_JOGADOR2).equals("")) {
                 this.mImvFotoJogador2.setImageResource(R.drawable.computador);
             } else {
                 this.ferramentas.setPic(this.mImvFotoJogador2, bundle.getString(FOTO_JOGADOR2));
             }
+            this.xadrezApplication.setPathFotoJogador2(bundle.getString(FOTO_JOGADOR2));
         }
     }
 
@@ -456,7 +460,23 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
         gameModel.setView(ll);
         gameModel.desenhaPecas();
 
-
+        this.mTxtNomeJogador2 = findViewById(R.id.txtNomeJogador2);
+        this.mImvFotoJogador2 = findViewById(R.id.imvFotoJogador2);
+        if (this.gameModel.getModoJogo() == Constantes.CRIAR_JOGO_REDE || this.gameModel.getModoJogo() == JUNTAR_JOGO_REDE) {
+            this.mTxtNomeJogador2.setText(this.xadrezApplication.getNomeJogador2());
+            this.mImvFotoJogador2.setImageBitmap(this.xadrezApplication.getFotoJogador2());
+        } else if (this.gameModel.getModoJogo() == Constantes.JOGADOR_VS_JOGADOR) {
+            this.mTxtNomeJogador2.setText(this.xadrezApplication.getNomeJogador2());
+            if (this.xadrezApplication.getPathFotoJogador2().equals("")) {
+                this.mImvFotoJogador2.setImageResource(R.drawable.computador);
+            } else {
+                this.ferramentas.setPic(this.mImvFotoJogador2, this.xadrezApplication.getPathFotoJogador2());
+            }
+        }
+        this.mTxtNomeJogador1 = findViewById(R.id.txtNomeJogador1);
+        this.mImvFotoJogador1 = findViewById(R.id.imvFotoJogador1);
+        this.mTxtNomeJogador1.setText(this.ferramentas.getSavedName());
+        this.ferramentas.setPic(this.mImvFotoJogador1, this.ferramentas.getSavedPhotoPath());
     }
 
     private void guardarHistorico() {
