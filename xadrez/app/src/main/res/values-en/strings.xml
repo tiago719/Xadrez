@@ -1,0 +1,104 @@
+<resources>
+    <string name="app_name">Xadrez</string>
+    <string name="botao1MP">Play against bot</string>
+    <string name="botao2MP">2 players game</string>
+    <string name="botao3MP">Create online game</string>
+    <string name="botao4MP">Join online game</string>
+    <string name="botao5MP">Credits</string>
+
+    <string name="perfil_name">Player name:</string>
+    <string name="perfil_name_hint">[player]</string>
+
+    /**Shared Preferences**/
+    <string name="saved_name">saved_name</string>
+    <string name="saved_photo">saved_photo</string>
+
+    /**Image Descriptions**/
+    <string name="perfil_photo">Profile picture</string>
+    <string name="btnPhoto">Take picture</string>
+    <string name="btnGallery">Choose from gallery</string>
+    <string name="historico_ModoJogo">Game mode</string>
+    <string name="historicoJogadaPeca">Piece</string>
+    <string name="tabuleiro">Board</string>
+
+    /**Exceptions**/
+    <string name="null_shared_preferences">Problem saving/getting data\n(Shared Preferences not found)</string>
+    <string name="take_photo">Problem taking a picture</string>
+
+    /**Dialogs**/
+    <string name="error_title">Problem!</string>
+    <string name="error_positive_button">Ok</string>
+    <string name="question_title_leave_game">Quit game</string>
+    <string name="question_message_leave_game">Do you want finish the game?</string>
+    <string name="question_title_leave_game_TCP">End connection</string>
+    <string name="question_message_leave_game_TCP">Do you want to end connection? If so, you will play against Bot!</string>
+    <string name="question_positive_button">Ok</string>
+    <string name="question_negative_button">Cancel</string>
+    <string name="ip_positive_button">Ok</string>
+    <string name="ip_negative_button">Cancel</string>
+    <string name="ip_title">Server IP</string>
+    <string name="progress_title">Create online game</string>
+    <string name="progress_message">Waiting for client</string>
+    <string name="progress_title_espera">Online game</string>
+    <string name="progress_message_espera">Preparing the battle field…</string>
+    <string name="error_save_historic">Problem saving game history.</string>
+    <string name="question_delete_historic_title">Delete history</string>
+    <string name="question_delete_historic_message">Are you sure you want to delete history?</string>
+    <string name="win_title"> Win</string>
+    <string name="question_title_alterar_jogo">Change game</string>
+    <string name="question_message_alterar_jogo_para_contra_bot">Do you want to change game mode? You will play against bot!</string>
+    <string name="question_message_alterar_jogo_para_contra_humano">Do you want to change game mode to 2 Players - 1 Device?</string>
+    <string name="error_socket_message">Problem in network sockets</string>
+    <string name="alert_title">Connection lost!</string>
+    <string name="alert_message">You are gonna play against bot!</string>
+
+    /**Menus**/
+    <string name="perfil">Profile</string>
+    <string name="historico">History</string>
+    <string name="historicoData">December 25</string>
+    <string name="historico_Vencedor">Winner</string>
+
+    /**Histórico**/
+    <string name="headerHistoricoData">Date</string>
+    <string name="headerHistoricoModoJogo">Game</string>
+    <string name="headerHistoricoVencedor">Winner</string>
+    <string name="historicoJogadaOrigem">Origin</string>
+    <string name="historicoJogadaDestino">Destiny</string>
+
+    /**Promover Peao**/
+    <string name="promover_peao_titilo">Choose piece</string>
+    <string name="rainha">Queen</string>
+    <string name="torre">Tower</string>
+    <string name="bispo">Bishop</string>
+    <string name="cavalo">Horse</string>
+    <string name="headerHistoricoJogadaPeca">Piece</string>
+    <string name="headerHistoricoJogadaOrigem">Origin</string>
+    <string name="headerHistoricoJogadaDestino">Destiny</string>
+    <string name="historicoVazio">There is no history</string>
+    <string name="apagar_historico">Erase history</string>
+
+    <string name="android">Bot</string>
+
+    /**Jogador VS Jogador**/
+    <string name="tempo_JOGvsJOG">Time game?</string>
+    <string name="tempoMaximo_JOGvsJOG">Maximum Time</string>
+    <string name="tempoGanho_JOGvsJOG">Time gained</string>
+    <string name="Jogador1_JOGvsJOG">Player 1 (white)</string>
+    <string name="Jogador2_JOGvsJOG">Player 2 (black)</string>
+    <string name="iniciarJogo_JOGvsJOG">Start game</string>
+    <string name="nomeJogador2_JOGvsJOG">[player2]</string>
+    <string name="alterarJogo">Change game</string>
+    <string name="jogador1">Player 1</string>
+    <string name="dois_segundos">2s</string>
+    <string name="dois_minutos">2m</string>
+
+    /**Criar jogo rede**/
+    <string name="button_criar_jogo">Create game</string>
+
+    /**Creditos**/
+    <string name="creditosTexto">Daniel Moreira 21240321\n
+                                Tiago Coutinho 21250388\n
+                                Arquiteturas Móveis 2017/2018\n
+                                Álvaro Santos</string>
+
+</resources>

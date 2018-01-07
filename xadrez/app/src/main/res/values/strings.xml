@@ -4,6 +4,7 @@
     <string name="botao2MP">Modo 2 Jogadores</string>
     <string name="botao3MP">Criar Jogo Online</string>
     <string name="botao4MP">Juntar Jogo Online</string>
+    <string name="botao5MP">Créditos</string>
 
     <string name="perfil_name">Nome Jogador:</string>
     <string name="perfil_name_hint">[jogador]</string>
@@ -96,4 +97,9 @@
     /**Criar jogo rede**/
     <string name="button_criar_jogo">Criar jogo</string>
 
+    /**Creditos**/
+    <string name="creditosTexto">Daniel Moreira 21240321\n\n
+                                Tiago Coutinho 21250388\n\n
+                                Arquiteturas Móveis 2017/2018\n
+                                Álvaro Santos</string>
 </resources>

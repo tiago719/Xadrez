@@ -22,11 +22,13 @@
         <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.JogarContraPCActivity"
-            android:configChanges="orientation|screenSize"/>
+        <activity
+            android:name=".Activities.JogarContraPCActivity"
+            android:configChanges="orientation|screenSize" />
         <activity android:name=".Activities.PerfilActivity" />
         <activity
             android:name=".Activities.ActivityPromocaoPeao"
@@ -36,6 +38,7 @@
         <activity android:name=".Activities.HistoricoJogadasActivity" />
         <activity android:name=".Activities.Configurar2Jogadores" />
         <activity android:name=".Activities.ConfigurarJogoRedeActivity" />
+        <activity android:name=".Activities.CreditosActivity"></activity>
     </application>
 
 </manifest>

@@ -84,6 +84,21 @@
             android:textColor="@color/title"
             android:textSize="24sp"
             android:textStyle="bold" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/botao5MP"
+            android:padding="15dp"
+            android:layout_margin="5dp"
+            android:onClick="onCreditos"
+            android:fontFamily="@font/fonty"
+            android:background="@drawable/rounded_button"
+            android:drawableStart="@mipmap/ic_fingerprint_black_18dp"
+            android:drawableEnd="@mipmap/ic_fingerprint_black_18dp"
+            android:textColor="@color/title"
+            android:textSize="24sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
 </FrameLayout>
