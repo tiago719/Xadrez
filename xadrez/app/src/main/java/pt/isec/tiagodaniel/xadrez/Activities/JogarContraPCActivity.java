@@ -391,20 +391,24 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
         if (item.getItemId() == R.id.alterarJogo) {
             String message;
 
-            if (this.xadrezApplication.getJogadorServidor() == this.gameModel.getTabuleiro().getJogadorAtual()) {
-                if (this.gameModel.getModoJogo() == JOGADOR_VS_COMPUTADOR) {
-                    message = getString(R.string.question_message_alterar_jogo_para_contra_humano);
-                } else {
-                    message = getString(R.string.question_message_alterar_jogo_para_contra_bot);
+            if (this.gameModel.getModoJogo() == CRIAR_JOGO_REDE || this.gameModel.getModoJogo() == JUNTAR_JOGO_REDE) {
+                if (this.xadrezApplication.getJogadorServidor() != this.gameModel.getTabuleiro().getJogadorAtual()) {
+                    return super.onOptionsItemSelected(item);
                 }
-
-                QuestionDialog questionDialog = new QuestionDialog(
-                        this,
-                        getString(R.string.question_title_alterar_jogo),
-                        message,
-                        TAG_ALTERAR_JOGO);
-                questionDialog.show(getFragmentManager(), QUESTION_DIALOG);
             }
+
+            if (this.gameModel.getModoJogo() == JOGADOR_VS_COMPUTADOR) {
+                message = getString(R.string.question_message_alterar_jogo_para_contra_humano);
+            } else {
+                message = getString(R.string.question_message_alterar_jogo_para_contra_bot);
+            }
+
+            QuestionDialog questionDialog = new QuestionDialog(
+                    this,
+                    getString(R.string.question_title_alterar_jogo),
+                    message,
+                    TAG_ALTERAR_JOGO);
+            questionDialog.show(getFragmentManager(), QUESTION_DIALOG);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -416,7 +420,7 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
                 if (tag.equals(TAG_SAIR_JOGO)) {
                     this.guardarHistorico(true);
                 } else if (tag.equals(TAG_ALTERAR_JOGO)) {
-                    this.guardarHistorico(true);
+                    this.guardarHistorico(false);
                     LinearLayout cronometros = findViewById(R.id.cronometros);
                     cronometros.setVisibility(View.GONE);
                     SocketHandler.closeSocket();
@@ -515,12 +519,13 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
 
     /**
      * Guarda o histórico nas shared preferences
+     *
      * @param isToBackPress true = fazer backPress
      */
     public void guardarHistorico(boolean isToBackPress) {
         try {
             this.xadrezApplication.guardarHistorico(this.gameModel.getHistorico());
-            if(isToBackPress) {
+            if (isToBackPress) {
                 super.onBackPressed();
             }
         } catch (IOException e) {
