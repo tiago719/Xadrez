@@ -63,7 +63,7 @@ public class EstadoEscolheDestino extends StateAdapter implements Constantes, On
                 jogaPC.start();
             } else if (flag1 && this.getGame().getModoJogo() == JOGADOR_VS_JOGADOR) {
                 if (getGame().getActivity().isJogoComTempo()) {
-                    getGame().getActivity().paraTempo(getGame().getTabuleiro().getJogadorAtual());
+                    getGame().getActivity().paraTempo(getGame().getTabuleiro().getJogadorAtual(), false);
                 }
                 this.getGame().getTabuleiro().trocaJogadorActual();
             } else if (flag1 && this.getGame().getModoJogo() == CRIAR_JOGO_REDE || this.getGame().getModoJogo() == JUNTAR_JOGO_REDE) {

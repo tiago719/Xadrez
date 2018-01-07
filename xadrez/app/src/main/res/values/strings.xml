@@ -87,7 +87,7 @@
     <string name="Jogador1_JOGvsJOG">Jogador 1 (brancas)</string>
     <string name="Jogador2_JOGvsJOG">Jogador 2 (pretas)</string>
     <string name="iniciarJogo_JOGvsJOG">Iniciar jogo</string>
-    <string name="nomeJogador2_JOGvsJOG">[nome jogador2]</string>
+    <string name="nomeJogador2_JOGvsJOG">[jogador2]</string>
     <string name="alterarJogo">Alterar jogo</string>
     <string name="jogador1">Jogador 1</string>
     <string name="dois_segundos">2s</string>

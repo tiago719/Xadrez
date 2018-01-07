@@ -174,7 +174,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/fonty"
-                android:textSize="30sp"
+                android:textSize="25sp"
                 android:textStyle="bold"
                 android:textColor="@color/title"
                 android:gravity="center_horizontal"
