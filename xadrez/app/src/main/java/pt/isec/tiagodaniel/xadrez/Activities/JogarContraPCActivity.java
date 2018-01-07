@@ -278,15 +278,18 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
             tempoMaximo*=60000;
             this.tempoGanho = bundle.getLong(TEMPO_GANHO_JOGO_JOGvsJOG);
             tempoGanho*=1000;
-            inicializaTempos();
+            inicializaTempos(false);
         } else {
             LinearLayout cronometros = findViewById(R.id.cronometros);
             cronometros.setVisibility(View.GONE);
         }
     }
 
-    public void inicializaTempos() {
-        xadrezApplication.resetTempos();
+    public void inicializaTempos(boolean orientacaoMudou)
+    {
+        if(!orientacaoMudou)
+            xadrezApplication.resetTempos();
+
         CronometroJogPretas.setBase(SystemClock.elapsedRealtime()+xadrezApplication.getCronometroJogPretasTempoStop());
         CronometroJogPretas.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override
@@ -432,6 +435,7 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
     }
 
     private void alterarModoJogo() {
+        jogoComTempo=false;
         switch (this.gameModel.getModoJogo()) {
             case JUNTAR_JOGO_REDE:
             case CRIAR_JOGO_REDE:
@@ -460,10 +464,7 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
         super.onConfigurationChanged(newConfig);
 
         Jogador jogador=getGameModel().getTabuleiro().getJogadorAtual();
-        if(jogador instanceof JogadorLight)
-            paraTempo(jogador, true);
-        else
-            paraTempo(jogador, true);
+        paraTempo(jogador, true);
 
         setContentView(R.layout.activity_jogar_contra_pc);
 
@@ -473,7 +474,7 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
             CronometroJogBrancas = findViewById(R.id.tempoJogBrancas);
             CronometroJogPretas = findViewById(R.id.tempoJogPretas);
 
-            inicializaTempos();
+            inicializaTempos(true);
         } else {
             LinearLayout cronometros = findViewById(R.id.cronometros);
             cronometros.setVisibility(View.GONE);
