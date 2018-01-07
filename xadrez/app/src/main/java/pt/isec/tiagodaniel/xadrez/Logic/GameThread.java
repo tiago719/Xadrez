@@ -33,7 +33,7 @@ public class GameThread extends Thread implements Constantes, OnCompleteListener
     /**
      * Construtor da GameThread
      *
-     * @param activity   actividade que chama a thread (JogarContraPCActivity)
+     * @param activity actividade que chama a thread (JogarContraPCActivity)
      */
     public GameThread(JogarContraPCActivity activity, int deviceType, Handler handler) throws NullSharedPreferencesException {
         this.gameActivity = activity;
@@ -88,7 +88,7 @@ public class GameThread extends Thread implements Constantes, OnCompleteListener
             }
 
         } catch (IOException | ClassNotFoundException e) {
-            if(!gameActivity.flagAltereiModoJogo) {
+            if (!gameActivity.flagAltereiModoJogo) {
                 AlertDialog alertDialog = new AlertDialog(this.gameActivity);
                 alertDialog.show(this.gameActivity.getFragmentManager(), ALERT_DIALOG);
             }
@@ -96,7 +96,7 @@ public class GameThread extends Thread implements Constantes, OnCompleteListener
             SocketHandler.closeSocket();
             gameActivity.getGameModel().setModoJogo(JOGADOR_VS_COMPUTADOR);
 
-            if(!gameActivity.isFlagSouEuAJogar()) {
+            if (!gameActivity.isFlagSouEuAJogar()) {
                 JogaPC jogaPC = new JogaPC(gameActivity.getGameModel());
                 jogaPC.start();
             }
@@ -157,6 +157,9 @@ public class GameThread extends Thread implements Constantes, OnCompleteListener
             @Override
             public void run() {
                 gameActivity.configuraJogador2(false, bundle, true);
+                if (clientServerMessage.isJogoComTempo()) {
+                    gameActivity.configuraTempo(clientServerMessage.isJogoComTempo(), clientServerMessage.getTempoMaximo(), clientServerMessage.getTempoGanho());
+                }
                 escondeProgressDialog();
             }
         });
@@ -166,6 +169,7 @@ public class GameThread extends Thread implements Constantes, OnCompleteListener
         clientServerMessage.resetDados();
         clientServerMessage.setNomeJogador(this.ferramentas.getSavedName());
         clientServerMessage.setFotoJogador(this.ferramentas.getSavedPhoto());
+
 
         out.writeUnshared(clientServerMessage);
         out.flush();

@@ -189,7 +189,10 @@ public class ConfigurarJogoRedeActivity extends Activity implements Constantes {
 
         bundle.putBoolean(TEMPO_JOGO_JOGvsJOG, jogarComTempo);
         if (jogarComTempo) {
-            bundle.putLong(TEMPO_MAX_JOGO_JOGvsJOG, this.mSeekBarTempoMaximo.getProgress());
+            int tempoMax=this.mSeekBarTempoMaximo.getProgress();
+            if(tempoMax<2)
+                tempoMax=2;
+            bundle.putLong(TEMPO_MAX_JOGO_JOGvsJOG, tempoMax);
             bundle.putLong(TEMPO_GANHO_JOGO_JOGvsJOG, this.mSeekBarTempoGanho.getProgress());
         }
 

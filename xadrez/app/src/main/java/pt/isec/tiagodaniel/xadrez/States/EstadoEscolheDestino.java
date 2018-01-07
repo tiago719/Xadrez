@@ -1,16 +1,8 @@
 package pt.isec.tiagodaniel.xadrez.States;
 
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.StrictMode;
-
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-import pt.isec.tiagodaniel.xadrez.Dialogs.AlertDialog;
 import pt.isec.tiagodaniel.xadrez.Dialogs.OnCompleteListener;
-import pt.isec.tiagodaniel.xadrez.Logic.ClientServerMessage;
 import pt.isec.tiagodaniel.xadrez.Logic.Constantes;
 import pt.isec.tiagodaniel.xadrez.Logic.GameModel;
 import pt.isec.tiagodaniel.xadrez.Logic.JogaPC;
