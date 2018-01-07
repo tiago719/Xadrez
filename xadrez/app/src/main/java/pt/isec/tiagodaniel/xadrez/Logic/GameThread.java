@@ -97,6 +97,7 @@ public class GameThread extends Thread implements Constantes, OnCompleteListener
             if (gameActivity.isFlagAltereiModoJogo()) {
                 return;
             }
+            gameActivity.guardarHistorico(false);
             gameActivity.getGameModel().setModoJogo(JOGADOR_VS_COMPUTADOR);
 
             if (!gameActivity.isFlagSouEuAJogar()) {
