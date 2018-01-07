@@ -64,6 +64,11 @@ public class MainActivity extends Activity implements OnCompleteListener, Consta
         ipDialog.show(getFragmentManager(), IP_DIALOG);
     }
 
+    public void onCreditos(View v) {
+        Intent intent = new Intent(this, CreditosActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater mi = new MenuInflater(this);
