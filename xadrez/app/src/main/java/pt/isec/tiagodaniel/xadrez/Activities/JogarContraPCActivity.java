@@ -56,7 +56,7 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
     private Chronometer CronometroJogBrancas, CronometroJogPretas;
     private int modoJogo;
     private boolean flagSouEuAJogar = false;
-    public boolean flagAltereiModoJogo = false;
+    private boolean flagAltereiModoJogo = false;
 
     public ImageView getCheck() {
         return Check;
@@ -181,6 +181,10 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
     @Override
     public void onBackPressed() {
         if (this.gameModel.getModoJogo() == JUNTAR_JOGO_REDE || this.gameModel.getModoJogo() == CRIAR_JOGO_REDE) {
+            if (this.xadrezApplication.getJogadorServidor() != this.gameModel.getTabuleiro().getJogadorAtual()) {
+                return;
+            }
+
             QuestionDialog questionDialog = new QuestionDialog(
                     this,
                     getString(R.string.question_title_leave_game_TCP),
@@ -387,10 +391,10 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
         if (item.getItemId() == R.id.alterarJogo) {
             String message;
 
-            if (this.gameModel.getTabuleiro().getJogadorAtual() != null) {
-                if (this.gameModel.getModoJogo() == JOGADOR_VS_COMPUTADOR)
+            if (this.xadrezApplication.getJogadorServidor() == this.gameModel.getTabuleiro().getJogadorAtual()) {
+                if (this.gameModel.getModoJogo() == JOGADOR_VS_COMPUTADOR) {
                     message = getString(R.string.question_message_alterar_jogo_para_contra_humano);
-                else {
+                } else {
                     message = getString(R.string.question_message_alterar_jogo_para_contra_bot);
                 }
 
@@ -417,8 +421,9 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
                     SocketHandler.closeSocket();
                     this.alterarModoJogo();
                 } else if (tag.equals(TAG_SAIR_JOGO_REDE)) {
+                    this.flagAltereiModoJogo = true;
                     SocketHandler.closeSocket();
-                    this.gameModel.setModoJogo(JOGADOR_VS_COMPUTADOR);
+                    this.finish();
                 }
                 break;
             }
@@ -550,6 +555,10 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
 
     public String getNomeJogador2() {
         return ((TextView) findViewById(R.id.txtNomeJogador2)).getText().toString();
+    }
+
+    public boolean isFlagAltereiModoJogo() {
+        return this.flagAltereiModoJogo;
     }
     //endregion
 

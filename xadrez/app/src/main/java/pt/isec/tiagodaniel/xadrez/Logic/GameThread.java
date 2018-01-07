@@ -88,12 +88,15 @@ public class GameThread extends Thread implements Constantes, OnCompleteListener
             }
 
         } catch (IOException | ClassNotFoundException e) {
-            if (!gameActivity.flagAltereiModoJogo) {
+            if (!gameActivity.isFlagAltereiModoJogo()) {
                 AlertDialog alertDialog = new AlertDialog(this.gameActivity);
                 alertDialog.show(this.gameActivity.getFragmentManager(), ALERT_DIALOG);
             }
         } finally {
             SocketHandler.closeSocket();
+            if (gameActivity.isFlagAltereiModoJogo()) {
+                return;
+            }
             gameActivity.getGameModel().setModoJogo(JOGADOR_VS_COMPUTADOR);
 
             if (!gameActivity.isFlagSouEuAJogar()) {
@@ -169,7 +172,9 @@ public class GameThread extends Thread implements Constantes, OnCompleteListener
         clientServerMessage.resetDados();
         clientServerMessage.setNomeJogador(this.ferramentas.getSavedName());
         clientServerMessage.setFotoJogador(this.ferramentas.getSavedPhoto());
-
+        clientServerMessage.setJogoComTempo(this.gameActivity.isJogoComTempo());
+        clientServerMessage.setTempoGanho(this.gameActivity.getTempoGanho());
+        clientServerMessage.setTempoMaximo(this.gameActivity.getTempoMaximo());
 
         out.writeUnshared(clientServerMessage);
         out.flush();
