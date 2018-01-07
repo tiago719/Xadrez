@@ -61,6 +61,7 @@ public interface Constantes {
 
     /**Histórico**/
     String HISTORIC_FILE_NAME = "historico.bin";
+    int HISTORICO_TOTAL_JOGOS = 10;
     String HISTORICO_DATA = "DATA";
     String HISTORICO_MODO_JOGO1 = "MODOJOGO1";
     String HISTORICO_MODO_JOGO2 = "MODOJOGO2";

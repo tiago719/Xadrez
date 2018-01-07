@@ -610,10 +610,6 @@ public class Tabuleiro {
             p.setView(ll);
     }
 
-    public Jogador getJogador(int index) {
-        return this.jogadores.get(index);
-    }
-
     //region Funções usadas pelo GameModel
     public void setVencedorJogo(String nomeVencedor, Jogador jogadorActual, boolean empate) {
         this.historico.setModoJogo(this.modoJogo);

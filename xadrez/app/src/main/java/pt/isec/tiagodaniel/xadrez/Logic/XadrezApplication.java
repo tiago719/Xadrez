@@ -17,7 +17,6 @@ import pt.isec.tiagodaniel.xadrez.Logic.Historico.Historico;
 public class XadrezApplication extends Application {
     private static XadrezApplication singleton;
     private ArrayList<Historico> historicList;
-    private int modoJogo;
     private long cronometroJogBrancasTempoStop, cronometroJogPretasTempoStop;
     private Bitmap fotoJogador2;
     private String pathFotoJogador2;
@@ -63,7 +62,7 @@ public class XadrezApplication extends Application {
     }
 
     private void addHistoric(Historico historico) {
-        if (this.historicList.size() == 5) {
+        if (this.historicList.size() == Constantes.HISTORICO_TOTAL_JOGOS) {
             this.historicList.remove(0);
         }
 
@@ -80,14 +79,6 @@ public class XadrezApplication extends Application {
         } else {
             throw new IOException();
         }
-    }
-
-    public void setModoJogo(int modoJogo) {
-        this.modoJogo = modoJogo;
-    }
-
-    public int getModoJogo() {
-        return this.modoJogo;
     }
 
     public long getCronometroJogBrancasTempoStop()
