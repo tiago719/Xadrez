@@ -25,10 +25,10 @@ public class XadrezApplication extends Application {
     private static XadrezApplication singleton;
     private ArrayList<Historico> historicList;
     private int modoJogo;
+    private long cronometroJogBrancasTempoStop, cronometroJogPretasTempoStop;
     private Bitmap fotoJogador2;
     private String pathFotoJogador2;
     private String nomeJogador2;
-
 
     public static XadrezApplication getInstance() {
         return singleton;
@@ -40,6 +40,8 @@ public class XadrezApplication extends Application {
         singleton = this;
         this.historicList = new ArrayList<>();
         this.getHistorico();
+        cronometroJogBrancasTempoStop=0;
+        cronometroJogPretasTempoStop=0;
     }
 
     public ArrayList<Historico> getHistorico() {
@@ -94,6 +96,26 @@ public class XadrezApplication extends Application {
         return this.modoJogo;
     }
 
+    public long getCronometroJogBrancasTempoStop()
+    {
+        return cronometroJogBrancasTempoStop;
+    }
+
+    public void setCronometroJogBrancasTempoStop(long cronometroJogBrancasTempoStop)
+    {
+        this.cronometroJogBrancasTempoStop = cronometroJogBrancasTempoStop;
+    }
+
+    public long getCronometroJogPretasTempoStop()
+    {
+        return cronometroJogPretasTempoStop;
+    }
+
+    public void setCronometroJogPretasTempoStop(long cronometroJogPretasTempoStop)
+    {
+        this.cronometroJogPretasTempoStop = cronometroJogPretasTempoStop;
+    }
+  
     public Bitmap getFotoJogador2() {
         return fotoJogador2;
     }

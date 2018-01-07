@@ -49,7 +49,7 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
     private Posicao reiCheck = null, peaoSubstituir;
     private Ferramentas ferramentas;
     private boolean jogoComTempo = false, orientacaoMudou = false;
-    private long tempoMaximo, tempoGanho, cronometroJogBrancasTempoStop, cronometroJogPretasTempoStop;
+    private long tempoMaximo, tempoGanho;
     private TextView mTxtNomeJogador1, mTxtNomeJogador2;
     private ImageView mImvFotoJogador1, mImvFotoJogador2;
     XadrezApplication xadrezApplication;
@@ -157,12 +157,11 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
         startActivityForResult(new Intent(JogarContraPCActivity.this, ActivityPromocaoPeao.class), 1);
     }
 
-    public void mostrarVencedor(Jogador vencedor) {
+    public void mostrarVencedor(String vencedor) {
         String titulo;
 
-        if (vencedor instanceof JogadorLight)
-            titulo = PECAS_BRANCAS + " " + getString(R.string.win_title);
-        else titulo = PECAS_PRETAS + " " + getString(R.string.win_title);
+
+        titulo = vencedor + " " + getString(R.string.win_title);
 
         WinDialog winDialog = new WinDialog(this, titulo);
         winDialog.show(getFragmentManager(), WIN_DIALOG);
@@ -278,33 +277,42 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
     }
 
     public void inicializaTempos() {
-        CronometroJogPretas.setBase(SystemClock.elapsedRealtime());
-        CronometroJogPretas.stop();
-        CronometroJogPretas.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+        CronometroJogPretas.setBase(SystemClock.elapsedRealtime()+xadrezApplication.getCronometroJogPretasTempoStop());
+       /* CronometroJogPretas.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override
             public void onChronometerTick(Chronometer chronometer) {
                 if (SystemClock.elapsedRealtime() == tempoMaximo) {
                     mostrarVencedor(gameModel.getTabuleiro().getJogadorAdversario());
                 }
             }
-        });
+        });*/
 
-        CronometroJogBrancas.setBase(SystemClock.elapsedRealtime());
-        CronometroJogBrancas.start();
-        CronometroJogPretas.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+        CronometroJogBrancas.setBase(SystemClock.elapsedRealtime()+xadrezApplication.getCronometroJogBrancasTempoStop());
+        /*CronometroJogPretas.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override
             public void onChronometerTick(Chronometer chronometer) {
                 if (SystemClock.elapsedRealtime() == tempoMaximo) {
                     mostrarVencedor(gameModel.getTabuleiro().getJogadorAdversario());
                 }
             }
-        });
+        });*/
+
+        if(gameModel.getTabuleiro().getJogadorAtual() instanceof JogadorLight)
+        {
+            CronometroJogBrancas.start();
+            CronometroJogPretas.stop();
+        }
+        else
+        {
+            CronometroJogPretas.start();
+            CronometroJogBrancas.stop();
+        }
     }
 
     public void paraTempo(Jogador jogador) {
         long res = 0;
         if (jogador instanceof JogadorLight) {
-            cronometroJogBrancasTempoStop = CronometroJogBrancas.getBase() - SystemClock.elapsedRealtime();
+            xadrezApplication.setCronometroJogBrancasTempoStop(CronometroJogBrancas.getBase() - SystemClock.elapsedRealtime());
             CronometroJogBrancas.stop();
             /*
             if(cronometroJogBrancasTempoStop-tempoGanho<0)
@@ -313,7 +321,7 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
                 res=cronometroJogBrancasTempoStop-tempoGanho;
             CronometroJogBrancas.setBase(res);*/
         } else {
-            cronometroJogPretasTempoStop = CronometroJogPretas.getBase() - SystemClock.elapsedRealtime();
+            xadrezApplication.setCronometroJogPretasTempoStop(CronometroJogPretas.getBase() - SystemClock.elapsedRealtime());
             CronometroJogPretas.stop();
             /*
             if(cronometroJogPretasTempoStop-tempoGanho<0)
@@ -326,10 +334,10 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
 
     public void comecaTempo(Jogador jogador) {
         if (jogador instanceof JogadorLight) {
-            CronometroJogBrancas.setBase(SystemClock.elapsedRealtime() + cronometroJogBrancasTempoStop);
+            CronometroJogBrancas.setBase(SystemClock.elapsedRealtime() + xadrezApplication.getCronometroJogBrancasTempoStop());
             CronometroJogBrancas.start();
         } else {
-            CronometroJogPretas.setBase(SystemClock.elapsedRealtime() + cronometroJogPretasTempoStop);
+            CronometroJogPretas.setBase(SystemClock.elapsedRealtime() + xadrezApplication.getCronometroJogPretasTempoStop());
             CronometroJogPretas.start();
         }
     }
@@ -400,8 +408,8 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
             case CRIAR_JOGO_REDE:
             case JUNTAR_JOGO_REDE:
             case JOGADOR_VS_JOGADOR: {
-                CronometroJogBrancas.setVisibility(View.GONE);
-                CronometroJogPretas.setVisibility(View.GONE);
+                LinearLayout cronometros = findViewById(R.id.cronometros);
+                cronometros.setVisibility(View.GONE);
                 this.gameModel.setModoJogo(JOGADOR_VS_COMPUTADOR);
                 break;
             }
@@ -415,6 +423,15 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
     public boolean isJogoComTempo() {
         return jogoComTempo;
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState)
+    {
+        super.onSaveInstanceState(outState);
+
+        paraTempo(getGameModel().getTabuleiro().getJogadorAtual());
+        paraTempo(getGameModel().getTabuleiro().getJogadorAdversario());
     }
 
     @Override
@@ -496,11 +513,12 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
 
     //region Funções usadas pelo Game Model
     public String getNomeJogador1() {
-        return ((TextView) findViewById(R.id.nomeJogador1)).getText().toString();
+        TextView nome =((TextView) findViewById(R.id.txtNomeJogador1));
+        return nome.getText().toString();
     }
 
     public String getNomeJogador2() {
-        return ((TextView) findViewById(R.id.nomeJogador2)).getText().toString();
+        return ((TextView) findViewById(R.id.txtNomeJogador2)).getText().toString();
     }
     //endregion
 }
