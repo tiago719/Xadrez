@@ -9,6 +9,8 @@ public class ClientServerMessage implements Serializable {
     private char colunaOrigem,colunaDestino;
     private byte[] fotoJogador;
     private boolean isCheck = false;
+    private boolean jogoComTempo = false;
+    private long tempoMaximo, tempoGanho;
 
     public ClientServerMessage() {
     }
@@ -72,5 +74,29 @@ public class ClientServerMessage implements Serializable {
     public void resetDados() {
         this.fotoJogador = null;
         this.nomeJogador = "";
+    }
+
+    public boolean isJogoComTempo() {
+        return jogoComTempo;
+    }
+
+    public void setJogoComTempo(boolean jogoComTempo) {
+        this.jogoComTempo = jogoComTempo;
+    }
+
+    public long getTempoMaximo() {
+        return tempoMaximo;
+    }
+
+    public void setTempoMaximo(long tempoMaximo) {
+        this.tempoMaximo = tempoMaximo;
+    }
+
+    public long getTempoGanho() {
+        return tempoGanho;
+    }
+
+    public void setTempoGanho(long tempoGanho) {
+        this.tempoGanho = tempoGanho;
     }
 }
