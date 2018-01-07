@@ -2,6 +2,7 @@ package pt.isec.tiagodaniel.xadrez.Logic;
 
 import android.app.Application;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 
@@ -24,6 +25,10 @@ public class XadrezApplication extends Application {
     private static XadrezApplication singleton;
     private ArrayList<Historico> historicList;
     private int modoJogo;
+    private Bitmap fotoJogador2;
+    private String pathFotoJogador2;
+    private String nomeJogador2;
+
 
     public static XadrezApplication getInstance() {
         return singleton;
@@ -87,5 +92,29 @@ public class XadrezApplication extends Application {
 
     public int getModoJogo() {
         return this.modoJogo;
+    }
+
+    public Bitmap getFotoJogador2() {
+        return fotoJogador2;
+    }
+
+    public void setFotoJogador2(Bitmap fotoJogador2) {
+        this.fotoJogador2 = fotoJogador2;
+    }
+
+    public String getNomeJogador2() {
+        return nomeJogador2;
+    }
+
+    public void setNomeJogador2(String nomeJogador2) {
+        this.nomeJogador2 = nomeJogador2;
+    }
+
+    public String getPathFotoJogador2() {
+        return pathFotoJogador2;
+    }
+
+    public void setPathFotoJogador2(String pathFotoJogador2) {
+        this.pathFotoJogador2 = pathFotoJogador2;
     }
 }
