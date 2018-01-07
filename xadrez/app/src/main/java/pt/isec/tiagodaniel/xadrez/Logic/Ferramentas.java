@@ -39,7 +39,7 @@ public class Ferramentas implements Constantes {
      */
     public void setPic(ImageView mImageView, String mCurrentPhotoPath) {
         if (mCurrentPhotoPath.equalsIgnoreCase(PHOTO_NOT_FOUND)) {
-            mImageView.setBackgroundResource(R.drawable.b_peao);
+            mImageView.setBackgroundResource(R.drawable.computador);
         } else {
             // Get the dimensions of the View
             int targetW = mImageView.getWidth() <= 0 ? 300 : mImageView.getWidth();
@@ -88,7 +88,11 @@ public class Ferramentas implements Constantes {
     }
 
     public byte[] getSavedPhoto() {
-        Bitmap bitmap = BitmapFactory.decodeFile(this.getSavedPhotoPath());
+        String fotoPath = this.getSavedPhotoPath();
+        if(fotoPath.equals(PHOTO_NOT_FOUND)) {
+            return null;
+        }
+        Bitmap bitmap = BitmapFactory.decodeFile(fotoPath);
         //TODO meter aqui valores constantes
         bitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
         ByteArrayOutputStream blob = new ByteArrayOutputStream();

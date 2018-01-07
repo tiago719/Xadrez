@@ -6,16 +6,13 @@ import pt.isec.tiagodaniel.xadrez.Logic.Constantes;
 import pt.isec.tiagodaniel.xadrez.Logic.GameModel;
 import pt.isec.tiagodaniel.xadrez.Logic.Peca;
 import pt.isec.tiagodaniel.xadrez.Logic.Posicao;
-
-/**
- * Created by drmoreira on 10-12-2017.
- */
+import pt.isec.tiagodaniel.xadrez.Logic.XadrezApplication;
 
 public class EstadoEscolhePeca extends StateAdapter {
 
     public EstadoEscolhePeca(GameModel game) {
         super(game);
-        if(getGame().getActivity().isJogoComTempo())
+        if (getGame().getActivity().isJogoComTempo())
             getGame().getActivity().comecaTempo(getGame().getTabuleiro().getJogadorAtual());
     }
 
@@ -23,12 +20,14 @@ public class EstadoEscolhePeca extends StateAdapter {
     public IState seguinte(int linha, char coluna) {
         Peca pecaAtual;
         ArrayList<Posicao> posicoesDisponiveis;
-        Posicao posicaoPeca=getGame().getTabuleiro().getPosicao(linha, coluna);
+        Posicao posicaoPeca = getGame().getTabuleiro().getPosicao(linha, coluna);
 
         pecaAtual = posicaoPeca.getPeca();
 
-        if(this.getGame().getTabuleiro().getJogadorAtual() == null) {
-            return this;
+        if (getGame().getModoJogo() == Constantes.CRIAR_JOGO_REDE || getGame().getModoJogo() == Constantes.JUNTAR_JOGO_REDE) {
+            if (((XadrezApplication) getGame().getActivity().getApplication()).getJogadorServidor() != getGame().getTabuleiro().getJogadorAtual()) {
+                return this;
+            }
         }
 
         if (pecaAtual == null)
@@ -39,9 +38,8 @@ public class EstadoEscolhePeca extends StateAdapter {
             getGame().getActivity().resetPosicoesDisponiveisAnteriores();
             getGame().getActivity().setPosicoesJogaveis(posicoesDisponiveis);
 
-            if(posicoesDisponiveis.size()>0)
-            {
-                return new EstadoEscolheDestino(getGame(),posicaoPeca);
+            if (posicoesDisponiveis.size() > 0) {
+                return new EstadoEscolheDestino(getGame(), posicaoPeca);
             }
         }
         return this;

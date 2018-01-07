@@ -73,23 +73,34 @@ public class GameThread extends Thread implements Constantes, OnCompleteListener
                                     gameActivity.getGameModel().getTabuleiro().getPosicao(linhaDestino, colunaDestino),
                                     gameActivity.getGameModel().getTabuleiro().getJogadorAtual(),
                                     gameActivity.getGameModel().getTabuleiro().getJogadorAdversario());
+
+                            gameActivity.getGameModel().verificaCheck(gameActivity.getGameModel().getTabuleiro().getJogadorAtual(),
+                                    false, 0, 'a', 0, 'a', true);
                         }
                     });
 
                     if (this.gameActivity.getGameModel().getModoJogo() == Constantes.CRIAR_JOGO_REDE) {
-                        this.gameActivity.getGameModel().getTabuleiro().setJogadorAtual(this.gameActivity.getGameModel().getTabuleiro().getJogador(1));
+                        this.gameActivity.getGameModel().getTabuleiro().trocaJogadorActual();
                     } else if (this.gameActivity.getGameModel().getModoJogo() == Constantes.JUNTAR_JOGO_REDE) {
-                        this.gameActivity.getGameModel().getTabuleiro().setJogadorAtual(this.gameActivity.getGameModel().getTabuleiro().getJogador(0));
+                        this.gameActivity.getGameModel().getTabuleiro().trocaJogadorActual();
                     }
                 }
             }
 
         } catch (IOException | ClassNotFoundException e) {
-            AlertDialog alertDialog = new AlertDialog(this.gameActivity);
-            alertDialog.show(this.gameActivity.getFragmentManager(), ALERT_DIALOG);
+            if(!gameActivity.flagAltereiModoJogo) {
+                AlertDialog alertDialog = new AlertDialog(this.gameActivity);
+                alertDialog.show(this.gameActivity.getFragmentManager(), ALERT_DIALOG);
+            }
         } finally {
             SocketHandler.closeSocket();
-            this.gameActivity.getGameModel().setModoJogo(JOGADOR_VS_COMPUTADOR);
+            gameActivity.getGameModel().setModoJogo(JOGADOR_VS_COMPUTADOR);
+
+            if(!gameActivity.isFlagSouEuAJogar()) {
+                JogaPC jogaPC = new JogaPC(gameActivity.getGameModel());
+                jogaPC.start();
+            }
+
         }
     }
 

@@ -1,12 +1,16 @@
 package pt.isec.tiagodaniel.xadrez.Logic;
 
+import android.os.Bundle;
 import android.os.Handler;
-import android.os.Parcel;
-import android.os.Parcelable;
+import android.os.StrictMode;
 import android.widget.Chronometer;
 import android.widget.LinearLayout;
 
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+
 import pt.isec.tiagodaniel.xadrez.Activities.JogarContraPCActivity;
+import pt.isec.tiagodaniel.xadrez.Dialogs.AlertDialog;
 import pt.isec.tiagodaniel.xadrez.Exceptions.NullSharedPreferencesException;
 import pt.isec.tiagodaniel.xadrez.Logic.Historico.Historico;
 import pt.isec.tiagodaniel.xadrez.States.EstadoEscolhePeca;
@@ -18,18 +22,22 @@ public class GameModel implements Constantes {
     private JogarContraPCActivity activity;
     private XadrezApplication xadrezApplication;
     private int modoJogo;
+    private ClientServerMessage messageToSend;
 
     public GameModel(LinearLayout ll, JogarContraPCActivity activity, Chronometer chronometer1, Chronometer chronometer2, int modoJogo) throws NullSharedPreferencesException {
+        messageToSend = new ClientServerMessage();
         this.activity = activity;
-        this.xadrezApplication = (XadrezApplication)getActivity().getApplication();
+        this.xadrezApplication = (XadrezApplication) getActivity().getApplication();
 
         this.modoJogo = modoJogo;
         tabuleiro = new Tabuleiro(ll, chronometer1, chronometer2, this.modoJogo);
 
         if (this.modoJogo == CRIAR_JOGO_REDE) {
+            this.xadrezApplication.setJogadorServidor(tabuleiro.getJogadorAtual());
             GameThread gameThread = new GameThread(this.activity, Constantes.SERVIDOR, new Handler());
             gameThread.start();
         } else if (this.modoJogo == JUNTAR_JOGO_REDE) {
+            this.xadrezApplication.setJogadorServidor(tabuleiro.getJogadorAdversario());
             GameThread gameThread = new GameThread(this.activity, Constantes.CLIENTE, new Handler());
             gameThread.start();
         }
@@ -74,7 +82,7 @@ public class GameModel implements Constantes {
         atual.addPeca(posicao.getPeca());
         posicao.desenhaPeca();
 
-        verificaCheck(atual);
+        verificaCheck(atual, false, 0, 'a', 0, 'a', false);
 
         if (this.getModoJogo() == JOGADOR_VS_COMPUTADOR) {
             getTabuleiro().trocaJogadorActual();
@@ -89,8 +97,16 @@ public class GameModel implements Constantes {
 
     //true - acabou o jogo
     //false - jogo continua
-    public boolean verificaCheck(Jogador atual) {
-        Jogador adversario = getTabuleiro().getOutroJogador(atual);
+    public boolean verificaCheck(Jogador atual, boolean enviarPosicoes, int lD, char cD, int lO, char cO, boolean jogoRede) {
+        Jogador adversario;
+        String nomeVencedor;
+
+        if (jogoRede) {
+            adversario = getTabuleiro().getJogadorAtual();
+        } else {
+            adversario = getTabuleiro().getOutroJogador(atual);
+        }
+
         adversario.verificaCheck();
         if (adversario.isCheck()) {
             getActivity().setReiCheck(getTabuleiro().getPosicaoRei(adversario));
@@ -100,13 +116,30 @@ public class GameModel implements Constantes {
 
         if (adversario.isCheck()) {
             if (!adversario.hasMovimentos(adversario)) {
-                this.tabuleiro.setVencedorJogo(this.activity.getNomeJogador1(), atual, false);
-                getActivity().mostrarVencedor(this.activity.getNomeJogador1());
+                if (jogoRede) {
+                    nomeVencedor = this.activity.getNomeJogador2();
+                } else {
+                    nomeVencedor = this.activity.getNomeJogador1();
+                }
+
+                if (enviarPosicoes) {
+                    this.sendTCPMessage(lD, cD, lO, cO);
+                }
+
+                this.tabuleiro.setVencedorJogo(nomeVencedor, atual, false);
+                getActivity().mostrarVencedor(nomeVencedor);
                 return true;
             }
         } else {
             if (!adversario.hasMovimentos(adversario)) {
-                this.tabuleiro.setVencedorJogo(this.activity.getNomeJogador1(), atual, true);
+                if (jogoRede) {
+                    this.tabuleiro.setVencedorJogo(this.activity.getNomeJogador2(), atual, true);
+                } else {
+                    this.tabuleiro.setVencedorJogo(this.activity.getNomeJogador1(), atual, true);
+                }
+                if (enviarPosicoes) {
+                    this.sendTCPMessage(lD, cD, lO, cO);
+                }
                 getActivity().mostrarEmpate();
                 return true;
             }
@@ -131,14 +164,39 @@ public class GameModel implements Constantes {
         this.tabuleiro.setModoJogo(modoJogo);
     }
 
-    public void desenhaPecas()
-    {
+    public void desenhaPecas() {
         tabuleiro.desenhaPecas();
     }
 
-    public void setView(LinearLayout ll)
-    {
+    public void setView(LinearLayout ll) {
         tabuleiro.setView(ll);
+    }
+
+    public void sendTCPMessage(int linhaDestino, char colunaDestino, int linhaOrigem, char colunaOrigem) {
+        messageToSend = new ClientServerMessage();
+        messageToSend.setLinhaDestino(linhaDestino);
+        messageToSend.setColunaDestino(colunaDestino);
+        messageToSend.setLinhaOrigem(linhaOrigem);
+        messageToSend.setColunaOrigem(colunaOrigem);
+        Handler handler = new Handler();
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                            .permitAll().build();
+                    StrictMode.setThreadPolicy(policy);
+
+                    ObjectOutputStream out = new ObjectOutputStream(SocketHandler.getClientSocket().getOutputStream());
+
+                    out.writeUnshared(messageToSend);
+                    out.flush();
+                } catch (IOException e) {
+                    AlertDialog alertDialog = new AlertDialog(activity);
+                    alertDialog.show(activity.getFragmentManager(), ALERT_DIALOG);
+                }
+            }
+        });
     }
 
 }
