@@ -1,5 +1,6 @@
 package pt.isec.tiagodaniel.xadrez.States;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
 
@@ -18,12 +19,10 @@ import pt.isec.tiagodaniel.xadrez.Logic.Posicao;
 import pt.isec.tiagodaniel.xadrez.Logic.SocketHandler;
 
 public class EstadoEscolheDestino extends StateAdapter implements Constantes, OnCompleteListener {
-    ClientServerMessage messageToSend;
 
     public EstadoEscolheDestino(GameModel game, Posicao posicaoOriginal) {
         super(game);
         setPosicaoOrigem(posicaoOriginal);
-        messageToSend = new ClientServerMessage();
     }
 
     @Override
@@ -45,13 +44,24 @@ public class EstadoEscolheDestino extends StateAdapter implements Constantes, On
             setPosicaoOrigem(posicaoDestino);
             return this;
         }
-        if(getPosicaoOrigem().getPeca().getDisponiveis(getGame().getTabuleiro().getJogadorAtual(), false).contains(posicaoDestino))// se clicou numa posicao disponivel
+        if (getPosicaoOrigem().getPeca().getDisponiveis(getGame().getTabuleiro().getJogadorAtual(), false).contains(posicaoDestino))// se clicou numa posicao disponivel
         {
             getGame().getTabuleiro().movePara(getPosicaoOrigem(), posicaoDestino, getGame().getTabuleiro().getJogadorAtual(), getGame().getTabuleiro().getJogadorAdversario());
             getGame().getActivity().resetPosicoesDisponiveisAnteriores();
 
-            if (getGame().verificaCheck(getGame().getTabuleiro().getJogadorAtual()))
-                return this;
+            if (getGame().getModoJogo() == CRIAR_JOGO_REDE || getGame().getModoJogo() == JUNTAR_JOGO_REDE) {
+                if (getGame().verificaCheck(getGame().getTabuleiro().getJogadorAtual(),
+                        true,
+                        posicaoDestino.getLinha(),
+                        posicaoDestino.getColuna(),
+                        getPosicaoOrigem().getLinha(),
+                        getPosicaoOrigem().getColuna(),
+                        false))
+                    return this;
+            } else {
+                if (getGame().verificaCheck(getGame().getTabuleiro().getJogadorAtual(), false, 0, 'a', 0, 'a', false))
+                    return this;
+            }
 
             if ((posicaoPeao = getGame().getTabuleiro().isPeaoUltimaLinha()) != null) {
                 flag1 = false;
@@ -67,31 +77,7 @@ public class EstadoEscolheDestino extends StateAdapter implements Constantes, On
                 }
                 this.getGame().getTabuleiro().trocaJogadorActual();
             } else if (flag1 && this.getGame().getModoJogo() == CRIAR_JOGO_REDE || this.getGame().getModoJogo() == JUNTAR_JOGO_REDE) {
-                messageToSend = new ClientServerMessage();
-                messageToSend.setLinhaDestino(posicaoDestino.getLinha());
-                messageToSend.setColunaDestino(posicaoDestino.getColuna());
-                messageToSend.setLinhaOrigem(getPosicaoOrigem().getLinha());
-                messageToSend.setColunaOrigem(getPosicaoOrigem().getColuna());
-                Handler handler = new Handler();
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-                                    .permitAll().build();
-                            StrictMode.setThreadPolicy(policy);
-
-                            ObjectOutputStream out = new ObjectOutputStream(SocketHandler.getClientSocket().getOutputStream());
-
-                            out.writeUnshared(messageToSend);
-                            out.flush();
-                        } catch (IOException e) {
-                            AlertDialog alertDialog = new AlertDialog(getGame().getActivity());
-                            alertDialog.show(getGame().getActivity().getFragmentManager(), ALERT_DIALOG);
-                        }
-                    }
-                });
-                //getGame().getTabuleiro().setJogadorAtual(null);
+                this.getGame().sendTCPMessage(posicaoDestino.getLinha(), posicaoDestino.getColuna(), getPosicaoOrigem().getLinha(), getPosicaoOrigem().getColuna());
                 getGame().getTabuleiro().trocaJogadorActual();
             }
             return new EstadoEscolhePeca(this.getGame());

@@ -103,4 +103,10 @@ public interface Constantes {
     String DEVICE_TYPE = "DEVICETYPE";
     int CLIENTE = 1;
     int SERVIDOR = 2;
+
+    /**BUNDLE verificaCheck**/
+    String LINHADESTINO = "LINHADESTINO";
+    String COLUNADESTINO = "COLUNADESTINO";
+    String LINHAORIGEM = "LINHAORIGEM";
+    String COLUNAORIGEM = "COLUNAORIGEM";
 }

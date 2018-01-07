@@ -74,7 +74,8 @@ public class GameThread extends Thread implements Constantes, OnCompleteListener
                                     gameActivity.getGameModel().getTabuleiro().getJogadorAtual(),
                                     gameActivity.getGameModel().getTabuleiro().getJogadorAdversario());
 
-                            gameActivity.getGameModel().verificaCheck(gameActivity.getGameModel().getTabuleiro().getJogadorAtual());
+                            gameActivity.getGameModel().verificaCheck(gameActivity.getGameModel().getTabuleiro().getJogadorAtual(),
+                                    false, 0, 'a', 0, 'a', true);
                         }
                     });
 

@@ -616,6 +616,7 @@ public class Tabuleiro {
 
     //region Funções usadas pelo GameModel
     public void setVencedorJogo(String nomeVencedor, Jogador jogadorActual, boolean empate) {
+        this.historico.setModoJogo(this.modoJogo);
         this.historico.setVencedorJogo(nomeVencedor, jogadorActual, empate);
     }
 
