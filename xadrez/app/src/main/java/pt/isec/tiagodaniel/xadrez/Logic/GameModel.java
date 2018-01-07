@@ -89,7 +89,7 @@ public class GameModel implements Constantes {
             jogaPC.start();
         } else if (this.getModoJogo() == JOGADOR_VS_JOGADOR) {
             if (getActivity().isJogoComTempo())
-                getActivity().paraTempo(getTabuleiro().getJogadorAtual());
+                getActivity().paraTempo(getTabuleiro().getJogadorAtual(),false);
 
             getTabuleiro().trocaJogadorActual();
         }

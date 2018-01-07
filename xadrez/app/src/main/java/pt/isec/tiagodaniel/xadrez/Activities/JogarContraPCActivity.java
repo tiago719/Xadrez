@@ -47,13 +47,13 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
     private ImageView Check = null;
     private Posicao reiCheck = null, peaoSubstituir;
     private Ferramentas ferramentas;
-    private boolean jogoComTempo = false, orientacaoMudou = false;
+    private boolean jogoComTempo = false;
     private long tempoMaximo, tempoGanho;
     private TextView mTxtNomeJogador1, mTxtNomeJogador2;
     private ImageView mImvFotoJogador1, mImvFotoJogador2;
     XadrezApplication xadrezApplication;
     private Jogador atual;
-    Chronometer CronometroJogBrancas, CronometroJogPretas;
+    private Chronometer CronometroJogBrancas, CronometroJogPretas;
     private int modoJogo;
     public boolean flagSouEuAJogar = false;
     public boolean flagAltereiModoJogo = false;
@@ -206,6 +206,8 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
         } else if (intent.getAction().equals(ACTION_JOGvsPC)) {
             this.modoJogo = JOGADOR_VS_COMPUTADOR;
             this.configuraJogador2(true, null, false);
+            LinearLayout cronometros = findViewById(R.id.cronometros);
+            cronometros.setVisibility(View.GONE);
 
         } else if (intent.getAction().equals(ACTION_JOGvsJOG)) {
             this.modoJogo = JOGADOR_VS_JOGADOR;
@@ -273,7 +275,9 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
         if (this.getGameModel().getModoJogo() != JOGADOR_VS_COMPUTADOR && bundle.getBoolean(TEMPO_JOGO_JOGvsJOG)) {
             this.jogoComTempo = true;
             this.tempoMaximo = bundle.getLong(TEMPO_MAX_JOGO_JOGvsJOG);
+            tempoMaximo*=60000;
             this.tempoGanho = bundle.getLong(TEMPO_GANHO_JOGO_JOGvsJOG);
+            tempoGanho*=1000;
             inicializaTempos();
         } else {
             LinearLayout cronometros = findViewById(R.id.cronometros);
@@ -282,25 +286,37 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
     }
 
     public void inicializaTempos() {
+        xadrezApplication.resetTempos();
         CronometroJogPretas.setBase(SystemClock.elapsedRealtime()+xadrezApplication.getCronometroJogPretasTempoStop());
-       /* CronometroJogPretas.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+        CronometroJogPretas.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override
             public void onChronometerTick(Chronometer chronometer) {
-                if (SystemClock.elapsedRealtime() == tempoMaximo) {
-                    mostrarVencedor(gameModel.getTabuleiro().getJogadorAdversario());
+                long passado=SystemClock.elapsedRealtime()-chronometer.getBase();
+                if (passado >= tempoMaximo)
+                {
+                    getGameModel().getTabuleiro().setVencedorJogo(mTxtNomeJogador1.getText().toString(), atual, false);
+                    mostrarVencedor(mTxtNomeJogador1.getText().toString());
+                    CronometroJogPretas.stop();
+                    CronometroJogBrancas.stop();
                 }
             }
-        });*/
+        });
 
         CronometroJogBrancas.setBase(SystemClock.elapsedRealtime()+xadrezApplication.getCronometroJogBrancasTempoStop());
-        /*CronometroJogPretas.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+        CronometroJogBrancas.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override
             public void onChronometerTick(Chronometer chronometer) {
-                if (SystemClock.elapsedRealtime() == tempoMaximo) {
-                    mostrarVencedor(gameModel.getTabuleiro().getJogadorAdversario());
+                long passado=SystemClock.elapsedRealtime()-chronometer.getBase();
+                if (passado >= tempoMaximo)
+                {
+                    getGameModel().getTabuleiro().setVencedorJogo(mTxtNomeJogador2.getText().toString(), atual, false);
+                    mostrarVencedor(mTxtNomeJogador2.getText().toString());
+
+                    CronometroJogPretas.stop();
+                    CronometroJogBrancas.stop();
                 }
             }
-        });*/
+        });
 
         if(gameModel.getTabuleiro().getJogadorAtual() instanceof JogadorLight)
         {
@@ -314,26 +330,31 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
         }
     }
 
-    public void paraTempo(Jogador jogador) {
+    public void paraTempo(Jogador jogador, boolean layoutChange) {
         long res = 0;
         if (jogador instanceof JogadorLight) {
-            xadrezApplication.setCronometroJogBrancasTempoStop(CronometroJogBrancas.getBase() - SystemClock.elapsedRealtime());
+            if(layoutChange)
+                res=CronometroJogBrancas.getBase() - SystemClock.elapsedRealtime();
+            else
+                res=CronometroJogBrancas.getBase() - SystemClock.elapsedRealtime()+tempoGanho;
+
+            if(res>0)
+                res=0;
+            xadrezApplication.setCronometroJogBrancasTempoStop(res);
+            comecaTempo(jogador);
             CronometroJogBrancas.stop();
-            /*
-            if(cronometroJogBrancasTempoStop-tempoGanho<0)
-                res=0;
-            else
-                res=cronometroJogBrancasTempoStop-tempoGanho;
-            CronometroJogBrancas.setBase(res);*/
         } else {
-            xadrezApplication.setCronometroJogPretasTempoStop(CronometroJogPretas.getBase() - SystemClock.elapsedRealtime());
-            CronometroJogPretas.stop();
-            /*
-            if(cronometroJogPretasTempoStop-tempoGanho<0)
-                res=0;
+            if(layoutChange)
+                res=CronometroJogPretas.getBase() - SystemClock.elapsedRealtime();
             else
-                res=cronometroJogPretasTempoStop-tempoGanho;
-            CronometroJogPretas.setBase(res);*/
+                res=CronometroJogPretas.getBase() - SystemClock.elapsedRealtime()+tempoGanho;
+
+            if(res>0)
+                res=0;
+
+            xadrezApplication.setCronometroJogPretasTempoStop(res);
+            comecaTempo(jogador);
+            CronometroJogPretas.stop();
         }
     }
 
@@ -435,24 +456,16 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState)
-    {
-        super.onSaveInstanceState(outState);
-
-        paraTempo(getGameModel().getTabuleiro().getJogadorAtual());
-        paraTempo(getGameModel().getTabuleiro().getJogadorAdversario());
-    }
-
-    @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
-        // Checks the orientation of the screen
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            setContentView(R.layout.activity_jogar_contra_pc);
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            setContentView(R.layout.activity_jogar_contra_pc);
-        }
+        Jogador jogador=getGameModel().getTabuleiro().getJogadorAtual();
+        if(jogador instanceof JogadorLight)
+            paraTempo(jogador, true);
+        else
+            paraTempo(jogador, true);
+
+        setContentView(R.layout.activity_jogar_contra_pc);
 
         ll = findViewById(R.id.tabuleiro);
 

@@ -134,6 +134,11 @@ public class XadrezApplication extends Application {
         this.pathFotoJogador2 = pathFotoJogador2;
     }
 
+    public void resetTempos()
+    {
+        cronometroJogBrancasTempoStop=0;
+        cronometroJogPretasTempoStop=0;
+    }
     public Jogador getJogadorServidor() {
         return jogadorServidor;
     }
