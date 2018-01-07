@@ -101,7 +101,7 @@ public class GameModel implements Constantes {
         if (adversario.isCheck()) {
             if (!adversario.hasMovimentos(adversario)) {
                 this.tabuleiro.setVencedorJogo(this.activity.getNomeJogador1(), atual, false);
-                getActivity().mostrarVencedor(atual);
+                getActivity().mostrarVencedor(this.activity.getNomeJogador1());
                 return true;
             }
         } else {
