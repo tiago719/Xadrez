@@ -8,6 +8,7 @@ public class ClientServerMessage implements Serializable {
     private int linhaOrigem, linhaDestino;
     private char colunaOrigem,colunaDestino;
     private byte[] fotoJogador;
+    private boolean isCheck = false;
 
     public ClientServerMessage() {
     }
@@ -58,6 +59,14 @@ public class ClientServerMessage implements Serializable {
 
     public byte[] getFotoJogador() {
         return this.fotoJogador;
+    }
+
+    public boolean isCheck() {
+        return isCheck;
+    }
+
+    public void setCheck(boolean check) {
+        isCheck = check;
     }
 
     public void resetDados() {

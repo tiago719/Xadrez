@@ -91,7 +91,8 @@ public class EstadoEscolheDestino extends StateAdapter implements Constantes, On
                         }
                     }
                 });
-                getGame().getTabuleiro().setJogadorAtual(null);
+                //getGame().getTabuleiro().setJogadorAtual(null);
+                getGame().getTabuleiro().trocaJogadorActual();
             }
             return new EstadoEscolhePeca(this.getGame());
         }

@@ -3,8 +3,6 @@ package pt.isec.tiagodaniel.xadrez.Logic;
 import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,7 +10,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.nio.file.Files;
 import java.util.ArrayList;
 
 import pt.isec.tiagodaniel.xadrez.Logic.Historico.Historico;
@@ -28,7 +25,7 @@ public class XadrezApplication extends Application {
     private Bitmap fotoJogador2;
     private String pathFotoJogador2;
     private String nomeJogador2;
-
+    private Jogador jogadorServidor;
 
     public static XadrezApplication getInstance() {
         return singleton;
@@ -116,5 +113,13 @@ public class XadrezApplication extends Application {
 
     public void setPathFotoJogador2(String pathFotoJogador2) {
         this.pathFotoJogador2 = pathFotoJogador2;
+    }
+
+    public Jogador getJogadorServidor() {
+        return jogadorServidor;
+    }
+
+    public void setJogadorServidor(Jogador jogadorServidor) {
+        this.jogadorServidor = jogadorServidor;
     }
 }
