@@ -30,8 +30,8 @@
     <string name="error_positive_button">Ok</string>
     <string name="question_title_leave_game">Quit game</string>
     <string name="question_message_leave_game">Do you want finish the game?</string>
-    <string name="question_title_leave_game_TCP">End connection</string>
-    <string name="question_message_leave_game_TCP">Do you want to end connection? If so, you will play against Bot!</string>
+    <string name="question_title_leave_game_TCP">Quit game</string>
+    <string name="question_message_leave_game_TCP">Do you want to end the game and the connection? If so, your opponent will play against Bot!</string>
     <string name="question_positive_button">Ok</string>
     <string name="question_negative_button">Cancel</string>
     <string name="ip_positive_button">Ok</string>
