@@ -12,10 +12,6 @@ import java.io.ByteArrayOutputStream;
 import pt.isec.tiagodaniel.xadrez.Exceptions.NullSharedPreferencesException;
 import pt.isec.tiagodaniel.xadrez.R;
 
-/**
- * Created by drmoreira on 28-12-2017.
- */
-
 public class Ferramentas implements Constantes {
     private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mEditor;
@@ -39,7 +35,7 @@ public class Ferramentas implements Constantes {
      */
     public void setPic(ImageView mImageView, String mCurrentPhotoPath) {
         if (mCurrentPhotoPath.equalsIgnoreCase(PHOTO_NOT_FOUND)) {
-            mImageView.setBackgroundResource(R.drawable.computador);
+            mImageView.setImageResource(R.drawable.computador);
         } else {
             // Get the dimensions of the View
             int targetW = mImageView.getWidth() <= 0 ? 300 : mImageView.getWidth();
@@ -59,8 +55,6 @@ public class Ferramentas implements Constantes {
             Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
             bitmap = Bitmap.createScaledBitmap(bitmap, targetW, targetH, true);
             mImageView.setImageBitmap(bitmap); //em alternativa retornar apenas o Bitmap
-            //TODO ver isto da rotação
-            //mImageView.setRotation(90);
         }
     }
 
