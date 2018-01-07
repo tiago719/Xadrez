@@ -8,9 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.media.VolumeShaper;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.os.SystemClock;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import pt.isec.tiagodaniel.xadrez.Dialogs.DrawDialog;
@@ -56,6 +55,8 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
     private Jogador atual;
     Chronometer CronometroJogBrancas, CronometroJogPretas;
     private int modoJogo;
+    public boolean flagSouEuAJogar = false;
+    public boolean flagAltereiModoJogo = false;
 
     public ImageView getCheck() {
         return Check;
@@ -250,10 +251,14 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
         this.xadrezApplication.setNomeJogador2(nome);
 
         if (flagGameThread) {
-            byte[] bitmapdata = bundle.getByteArray(FOTO_JOGADOR2);
-            Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
-            this.mImvFotoJogador2.setImageBitmap(bitmap);
-            this.xadrezApplication.setFotoJogador2(bitmap);
+            if (bundle.getByteArray(FOTO_JOGADOR2) == null) {
+                this.mImvFotoJogador2.setImageResource(R.drawable.computador);
+            } else {
+                byte[] bitmapdata = bundle.getByteArray(FOTO_JOGADOR2);
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
+                this.mImvFotoJogador2.setImageBitmap(bitmap);
+                this.xadrezApplication.setFotoJogador2(bitmap);
+            }
         } else {
             if (bundle.getString(FOTO_JOGADOR2).equals("")) {
                 this.mImvFotoJogador2.setImageResource(R.drawable.computador);
@@ -354,18 +359,20 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
         if (item.getItemId() == R.id.alterarJogo) {
             String message;
 
-            if (this.gameModel.getModoJogo() == JOGADOR_VS_COMPUTADOR)
-                message = getString(R.string.question_message_alterar_jogo_para_contra_humano);
-            else {
-                message = getString(R.string.question_message_alterar_jogo_para_contra_bot);
-            }
+            if (this.gameModel.getTabuleiro().getJogadorAtual() != null) {
+                if (this.gameModel.getModoJogo() == JOGADOR_VS_COMPUTADOR)
+                    message = getString(R.string.question_message_alterar_jogo_para_contra_humano);
+                else {
+                    message = getString(R.string.question_message_alterar_jogo_para_contra_bot);
+                }
 
-            QuestionDialog questionDialog = new QuestionDialog(
-                    this,
-                    getString(R.string.question_title_alterar_jogo),
-                    message,
-                    TAG_ALTERAR_JOGO);
-            questionDialog.show(getFragmentManager(), QUESTION_DIALOG);
+                QuestionDialog questionDialog = new QuestionDialog(
+                        this,
+                        getString(R.string.question_title_alterar_jogo),
+                        message,
+                        TAG_ALTERAR_JOGO);
+                questionDialog.show(getFragmentManager(), QUESTION_DIALOG);
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -405,12 +412,14 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
 
     private void alterarModoJogo() {
         switch (this.gameModel.getModoJogo()) {
-            case CRIAR_JOGO_REDE:
             case JUNTAR_JOGO_REDE:
+            case CRIAR_JOGO_REDE:
             case JOGADOR_VS_JOGADOR: {
                 LinearLayout cronometros = findViewById(R.id.cronometros);
                 cronometros.setVisibility(View.GONE);
                 this.gameModel.setModoJogo(JOGADOR_VS_COMPUTADOR);
+                this.flagSouEuAJogar = true;
+                this.flagAltereiModoJogo = true;
                 break;
             }
             case JOGADOR_VS_COMPUTADOR: {
@@ -493,6 +502,9 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
         return this.gameModel;
     }
 
+    public boolean isFlagSouEuAJogar() {
+        return this.flagSouEuAJogar;
+    }
     //region Funções privadas
     private void setModoJogo() {
         Intent intent = getIntent();

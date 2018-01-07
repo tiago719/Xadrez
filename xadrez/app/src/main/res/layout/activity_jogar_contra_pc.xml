@@ -42,8 +42,7 @@
                 android:layout_weight="1"
                 android:adjustViewBounds="false"
                 android:contentDescription="@string/perfil_photo"
-                android:layout_gravity="center"
-                android:src="@drawable/b_peao" />
+                android:layout_gravity="center" />
         </LinearLayout>
 
         <LinearLayout

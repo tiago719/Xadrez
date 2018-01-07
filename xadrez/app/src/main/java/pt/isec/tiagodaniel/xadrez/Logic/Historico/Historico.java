@@ -54,6 +54,10 @@ public class Historico implements Serializable {
                 }
                 break;
             }
+            case Constantes.CRIAR_JOGO_REDE:
+            case Constantes.JUNTAR_JOGO_REDE: {
+                this.vencedorJogo = nomeVencedor;
+            }
         }
     }
 

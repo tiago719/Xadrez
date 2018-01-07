@@ -50,7 +50,7 @@ public class JogaPC extends Thread
                     posicaoPeao.desenhaPeca();
                 }
 
-                if(gameModel.verificaCheck(gameModel.getTabuleiro().getJogadorAtual()))
+                if(gameModel.verificaCheck(gameModel.getTabuleiro().getJogadorAtual(), false, 0, 'a', 0, 'a', false))
                 {
                     return;
                 }
