@@ -87,8 +87,7 @@ public class Ferramentas implements Constantes {
             return null;
         }
         Bitmap bitmap = BitmapFactory.decodeFile(fotoPath);
-        //TODO meter aqui valores constantes
-        bitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
+        bitmap = Bitmap.createScaledBitmap(bitmap, FOTO_WIDTH, FOTO_HEIGHT, true);
         ByteArrayOutputStream blob = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 0 /* Ignored for PNGs */, blob);
         return blob.toByteArray();

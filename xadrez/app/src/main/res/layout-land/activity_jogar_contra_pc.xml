@@ -33,7 +33,9 @@
                 android:fontFamily="@font/fonty"
                 android:gravity="center"
                 android:text="@string/android"
-                android:textColor="@color/title" />
+                android:textColor="@color/title"
+                android:textStyle="bold"
+                android:textSize="@dimen/activity_jogar_contra_pc_nome_jogador"/>
 
             <ImageView
                 android:id="@+id/imvFotoJogador2"
@@ -98,7 +100,9 @@
                 android:fontFamily="@font/fonty"
                 android:gravity="center"
                 android:text="@string/perfil_name_hint"
-                android:textColor="@color/title" />
+                android:textColor="@color/title"
+                android:textStyle="bold"
+                android:textSize="@dimen/activity_jogar_contra_pc_nome_jogador"/>
 
             <ImageView
                 android:id="@+id/imvFotoJogador1"

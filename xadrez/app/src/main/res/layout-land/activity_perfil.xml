@@ -20,7 +20,7 @@
             android:fontFamily="@font/fonty"
             android:text="@string/perfil_name"
             android:textColor="@color/title"
-            android:textSize="36sp"
+            android:textSize="@dimen/activity_perfil_text_view_landscape"
             android:textStyle="bold" />
 
         <EditText
@@ -31,7 +31,7 @@
             android:inputType="textPersonName"
             android:hint="@string/perfil_name_hint"
             android:fontFamily="@font/fonty"
-            android:textSize="30sp"
+            android:textSize="@dimen/activity_perfil_edit_text"
             android:textStyle="bold"
             android:textColor="@color/edit"
             android:textColorHint="@color/tabLight"/>

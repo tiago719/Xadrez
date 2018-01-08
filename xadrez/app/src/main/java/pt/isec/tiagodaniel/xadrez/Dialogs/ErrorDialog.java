@@ -10,10 +10,6 @@ import android.os.Bundle;
 import pt.isec.tiagodaniel.xadrez.Logic.Constantes;
 import pt.isec.tiagodaniel.xadrez.R;
 
-/**
- * Created by drmoreira on 28-12-2017.
- */
-
 @SuppressLint("ValidFragment")
 public class ErrorDialog extends DialogFragment {
     private String mMessage;

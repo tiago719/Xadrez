@@ -19,7 +19,7 @@
         android:padding="20dp">
 
         <TextView
-            android:textSize="20sp"
+            android:textSize="@dimen/header_historico_jogada"
             android:text="@string/historicoJogadaPeca"
             android:gravity="center"
             android:layout_gravity="center_vertical"
@@ -32,7 +32,7 @@
             android:textColor="@color/title"/>
 
         <TextView
-            android:textSize="20sp"
+            android:textSize="@dimen/header_historico"
             android:text="@string/historicoJogadaOrigem"
             android:gravity="center"
             android:layout_gravity="center_vertical"
@@ -45,7 +45,7 @@
             android:textColor="@color/title"/>
 
         <TextView
-            android:textSize="20sp"
+            android:textSize="@dimen/header_historico_jogada"
             android:text="@string/historicoJogadaDestino"
             android:gravity="center"
             android:layout_gravity="center_vertical"

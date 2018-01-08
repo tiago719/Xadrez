@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/promover_peao_titilo"
-        android:textSize="50sp"
+        android:textSize="@dimen/activity_promocao_peao_text_view"
         android:typeface="monospace"
         android:textStyle="bold"
         android:fontFamily="@font/fonty"
@@ -38,7 +38,7 @@
             android:padding="15dp"
             android:text="@string/rainha"
             android:textColor="@color/title"
-            android:textSize="24sp"
+            android:textSize="@dimen/activity_promocao_peao_button"
             android:textStyle="bold" />
         <Button
             android:layout_width="match_parent"
@@ -52,7 +52,7 @@
             android:drawableStart="@drawable/b_bispo"
             android:drawableEnd="@drawable/p_bispo"
             android:textColor="@color/title"
-            android:textSize="24sp"
+            android:textSize="@dimen/activity_promocao_peao_button"
             android:textStyle="bold"/>
         <Button
             android:layout_width="match_parent"
@@ -66,7 +66,7 @@
             android:drawableStart="@drawable/b_torre"
             android:drawableEnd="@drawable/p_torre"
             android:textColor="@color/title"
-            android:textSize="24sp"
+            android:textSize="@dimen/activity_promocao_peao_button"
             android:textStyle="bold"/>
 
         <Button
@@ -81,7 +81,7 @@
             android:drawableStart="@drawable/b_cavalo"
             android:drawableEnd="@drawable/p_cavalo"
             android:textColor="@color/title"
-            android:textSize="24sp"
+            android:textSize="@dimen/activity_promocao_peao_button"
             android:textStyle="bold" />
     </LinearLayout>
 

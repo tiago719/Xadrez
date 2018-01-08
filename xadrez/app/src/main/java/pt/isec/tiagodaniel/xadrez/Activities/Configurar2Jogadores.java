@@ -73,17 +73,13 @@ public class Configurar2Jogadores extends Activity implements OnCompleteListener
     public void onComecarJogo_JOGvsJOG(View v) {
         Intent intent = new Intent(this, JogarContraPCActivity.class);
         Bundle bundle = new Bundle();
-        if (this.mTxtNomeJogador2.getText().toString().equals("")) {
-            bundle.putString(NOME_JOGADOR2, NOME_JOGADOR2_VAZIO);
-        } else {
-            bundle.putString(NOME_JOGADOR2, this.mTxtNomeJogador2.getText().toString());
-        }
+        bundle.putString(NOME_JOGADOR2, this.mTxtNomeJogador2.getText().toString());
         bundle.putString(FOTO_JOGADOR2, this.fotoJogador2Path);
         bundle.putBoolean(TEMPO_JOGO_JOGvsJOG, jogarComTempo);
         if (jogarComTempo) {
-            int tempoMax=this.mSeekBarTempoMaximo.getProgress();
-            if(tempoMax<2)
-                tempoMax=2;
+            int tempoMax = this.mSeekBarTempoMaximo.getProgress();
+            if (tempoMax < 2)
+                tempoMax = 2;
             bundle.putLong(TEMPO_MAX_JOGO_JOGvsJOG, tempoMax);
             bundle.putLong(TEMPO_GANHO_JOGO_JOGvsJOG, this.mSeekBarTempoGanho.getProgress());
         }
@@ -168,7 +164,7 @@ public class Configurar2Jogadores extends Activity implements OnCompleteListener
         this.mSeekBarTempoMaximo = findViewById(R.id.seekBarTempoMaximo);
         this.mSeekBarTempoMaximo.setEnabled(jogarComTempo);
         this.mSeekBarTempoMaximo.setMax(TEMPO_MAXIMO_MAX);
-        this.mSeekBarTempoMaximo.setProgress(TEMPO_MAXIMO_MAX/2);
+        this.mSeekBarTempoMaximo.setProgress(TEMPO_MAXIMO_MAX / 2);
         String minutos = String.valueOf(this.mSeekBarTempoMaximo.getProgress()) + MINUTOS;
         this.mTxtTempoMaximo.setText(minutos);
         this.mSeekBarTempoMaximo.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {

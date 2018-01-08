@@ -74,7 +74,6 @@ public interface Constantes {
     String TEMPO_JOGO_JOGvsJOG = "TEMPOJOGO";
     String TEMPO_MAX_JOGO_JOGvsJOG = "TEMPOMAXIMO";
     String TEMPO_GANHO_JOGO_JOGvsJOG = "TEMPOGANHO";
-    String NOME_JOGADOR2_VAZIO = "Jogador 2";
 
     /**Actions**/
     String ACTION_JOGvsPC = "JOGADORVSBOT";
@@ -110,4 +109,9 @@ public interface Constantes {
     String COLUNADESTINO = "COLUNADESTINO";
     String LINHAORIGEM = "LINHAORIGEM";
     String COLUNAORIGEM = "COLUNAORIGEM";
+
+    int FOTO_WIDTH = 300;
+    int FOTO_HEIGHT = 300;
+
+    String IP_DEFAULT = "10.65.134.217";
 }
