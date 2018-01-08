@@ -37,7 +37,7 @@ public class IpDialog extends DialogFragment {
 
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
         builder.setTitle(this.mTitle)
-                .setIcon(R.mipmap.ic_help_black_24dp)
+                .setIcon(R.drawable.ic_help_black_24dp)
                 .setView(edtIP)
                 .setPositiveButton(getString(R.string.ip_positive_button), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {

@@ -112,8 +112,8 @@
             android:layout_margin="5dp"
             android:fontFamily="@font/fonty"
             android:background="@drawable/rounded_button"
-            android:drawableStart="@mipmap/ic_face_black_18dp"
-            android:drawableEnd="@mipmap/ic_face_black_18dp"
+            android:drawableStart="@drawable/ic_face_black_18dp"
+            android:drawableEnd="@drawable/ic_face_black_18dp"
             android:textColor="@color/title"
             android:textSize="24sp"
             android:textStyle="bold"/>
@@ -221,7 +221,7 @@
                     android:layout_weight="1"
                     android:contentDescription="@string/perfil_photo"
                     android:layout_gravity="center"
-                    android:src="@mipmap/ic_add_a_photo_black_48dp"
+                    android:src="@drawable/ic_add_a_photo_black_48dp"
                     android:onClick="onTirarFoto"/>
             </LinearLayout>
 
