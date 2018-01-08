@@ -76,6 +76,8 @@ public class GameThread extends Thread implements Constantes, OnCompleteListener
 
                             gameActivity.getGameModel().verificaCheck(gameActivity.getGameModel().getTabuleiro().getJogadorAtual(),
                                     false, 0, 'a', 0, 'a', true);
+                            gameActivity.paraTempo(gameActivity.getGameModel().getTabuleiro().getJogadorAdversario(), false);
+                            gameActivity.comecaTempo(gameActivity.getGameModel().getTabuleiro().getJogadorAtual());
                         }
                     });
 
@@ -154,6 +156,7 @@ public class GameThread extends Thread implements Constantes, OnCompleteListener
         clientServerMessage = (ClientServerMessage) in.readObject();
 
         bundle = new Bundle();
+
         bundle.putString(NOME_JOGADOR2, clientServerMessage.getNomeJogador());
         bundle.putByteArray(FOTO_JOGADOR2, clientServerMessage.getFotoJogador());
 

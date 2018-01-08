@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="pt.isec.tiagodaniel.xadrez.Activities.MainActivity"
     android:padding="40dp"
-    android:background="@drawable/background">
+    android:background="@drawable/background"
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="0.2"
         android:text="@string/app_name"
         android:textSize="50sp"
         android:typeface="monospace"
@@ -18,12 +20,12 @@
         android:textColor="@color/title"
         android:textAlignment="center"
         android:layout_gravity="top|center"
-        android:padding="20dp"
         android:layout_margin="20dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_gravity="bottom|center_horizontal"
         android:orientation="vertical">
 
@@ -36,16 +38,16 @@
             android:drawableEnd="@mipmap/ic_android_black_18dp"
             android:fontFamily="@font/fonty"
             android:onClick="onJogarContraPC"
-            android:padding="15dp"
+            android:padding="10dp"
             android:text="@string/botao1MP"
             android:textColor="@color/title"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/botao2MP"
-            android:padding="15dp"
+            android:padding="10dp"
             android:layout_margin="5dp"
             android:onClick="onModo2Jogadores"
             android:fontFamily="@font/fonty"
@@ -53,13 +55,13 @@
             android:drawableStart="@mipmap/ic_face_black_18dp"
             android:drawableEnd="@mipmap/ic_face_black_18dp"
             android:textColor="@color/title"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:textStyle="bold"/>
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/botao3MP"
-            android:padding="15dp"
+            android:padding="10dp"
             android:layout_margin="5dp"
             android:onClick="onCriarJogoOnline"
             android:fontFamily="@font/fonty"
@@ -67,14 +69,14 @@
             android:drawableStart="@mipmap/ic_wifi_black_18dp"
             android:drawableEnd="@mipmap/ic_face_black_18dp"
             android:textColor="@color/title"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:textStyle="bold"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/botao4MP"
-            android:padding="15dp"
+            android:padding="10dp"
             android:layout_margin="5dp"
             android:onClick="onJuntarJogoOnline"
             android:fontFamily="@font/fonty"
@@ -82,14 +84,14 @@
             android:drawableStart="@mipmap/ic_face_black_18dp"
             android:drawableEnd="@mipmap/ic_wifi_black_18dp"
             android:textColor="@color/title"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/botao5MP"
-            android:padding="15dp"
+            android:padding="10dp"
             android:layout_margin="5dp"
             android:onClick="onCreditos"
             android:fontFamily="@font/fonty"
@@ -97,8 +99,8 @@
             android:drawableStart="@mipmap/ic_fingerprint_black_18dp"
             android:drawableEnd="@mipmap/ic_fingerprint_black_18dp"
             android:textColor="@color/title"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
     </LinearLayout>
 
-</FrameLayout>
+</LinearLayout>
