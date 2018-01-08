@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="application_name_text_size_portrait">70sp</dimen>
+    <dimen name="application_name_text_size_landscape">80sp</dimen>
+    <dimen name="main_button_text_size_portrait">40sp</dimen>
+    <dimen name="main_button_text_size_landscape">40sp</dimen>
+</resources>
