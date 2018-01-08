@@ -33,7 +33,8 @@
                 android:gravity="center"
                 android:text="@string/perfil_name_hint"
                 android:textColor="@color/title"
-                android:textSize="20sp"/>
+                android:textStyle="bold"
+                android:textSize="@dimen/activity_jogar_contra_pc_nome_jogador"/>
 
             <ImageView
                 android:id="@+id/imvFotoJogador1"
@@ -85,7 +86,6 @@
             android:layout_weight="1"
             android:orientation="vertical"
             android:padding="5dp">
-            <!-- TODO: valores absolutos?-->
             <TextView
                 android:id="@+id/txtNomeJogador2"
                 android:layout_width="match_parent"
@@ -96,7 +96,8 @@
                 android:gravity="center"
                 android:text="@string/android"
                 android:textColor="@color/title"
-                android:textSize="20sp"/>
+                android:textStyle="bold"
+                android:textSize="@dimen/activity_jogar_contra_pc_nome_jogador"/>
 
             <ImageView
                 android:id="@+id/imvFotoJogador2"

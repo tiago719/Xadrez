@@ -51,6 +51,7 @@
     <string name="error_socket_message">Problem in network sockets</string>
     <string name="alert_title">Connection lost!</string>
     <string name="alert_message">You are gonna play against bot!</string>
+    <string name="error_juntar_jogo_rede">Server not found!\nTry again later</string>
 
     /**Menus**/
     <string name="perfil">Profile</string>

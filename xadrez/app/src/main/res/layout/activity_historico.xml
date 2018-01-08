@@ -26,7 +26,7 @@
         android:layout_gravity="center_horizontal"
         android:gravity="center"
         android:text="@string/historicoVazio"
-        android:textSize="40dp"
+        android:textSize="@dimen/activity_historico_sem_historico"
         android:visibility="gone"
         android:fontFamily="@font/fonty"
         android:textStyle="bold"

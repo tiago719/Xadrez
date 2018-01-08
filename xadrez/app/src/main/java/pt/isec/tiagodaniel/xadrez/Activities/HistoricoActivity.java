@@ -131,32 +131,32 @@ public class HistoricoActivity extends Activity implements Constantes, OnComplet
         switch (modoJogo) {
             case JOGADOR_VS_JOGADOR: {
                 arrayList.clear();
-                arrayList.add(0, R.drawable.ic_face_black_18dp);
-                arrayList.add(1, R.drawable.ic_face_black_18dp);
+                arrayList.add(0, R.drawable.ic_face_black);
+                arrayList.add(1, R.drawable.ic_face_black);
                 break;
             }
             case JOGADOR_VS_COMPUTADOR: {
                 arrayList.clear();
-                arrayList.add(0, R.drawable.ic_face_black_18dp);
-                arrayList.add(1, R.drawable.ic_computer_black_18dp);
+                arrayList.add(0, R.drawable.ic_face_black);
+                arrayList.add(1, R.drawable.ic_android_black);
                 break;
             }
             case CRIAR_JOGO_REDE: {
                 arrayList.clear();
                 arrayList.add(0, R.drawable.ic_wifi_black_18dp);
-                arrayList.add(1, R.drawable.ic_face_black_18dp);
+                arrayList.add(1, R.drawable.ic_face_black);
                 break;
             }
             case JUNTAR_JOGO_REDE: {
                 arrayList.clear();
-                arrayList.add(0, R.drawable.ic_face_black_18dp);
+                arrayList.add(0, R.drawable.ic_face_black);
                 arrayList.add(1, R.drawable.ic_wifi_black_18dp);
                 break;
             }
             default: {
                 arrayList.clear();
-                arrayList.add(0, R.drawable.ic_face_black_18dp);
-                arrayList.add(1, R.drawable.ic_face_black_18dp);
+                arrayList.add(0, R.drawable.ic_face_black);
+                arrayList.add(1, R.drawable.ic_face_black);
             }
         }
 

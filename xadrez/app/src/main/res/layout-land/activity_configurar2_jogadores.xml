@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/tempo_JOGvsJOG"
                 android:fontFamily="@font/fonty"
-                android:textSize="25sp"
+                android:textSize="@dimen/activity_configurar2_jogadores_switch"
                 android:textStyle="bold"
                 android:textColor="@color/title"/>
 
@@ -43,7 +43,7 @@
                     android:text="@string/tempoMaximo_JOGvsJOG"
                     android:layout_weight="1"
                     android:fontFamily="@font/fonty"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/activity_configurar2_jogadores_text_view"
                     android:textStyle="bold"
                     android:textColor="@color/title"/>
 
@@ -58,7 +58,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/fonty"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/activity_configurar2_jogadores_text_view_2"
                     android:text="@string/dois_minutos"
                     android:textStyle="bold"
                     android:textColor="@color/title"
@@ -77,7 +77,7 @@
                     android:text="@string/tempoGanho_JOGvsJOG"
                     android:layout_weight="1"
                     android:fontFamily="@font/fonty"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/activity_configurar2_jogadores_text_view"
                     android:textStyle="bold"
                     android:textColor="@color/title"/>
 
@@ -92,7 +92,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/fonty"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/activity_configurar2_jogadores_text_view_2"
                     android:text="@string/dois_segundos"
                     android:textStyle="bold"
                     android:textColor="@color/title"
@@ -103,6 +103,7 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/btnComecarJogo_JOGvsJOG"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.4"
@@ -112,10 +113,10 @@
             android:layout_margin="5dp"
             android:fontFamily="@font/fonty"
             android:background="@drawable/rounded_button"
-            android:drawableStart="@drawable/ic_face_black_18dp"
-            android:drawableEnd="@drawable/ic_face_black_18dp"
+            android:drawableStart="@drawable/ic_face_black"
+            android:drawableEnd="@drawable/ic_face_black"
             android:textColor="@color/title"
-            android:textSize="24sp"
+            android:textSize="@dimen/activity_configurar2_jogadores_botao"
             android:textStyle="bold"/>
 
     </LinearLayout>
@@ -141,7 +142,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/Jogador1_JOGvsJOG"
                 android:fontFamily="@font/fonty"
-                android:textSize="25sp"
+                android:textSize="@dimen/activity_configurar2_jogadores_text_view"
                 android:textStyle="bold"
                 android:textColor="@color/title"
                 android:gravity="center_horizontal"/>
@@ -159,7 +160,7 @@
                     android:text="@string/jogador1"
                     android:layout_weight="1"
                     android:fontFamily="@font/fonty"
-                    android:textSize="30sp"
+                    android:textSize="@dimen/activity_configurar2_jogadores_nome_jogador"
                     android:textStyle="bold"
                     android:textColor="@color/title"
                     android:gravity="center_horizontal"
@@ -189,7 +190,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/Jogador2_JOGvsJOG"
                 android:fontFamily="@font/fonty"
-                android:textSize="25sp"
+                android:textSize="@dimen/activity_configurar2_jogadores_text_view"
                 android:textStyle="bold"
                 android:textColor="@color/title"
                 android:gravity="center_horizontal"/>
@@ -206,7 +207,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/fonty"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/activity_configurar2_jogadores_nome_jogador"
                     android:textStyle="bold"
                     android:textColor="@color/title"
                     android:gravity="center_horizontal"

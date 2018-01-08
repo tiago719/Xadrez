@@ -53,6 +53,7 @@
     <string name="error_socket_message">Problema nos sockets de rede</string>
     <string name="alert_title">Conexão interrompida!</string>
     <string name="alert_message">Irás jogar contra o bot!</string>
+    <string name="error_juntar_jogo_rede">Servidor não encontrado!\nTenta mais tarde</string>
 
     /**Menus**/
     <string name="perfil">Perfil</string>

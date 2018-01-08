@@ -12,8 +12,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.io.IOException;
 import java.net.Socket;
 
+import pt.isec.tiagodaniel.xadrez.Dialogs.ErrorDialog;
 import pt.isec.tiagodaniel.xadrez.Dialogs.IpDialog;
 import pt.isec.tiagodaniel.xadrez.Dialogs.OnCompleteListener;
 import pt.isec.tiagodaniel.xadrez.Logic.Constantes;
@@ -90,7 +92,6 @@ public class MainActivity extends Activity implements OnCompleteListener, Consta
     private void connectClient(final String serverIP) {
         Thread t = new Thread(new Runnable() {
             Socket socketGame = null;
-            Handler procMsg = new Handler();
 
             @Override
             public void run() {
@@ -101,16 +102,13 @@ public class MainActivity extends Activity implements OnCompleteListener, Consta
                     socketGame = null;
                 }
                 if (socketGame == null) {
-                    procMsg.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            finish();
-                        }
-                    });
+                    showError();
+
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), JogarContraPCActivity.class);
+                    intent.setAction(Constantes.ACTION_JUNTAR_JOGO_REDE);
+                    startActivity(intent);
                 }
-                Intent intent = new Intent(getApplicationContext(), JogarContraPCActivity.class);
-                intent.setAction(Constantes.ACTION_JUNTAR_JOGO_REDE);
-                startActivity(intent);
             }
         });
         t.start();
@@ -124,5 +122,10 @@ public class MainActivity extends Activity implements OnCompleteListener, Consta
                 break;
             }
         }
+    }
+
+    private void showError() {
+        ErrorDialog errorDialog = new ErrorDialog(this, getString(R.string.error_juntar_jogo_rede));
+        errorDialog.show(getFragmentManager(), ERROR_DIALOG);
     }
 }

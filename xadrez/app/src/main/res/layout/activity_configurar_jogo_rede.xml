@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:text="@string/tempo_JOGvsJOG"
             android:fontFamily="@font/fonty"
-            android:textSize="25sp"
+            android:textSize="@dimen/activity_configurar2_jogadores_switch"
             android:textStyle="bold"
             android:textColor="@color/title"/>
 
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:text="@string/tempoMaximo_JOGvsJOG"
             android:fontFamily="@font/fonty"
-            android:textSize="25sp"
+            android:textSize="@dimen/activity_configurar2_jogadores_text_view"
             android:textStyle="bold"
             android:textColor="@color/title"
             android:layout_marginTop="15pt"/>
@@ -52,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/fonty"
-                android:textSize="20sp"
+                android:textSize="@dimen/activity_configurar2_jogadores_text_view_2"
                 android:text="@string/dois_minutos"
                 android:textStyle="bold"
                 android:textColor="@color/title"
@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:text="@string/tempoGanho_JOGvsJOG"
             android:fontFamily="@font/fonty"
-            android:textSize="25sp"
+            android:textSize="@dimen/activity_configurar2_jogadores_text_view"
             android:textStyle="bold"
             android:textColor="@color/title"
             android:layout_marginTop="15pt"/>
@@ -86,7 +86,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/fonty"
-                android:textSize="20sp"
+                android:textSize="@dimen/activity_configurar2_jogadores_text_view_2"
                 android:text="@string/dois_segundos"
                 android:textStyle="bold"
                 android:textColor="@color/title"
@@ -105,9 +105,9 @@
         android:layout_margin="5dp"
         android:fontFamily="@font/fonty"
         android:background="@drawable/rounded_button"
-        android:drawableStart="@drawable/ic_wifi_black_18dp"
-        android:drawableEnd="@drawable/ic_face_black_18dp"
+        android:drawableStart="@drawable/ic_wifi_black"
+        android:drawableEnd="@drawable/ic_face_black"
         android:textColor="@color/title"
-        android:textSize="24sp"
+        android:textSize="@dimen/activity_configurar2_jogadores_botao"
         android:textStyle="bold" />
 </LinearLayout>

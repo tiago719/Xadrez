@@ -4,4 +4,22 @@
     <dimen name="application_name_text_size_landscape">40sp</dimen>
     <dimen name="main_button_text_size_portrait">24sp</dimen>
     <dimen name="main_button_text_size_landscape">16sp</dimen>
+    <dimen name="icones">18dp</dimen>
+    <dimen name="activity_jogar_contra_pc_nome_jogador">20sp</dimen>
+    <dimen name="activity_configurar2_jogadores_switch">25sp</dimen>
+    <dimen name="activity_configurar2_jogadores_text_view">25sp</dimen>
+    <dimen name="activity_configurar2_jogadores_text_view_2">20sp</dimen>
+    <dimen name="activity_configurar2_jogadores_nome_jogador">30sp</dimen>
+    <dimen name="activity_configurar2_jogadores_botao">25sp</dimen>
+    <dimen name="creditos">30sp</dimen>
+    <dimen name="activity_perfil_text_view">40sp</dimen>
+    <dimen name="activity_perfil_text_view_landscape">40sp</dimen>
+    <dimen name="activity_perfil_edit_text">30sp</dimen>
+    <dimen name="activity_historico_sem_historico">40sp</dimen>
+    <dimen name="header_historico">25sp</dimen>
+    <dimen name="linha_historico">20sp</dimen>
+    <dimen name="header_historico_jogada">20sp</dimen>
+    <dimen name="linha_historico_jogada">34sp</dimen>
+    <dimen name="activity_promocao_peao_text_view">50sp</dimen>
+    <dimen name="activity_promocao_peao_button">34sp</dimen>
 </resources>
