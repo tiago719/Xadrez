@@ -175,7 +175,7 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        gameModel.substituiPeao(resultCode, peaoSubstituir, atual);
+        gameModel.substituiPeao(resultCode, peaoSubstituir, atual, false);
     }
 
     @Override

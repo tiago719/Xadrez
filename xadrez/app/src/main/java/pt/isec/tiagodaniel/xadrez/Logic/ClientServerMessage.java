@@ -11,8 +11,12 @@ public class ClientServerMessage implements Serializable {
     private boolean isCheck = false;
     private boolean jogoComTempo = false;
     private long tempoMaximo, tempoGanho;
+    private boolean flagTrocouPeao;
+    private int pecaPromivida;
 
     public ClientServerMessage() {
+        flagTrocouPeao = false;
+        pecaPromivida = 0;
     }
 
     public String getNomeJogador() {
@@ -98,5 +102,21 @@ public class ClientServerMessage implements Serializable {
 
     public void setTempoGanho(long tempoGanho) {
         this.tempoGanho = tempoGanho;
+    }
+
+    public boolean isFlagTrocouPeao() {
+        return flagTrocouPeao;
+    }
+
+    public void setFlagTrocouPeao(boolean flagTrocouPeao) {
+        this.flagTrocouPeao = flagTrocouPeao;
+    }
+
+    public int getPecaPromivida() {
+        return pecaPromivida;
+    }
+
+    public void setPecaPromivida(int pecaPromivida) {
+        this.pecaPromivida = pecaPromivida;
     }
 }

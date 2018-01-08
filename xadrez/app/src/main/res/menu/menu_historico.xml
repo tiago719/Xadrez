@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/apagarHistorico"
-        android:icon="@mipmap/ic_delete_forever_white_24dp"
+        android:icon="@drawable/ic_delete_forever_white_24dp"
         android:showAsAction="always"
         android:title="@string/apagar_historico" />
 </menu>

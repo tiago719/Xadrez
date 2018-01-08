@@ -41,7 +41,7 @@ public class QuestionDialog extends DialogFragment {
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(this.mTitle)
-                .setIcon(R.mipmap.ic_help_black_24dp)
+                .setIcon(R.drawable.ic_help_black_24dp)
                 .setMessage(this.mMessage)
                 .setPositiveButton(getString(R.string.question_positive_button), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {

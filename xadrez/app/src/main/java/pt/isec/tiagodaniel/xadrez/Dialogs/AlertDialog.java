@@ -23,7 +23,7 @@ public class AlertDialog extends DialogFragment {
         // Use the Builder class for convenient dialog construction
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
         builder.setTitle(getString(R.string.alert_title))
-                .setIcon(R.mipmap.ic_error_black_24dp)
+                .setIcon(R.drawable.ic_error_black_24dp)
                 .setMessage(getString(R.string.alert_message))
                 .setPositiveButton(getString(R.string.error_positive_button), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {

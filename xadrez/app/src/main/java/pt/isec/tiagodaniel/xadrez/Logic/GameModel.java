@@ -1,6 +1,5 @@
 package pt.isec.tiagodaniel.xadrez.Logic;
 
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.widget.Chronometer;
@@ -23,6 +22,7 @@ public class GameModel implements Constantes {
     private XadrezApplication xadrezApplication;
     private int modoJogo;
     private ClientServerMessage messageToSend;
+    private Posicao posicaoAtual;
 
     public GameModel(LinearLayout ll, JogarContraPCActivity activity, Chronometer chronometer1, Chronometer chronometer2, int modoJogo) throws NullSharedPreferencesException {
         messageToSend = new ClientServerMessage();
@@ -61,7 +61,7 @@ public class GameModel implements Constantes {
         this.setState(this.state.seguinte(linha, coluna));
     }
 
-    public void substituiPeao(int resultado, Posicao posicao, Jogador atual) {
+    public void substituiPeao(int resultado, Posicao posicao, Jogador atual, boolean fromThread) {
         JogaPC jogaPC = new JogaPC(this);
         atual.addPecaMorta(posicao.getPeca());
         posicao.apagaPeca();
@@ -89,8 +89,12 @@ public class GameModel implements Constantes {
             jogaPC.start();
         } else if (this.getModoJogo() == JOGADOR_VS_JOGADOR) {
             if (getActivity().isJogoComTempo())
-                getActivity().paraTempo(getTabuleiro().getJogadorAtual(),false);
-
+                getActivity().paraTempo(getTabuleiro().getJogadorAtual(), false);
+            getTabuleiro().trocaJogadorActual();
+        } else if (this.getModoJogo() == JUNTAR_JOGO_REDE || this.getModoJogo() == CRIAR_JOGO_REDE) {
+            if(!fromThread) {
+                this.sendTCPMessage(posicao.getLinha(), posicao.getColuna(), posicaoAtual.getLinha(), posicaoAtual.getColuna(), true, resultado);
+            }
             getTabuleiro().trocaJogadorActual();
         }
     }
@@ -123,7 +127,7 @@ public class GameModel implements Constantes {
                 }
 
                 if (enviarPosicoes) {
-                    this.sendTCPMessage(lD, cD, lO, cO);
+                    this.sendTCPMessage(lD, cD, lO, cO, false, 0);
                 }
 
                 this.tabuleiro.setVencedorJogo(nomeVencedor, atual, false);
@@ -138,7 +142,7 @@ public class GameModel implements Constantes {
                     this.tabuleiro.setVencedorJogo(this.activity.getNomeJogador1(), atual, true);
                 }
                 if (enviarPosicoes) {
-                    this.sendTCPMessage(lD, cD, lO, cO);
+                    this.sendTCPMessage(lD, cD, lO, cO, false, 0);
                 }
                 getActivity().mostrarEmpate();
                 return true;
@@ -170,14 +174,17 @@ public class GameModel implements Constantes {
 
     public void setView(LinearLayout ll) {
         tabuleiro.setView(ll);
+
     }
 
-    public void sendTCPMessage(int linhaDestino, char colunaDestino, int linhaOrigem, char colunaOrigem) {
+    public void sendTCPMessage(int linhaDestino, char colunaDestino, int linhaOrigem, char colunaOrigem, boolean flagTrocouPeao, int pecaPromovida) {
         messageToSend = new ClientServerMessage();
         messageToSend.setLinhaDestino(linhaDestino);
         messageToSend.setColunaDestino(colunaDestino);
         messageToSend.setLinhaOrigem(linhaOrigem);
         messageToSend.setColunaOrigem(colunaOrigem);
+        messageToSend.setFlagTrocouPeao(flagTrocouPeao);
+        messageToSend.setPecaPromivida(pecaPromovida);
         Handler handler = new Handler();
         handler.post(new Runnable() {
             @Override
@@ -199,4 +206,7 @@ public class GameModel implements Constantes {
         });
     }
 
+    public void setPosicaoAtual(Posicao posicaoAtual) {
+        this.posicaoAtual = posicaoAtual;
+    }
 }

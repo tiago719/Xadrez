@@ -14,7 +14,7 @@
         android:text="@string/app_name"
         android:textAlignment="center"
         android:textColor="@color/title"
-        android:textSize="40sp"
+        android:textSize="@dimen/application_name_text_size_portrait"
         android:textStyle="bold"
         android:typeface="monospace"
         android:layout_margin="10dp"/>
@@ -32,13 +32,13 @@
             android:layout_margin="5dp"
             android:padding="5dp"
             android:background="@drawable/rounded_button"
-            android:drawableEnd="@mipmap/ic_android_black_18dp"
-            android:drawableStart="@mipmap/ic_face_black_18dp"
+            android:drawableEnd="@drawable/ic_android_black_18dp"
+            android:drawableStart="@drawable/ic_face_black_18dp"
             android:fontFamily="@font/fonty"
             android:onClick="onJogarContraPC"
             android:text="@string/botao1MP"
             android:textColor="@color/title"
-            android:textSize="16sp"
+            android:textSize="@dimen/main_button_text_size_landscape"
             android:textStyle="bold" />
 
         <Button
@@ -48,13 +48,13 @@
             android:layout_margin="5dp"
             android:padding="5dp"
             android:background="@drawable/rounded_button"
-            android:drawableEnd="@mipmap/ic_face_black_18dp"
-            android:drawableStart="@mipmap/ic_face_black_18dp"
+            android:drawableEnd="@drawable/ic_face_black_18dp"
+            android:drawableStart="@drawable/ic_face_black_18dp"
             android:fontFamily="@font/fonty"
             android:onClick="onModo2Jogadores"
             android:text="@string/botao2MP"
             android:textColor="@color/title"
-            android:textSize="16sp"
+            android:textSize="@dimen/main_button_text_size_landscape"
             android:textStyle="bold" />
 
         <Button
@@ -64,13 +64,13 @@
             android:layout_margin="5dp"
             android:padding="5dp"
             android:background="@drawable/rounded_button"
-            android:drawableEnd="@mipmap/ic_face_black_18dp"
-            android:drawableStart="@mipmap/ic_wifi_black_18dp"
+            android:drawableEnd="@drawable/ic_face_black_18dp"
+            android:drawableStart="@drawable/ic_wifi_black_18dp"
             android:fontFamily="@font/fonty"
             android:onClick="onCriarJogoOnline"
             android:text="@string/botao3MP"
             android:textColor="@color/title"
-            android:textSize="16sp"
+            android:textSize="@dimen/main_button_text_size_landscape"
             android:textStyle="bold" />
 
         <Button
@@ -80,13 +80,13 @@
             android:layout_margin="5dp"
             android:padding="5dp"
             android:background="@drawable/rounded_button"
-            android:drawableEnd="@mipmap/ic_wifi_black_18dp"
-            android:drawableStart="@mipmap/ic_face_black_18dp"
+            android:drawableEnd="@drawable/ic_wifi_black_18dp"
+            android:drawableStart="@drawable/ic_face_black_18dp"
             android:fontFamily="@font/fonty"
             android:onClick="onJuntarJogoOnline"
             android:text="@string/botao4MP"
             android:textColor="@color/title"
-            android:textSize="16sp"
+            android:textSize="@dimen/main_button_text_size_landscape"
             android:textStyle="bold" />
 
         <Button
@@ -96,13 +96,13 @@
             android:layout_margin="5dp"
             android:padding="5dp"
             android:background="@drawable/rounded_button"
-            android:drawableEnd="@mipmap/ic_fingerprint_black_18dp"
-            android:drawableStart="@mipmap/ic_fingerprint_black_18dp"
+            android:drawableEnd="@drawable/ic_fingerprint_black_18dp"
+            android:drawableStart="@drawable/ic_fingerprint_black_18dp"
             android:fontFamily="@font/fonty"
             android:onClick="onCreditos"
             android:text="@string/botao5MP"
             android:textColor="@color/title"
-            android:textSize="16sp"
+            android:textSize="@dimen/main_button_text_size_landscape"
             android:textStyle="bold" />
     </LinearLayout>
 

@@ -74,6 +74,13 @@ public class GameThread extends Thread implements Constantes, OnCompleteListener
                                     gameActivity.getGameModel().getTabuleiro().getJogadorAtual(),
                                     gameActivity.getGameModel().getTabuleiro().getJogadorAdversario());
 
+                            if(clientServerMessage.isFlagTrocouPeao()) {
+                                gameActivity.getGameModel().substituiPeao(clientServerMessage.getPecaPromivida(),
+                                        gameActivity.getGameModel().getTabuleiro().getPosicao(linhaDestino, colunaDestino),
+                                        gameActivity.getGameModel().getTabuleiro().getJogadorAtual(),
+                                        true);
+                            }
+
                             gameActivity.getGameModel().verificaCheck(gameActivity.getGameModel().getTabuleiro().getJogadorAtual(),
                                     false, 0, 'a', 0, 'a', true);
                             gameActivity.paraTempo(gameActivity.getGameModel().getTabuleiro().getJogadorAdversario(), false);
@@ -81,10 +88,12 @@ public class GameThread extends Thread implements Constantes, OnCompleteListener
                         }
                     });
 
-                    if (this.gameActivity.getGameModel().getModoJogo() == Constantes.CRIAR_JOGO_REDE) {
-                        this.gameActivity.getGameModel().getTabuleiro().trocaJogadorActual();
-                    } else if (this.gameActivity.getGameModel().getModoJogo() == Constantes.JUNTAR_JOGO_REDE) {
-                        this.gameActivity.getGameModel().getTabuleiro().trocaJogadorActual();
+                    if(!clientServerMessage.isFlagTrocouPeao()) {
+                        if (this.gameActivity.getGameModel().getModoJogo() == Constantes.CRIAR_JOGO_REDE) {
+                            this.gameActivity.getGameModel().getTabuleiro().trocaJogadorActual();
+                        } else if (this.gameActivity.getGameModel().getModoJogo() == Constantes.JUNTAR_JOGO_REDE) {
+                            this.gameActivity.getGameModel().getTabuleiro().trocaJogadorActual();
+                        }
                     }
                 }
             }

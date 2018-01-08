@@ -31,7 +31,7 @@ public class DrawDialog extends DialogFragment {
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(title)
-                .setIcon(R.mipmap.ic_draw)
+                .setIcon(R.drawable.ic_draw)
                 .setPositiveButton(getString(R.string.error_positive_button), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         mListener.onComplete(Constantes.DRAW_OK, mTag);

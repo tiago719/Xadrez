@@ -70,7 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:src="@mipmap/ic_add_a_photo_black_48dp"
+                android:src="@drawable/ic_add_a_photo_black_48dp"
                 android:layout_marginBottom="20dp"
                 android:contentDescription="@string/btnPhoto"
                 android:onClick="onTirarFoto"/>
@@ -80,7 +80,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:src="@mipmap/ic_insert_photo_black_48dp"
+                android:src="@drawable/ic_insert_photo_black_48dp"
                 android:contentDescription="@string/btnGallery"
                 android:onClick="onSelecionarImagem"/>
 
