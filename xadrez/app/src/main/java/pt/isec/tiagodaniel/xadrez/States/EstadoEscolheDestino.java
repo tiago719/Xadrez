@@ -57,6 +57,7 @@ public class EstadoEscolheDestino extends StateAdapter implements Constantes, On
 
             if ((posicaoPeao = getGame().getTabuleiro().isPeaoUltimaLinha()) != null) {
                 flag1 = false;
+                getGame().setPosicaoAtual(getPosicaoOrigem());
                 getGame().getActivity().peaoUltimaLinha(posicaoPeao, getGame().getTabuleiro().getJogadorAtual());
             }
 
@@ -69,7 +70,7 @@ public class EstadoEscolheDestino extends StateAdapter implements Constantes, On
                 }
                 this.getGame().getTabuleiro().trocaJogadorActual();
             } else if (flag1 && this.getGame().getModoJogo() == CRIAR_JOGO_REDE || this.getGame().getModoJogo() == JUNTAR_JOGO_REDE) {
-                this.getGame().sendTCPMessage(posicaoDestino.getLinha(), posicaoDestino.getColuna(), getPosicaoOrigem().getLinha(), getPosicaoOrigem().getColuna());
+                this.getGame().sendTCPMessage(posicaoDestino.getLinha(), posicaoDestino.getColuna(), getPosicaoOrigem().getLinha(), getPosicaoOrigem().getColuna(), false, 0);
                 getGame().getActivity().paraTempo(getGame().getTabuleiro().getJogadorAtual(), false);
                 getGame().getTabuleiro().trocaJogadorActual();
             }
