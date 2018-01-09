@@ -103,6 +103,7 @@ public interface Constantes {
     String DEVICE_TYPE = "DEVICETYPE";
     int CLIENTE = 1;
     int SERVIDOR = 2;
+    int TIMEOUT = 5000; //5 segundos
 
     /**BUNDLE verificaCheck**/
     String LINHADESTINO = "LINHADESTINO";
