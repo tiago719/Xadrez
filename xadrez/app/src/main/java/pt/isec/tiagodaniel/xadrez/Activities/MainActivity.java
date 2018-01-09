@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 
 import pt.isec.tiagodaniel.xadrez.Dialogs.ErrorDialog;
@@ -96,7 +97,9 @@ public class MainActivity extends Activity implements OnCompleteListener, Consta
             @Override
             public void run() {
                 try {
-                    socketGame = new Socket(serverIP, SERVER_PORT);
+                    socketGame = new Socket();
+                    socketGame.connect(new InetSocketAddress(serverIP, SERVER_PORT), TIMEOUT);
+                    //socketGame = new Socket(serverIP, SERVER_PORT);
                     SocketHandler.setClientSocket(socketGame);
                 } catch (Exception e) {
                     socketGame = null;
