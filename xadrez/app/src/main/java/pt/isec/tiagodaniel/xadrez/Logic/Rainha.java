@@ -29,7 +29,6 @@ public class Rainha extends Peca implements Constantes
         ArrayList<Posicao> disponiveis=tabuleiro.horizontalVertival(this, pc);
 
         if(!disponiveis.addAll(tabuleiro.diagonal(this, pc)))
-            System.out.println("ERRO A SOMAR OS DIAGONAIS COM OS VERTICAIS/HORIZONTAIS NA RAINHA");
 
         for (Iterator<Posicao> iterator = disponiveis.iterator(); iterator.hasNext();) {
             Posicao posicao = iterator.next();
