@@ -28,7 +28,7 @@ public class Rainha extends Peca implements Constantes
     {
         ArrayList<Posicao> disponiveis=tabuleiro.horizontalVertival(this, pc);
 
-        if(!disponiveis.addAll(tabuleiro.diagonal(this, pc)))
+        disponiveis.addAll(tabuleiro.diagonal(this, pc));
 
         for (Iterator<Posicao> iterator = disponiveis.iterator(); iterator.hasNext();) {
             Posicao posicao = iterator.next();
