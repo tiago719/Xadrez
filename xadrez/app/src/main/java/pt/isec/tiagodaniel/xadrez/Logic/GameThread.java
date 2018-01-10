@@ -74,7 +74,7 @@ public class GameThread extends Thread implements Constantes, OnCompleteListener
                                     gameActivity.getGameModel().getTabuleiro().getJogadorAtual(),
                                     gameActivity.getGameModel().getTabuleiro().getJogadorAdversario());
 
-                            if(clientServerMessage.isFlagTrocouPeao()) {
+                            if (clientServerMessage.isFlagTrocouPeao()) {
                                 gameActivity.getGameModel().substituiPeao(clientServerMessage.getPecaPromivida(),
                                         gameActivity.getGameModel().getTabuleiro().getPosicao(linhaDestino, colunaDestino),
                                         gameActivity.getGameModel().getTabuleiro().getJogadorAtual(),
@@ -88,7 +88,7 @@ public class GameThread extends Thread implements Constantes, OnCompleteListener
                         }
                     });
 
-                    if(!clientServerMessage.isFlagTrocouPeao()) {
+                    if (!clientServerMessage.isFlagTrocouPeao()) {
                         if (this.gameActivity.getGameModel().getModoJogo() == Constantes.CRIAR_JOGO_REDE) {
                             this.gameActivity.getGameModel().getTabuleiro().trocaJogadorActual();
                         } else if (this.gameActivity.getGameModel().getModoJogo() == Constantes.JUNTAR_JOGO_REDE) {
@@ -173,9 +173,7 @@ public class GameThread extends Thread implements Constantes, OnCompleteListener
             @Override
             public void run() {
                 gameActivity.configuraJogador2(false, bundle, true);
-                if (clientServerMessage.isJogoComTempo()) {
-                    gameActivity.configuraTempo(clientServerMessage.isJogoComTempo(), clientServerMessage.getTempoMaximo(), clientServerMessage.getTempoGanho());
-                }
+                gameActivity.configuraTempo(clientServerMessage.isJogoComTempo(), clientServerMessage.getTempoMaximo(), clientServerMessage.getTempoGanho());
                 escondeProgressDialog();
             }
         });
