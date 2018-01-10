@@ -291,6 +291,11 @@ public class JogarContraPCActivity extends Activity implements OnCompleteListene
     }
 
     public void configuraTempo(boolean jogoComTempo, long tempoMaximo, long tempoGanho) {
+        if(!jogoComTempo) {
+            LinearLayout cronometros = findViewById(R.id.cronometros);
+            cronometros.setVisibility(View.GONE);
+            return;
+        }
         this.jogoComTempo = jogoComTempo;
         this.tempoMaximo = tempoMaximo;
         this.tempoGanho = tempoGanho;
